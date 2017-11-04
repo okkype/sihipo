@@ -1,0 +1,9 @@
+{% extends 'sihipo_root/base/list.html' %}
+{% block list_header %}
+<th>Kode Tanaman</th>
+<th>Catatan</th>
+{% endblock %}
+{% block list_body %}
+<td><a href="{% url name|add:'_update' object.id %}">{{ object.kode }}</a></td>
+<td>{{ object.note }}</td>
+{% endblock %}
