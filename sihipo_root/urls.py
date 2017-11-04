@@ -4,10 +4,10 @@ from . import views
 
 
 urlpatterns = [
-    url(r'^plantplant/$', views.PlantPlantList.as_view(), name='plantplantlist'),
-    url(r'^plantplant/create$', views.PlantPlantCreate.as_view(), name='plantplantcreate'),
-    url(r'^plantplant/update/(?P<pk>\d+)$', views.PlantPlantUpdate.as_view(), name='plantplantupdate'),
-    url(r'^plantplant/delete/(?P<pk>\d+)$', views.PlantPlantDelete.as_view(), name='plantplantdelete'),
+    url(r'^plantplant/$', views.PlantPlantList.as_view(), name='plantplant_list'),
+    url(r'^plantplant/create$', views.PlantPlantCreate.as_view(), name='plantplant_create'),
+    url(r'^plantplant/update/(?P<pk>\d+)$', views.PlantPlantUpdate.as_view(), name='plantplant_update'),
+    url(r'^plantplant/delete/(?P<pk>\d+)$', views.PlantPlantDelete.as_view(), name='plantplant_delete'),
     url(r'^plantopt/$', views.PlantOptList.as_view(), name='plantopt_list'),
     url(r'^plantopt/create$', views.PlantOptCreate.as_view(), name='plantopt_create'),
     url(r'^plantopt/update/(?P<pk>\d+)$', views.PlantOptUpdate.as_view(), name='plantopt_update'),
