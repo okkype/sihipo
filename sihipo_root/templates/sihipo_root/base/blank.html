@@ -8,12 +8,13 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Si Hipo - Sistem Informasi Hidroponik</title>
-    <link href="{% static 'sb-admin-2/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-	<link href="{% static 'sb-admin-2/vendor/metisMenu/metisMenu.min.css' %}" rel="stylesheet">
-	<link href="{% static 'sb-admin-2/vendor/datatables-plugins/dataTables.bootstrap.css' %}" rel="stylesheet">
-    <link href="{% static 'sb-admin-2/vendor/datatables-responsive/dataTables.responsive.css' %}" rel="stylesheet">
-	<link href="{% static 'sb-admin-2/dist/css/sb-admin-2.css' %}" rel="stylesheet">
-	<link href="{% static 'sb-admin-2/vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'sb-admin-2/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'sb-admin-2/vendor/metisMenu/metisMenu.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'sb-admin-2/vendor/datatables-plugins/dataTables.bootstrap.css' %}" rel="stylesheet" />
+    <link href="{% static 'sb-admin-2/vendor/datatables-responsive/dataTables.responsive.css' %}" rel="stylesheet" />
+	<link href="{% static 'sb-admin-2/dist/css/sb-admin-2.css' %}" rel="stylesheet" />
+	<link href="{% static 'sb-admin-2/vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'sb-admin-2/vendor/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css' %}" rel="stylesheet" />
 </head>
 
 <body>
@@ -134,7 +135,7 @@
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-sitemap fa-fw"></i> Master Data<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-database fa-fw"></i> Master Data<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
                                     <a href="{% url 'plantplant_list' %}">Tanaman</a>
@@ -144,6 +145,12 @@
                                 </li>
                                 <li>
                                     <a href="{% url 'plantsensor_list' %}">Sensor</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'plantcontrol_list' %}">Kontrol</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'plantrack_list' %}">Rak Tanam</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
@@ -192,17 +199,20 @@
     </div>
     <script src="{% static 'sb-admin-2/vendor/jquery/jquery.min.js' %}"></script>
     <script src="{% static 'sb-admin-2/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'sb-admin-2/vendor/momentjs/moment.js' %}"></script>
+    <script src="{% static 'sb-admin-2/vendor/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js' %}"></script>
     <script src="{% static 'sb-admin-2/vendor/metisMenu/metisMenu.min.js' %}"></script>
     <script src="{% static 'sb-admin-2/vendor/datatables/js/jquery.dataTables.min.js' %}"></script>
     <script src="{% static 'sb-admin-2/vendor/datatables-plugins/dataTables.bootstrap.min.js' %}"></script>
     <script src="{% static 'sb-admin-2/vendor/datatables-responsive/dataTables.responsive.js' %}"></script>
     <script src="{% static 'sb-admin-2/dist/js/sb-admin-2.js' %}"></script>
-    <script>
-    $(document).ready(function() {
-        $('.data-tables').DataTable({
-            responsive: true
-        });
-    });
+    <script type="text/javascript">
+	    $(document).ready(function() {
+	        $('.data-tables').DataTable({
+	            responsive: true
+	        });
+	        {% block jquery %}{% endblock %}
+	    });
     </script>
 </body>
 

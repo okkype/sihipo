@@ -9,7 +9,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 def get_plant_context(obj, context):
     context['name'] = obj.model._meta.model_name
     context['verbose_name'] = obj.model._meta.verbose_name
-    context['back_url'] = obj.success_url
+    context['referer'] = obj.request.META.get('HTTP_REFERER')
     return context
 
 class PlantListView(ListView):
@@ -162,4 +162,106 @@ class PlantSensorDetailUpdate(PlantSensorDetailView, PlantUpdateView):
     pass
 
 class PlantSensorDetailDelete(PlantSensorDetailView, PlantDeleteView):
+    pass
+    
+# PlantControl
+class PlantControlView(object):
+    model = PlantControl
+    fields = ['kode', 'url', 'active']
+    success_url = reverse_lazy('plantcontrol_list')
+
+class PlantControlList(PlantControlView, PlantListView):
+    pass
+
+class PlantControlCreate(PlantControlView, PlantCreateView):
+    pass
+
+class PlantControlUpdate(PlantControlView, PlantUpdateView):
+    def get_context_data(self, **kwargs):
+        context = super(PlantControlUpdate, self).get_context_data(**kwargs)
+        context['link_list'] = [
+            {
+                'name':'Detail Sensor',
+                'link':reverse_lazy('plantcontroldetail_list')
+            }
+        ]
+        self.request.session['parent_id'] = context['object'].id
+        return context
+
+class PlantControlDelete(PlantControlView, PlantDeleteView):
+    pass
+
+# PlantControlDetail
+class PlantControlDetailView(object):
+    model = PlantControlDetail
+    fields = ['plant_control', 'kode', 'val', 'active']
+    success_url = reverse_lazy('plantcontroldetail_list')
+
+class PlantControlDetailList(PlantControlDetailView, PlantListView):
+    def get_context_data(self, **kwargs):
+        context = super(PlantControlDetailList, self).get_context_data(**kwargs)
+        context['object_list'] = self.model.objects.filter(plant_control=self.request.session.get('parent_id'))
+        return context
+
+class PlantControlDetailCreate(PlantControlDetailView, PlantCreateView):
+    def get_initial(self):
+        context = super(PlantControlDetailCreate, self).get_initial()
+        context['plant_control'] = self.request.session.get('parent_id')
+        return context
+
+class PlantControlDetailUpdate(PlantControlDetailView, PlantUpdateView):
+    pass
+
+class PlantControlDetailDelete(PlantControlDetailView, PlantDeleteView):
+    pass
+    
+# PlantRack
+class PlantRackView(object):
+    model = PlantRack
+    fields = ['kode', 'plant_control', 'plant_sensor', 'dt', 'p', 'l', 't', 'type', 'active']
+    success_url = reverse_lazy('plantrack_list')
+
+class PlantRackList(PlantRackView, PlantListView):
+    pass
+
+class PlantRackCreate(PlantRackView, PlantCreateView):
+    pass
+
+class PlantRackUpdate(PlantRackView, PlantUpdateView):
+    def get_context_data(self, **kwargs):
+        context = super(PlantRackUpdate, self).get_context_data(**kwargs)
+        context['link_list'] = [
+            {
+                'name':'Titik Tanam',
+                'link':reverse_lazy('plantrackpoint_list')
+            }
+        ]
+        self.request.session['parent_id'] = context['object'].id
+        return context
+
+class PlantRackDelete(PlantRackView, PlantDeleteView):
+    pass
+
+# PlantRackPoint
+class PlantRackPointView(object):
+    model = PlantRackPoint
+    fields = ['plant_rack', 'plant_plant', 'dt', 'p', 'l', 't', 'active']
+    success_url = reverse_lazy('plantrackpoint_list')
+
+class PlantRackPointList(PlantRackPointView, PlantListView):
+    def get_context_data(self, **kwargs):
+        context = super(PlantRackPointList, self).get_context_data(**kwargs)
+        context['object_list'] = self.model.objects.filter(plant_rack=self.request.session.get('parent_id'))
+        return context
+
+class PlantRackPointCreate(PlantRackPointView, PlantCreateView):
+    def get_initial(self):
+        context = super(PlantRackPointCreate, self).get_initial()
+        context['plant_rack'] = self.request.session.get('parent_id')
+        return context
+
+class PlantRackPointUpdate(PlantRackPointView, PlantUpdateView):
+    pass
+
+class PlantRackPointDelete(PlantRackPointView, PlantDeleteView):
     pass

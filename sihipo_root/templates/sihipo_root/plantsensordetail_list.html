@@ -4,6 +4,6 @@
 <th>Kode Detail Sensor</th>
 {% endblock %}
 {% block list_body %}
-<td><a href="{% url name|add:'_update' object.id %}">{{ object.plant__sensor }}</a></td>
+<td><a href="{% url name|add:'_update' object.id %}">{{ object.plant_sensor }}</a></td>
 <td>{{ object.kode }}</td>
 {% endblock %}

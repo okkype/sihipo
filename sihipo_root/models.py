@@ -21,7 +21,7 @@ class PlantBase(models.Model):
     created_by = models.ForeignKey('auth.User', models.SET_NULL, related_name='created_by', null=True, blank=True)
     updated = models.DateTimeField(auto_now=True)
     updated_by = models.ForeignKey('auth.User', models.SET_NULL, related_name='updated_by', null=True, blank=True)
-    note = models.TextField('Note', null=True, blank=True)
+    note = models.TextField('Catatan', null=True, blank=True)
     active = models.BooleanField('Aktif', default=True)
     
     sensor_type = (

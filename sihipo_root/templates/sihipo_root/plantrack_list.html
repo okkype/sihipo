@@ -1,0 +1,21 @@
+{% extends 'sihipo_root/base/list.html' %}
+{% block list_header %}
+<th>Kode Rak</th>
+<th>Kode Kontrol</th>
+<th>Kode Sensor</th>
+<th>Tanggal Tanam</th>
+<th>Panjang</th>
+<th>Lebar</th>
+<th>Tinggi</th>
+<th>Tipe</th>
+{% endblock %}
+{% block list_body %}
+<td><a href="{% url name|add:'_update' object.id %}">{{ object.kode }}</a></td>
+<td>{{ object.plant_control }}</td>
+<td>{{ object.plant_sensor }}</td>
+<td>{{ object.dt }}</td>
+<td>{{ object.p }}</td>
+<td>{{ object.l }}</td>
+<td>{{ object.t }}</td>
+<td>{{ object.type }}</td>
+{% endblock %}
