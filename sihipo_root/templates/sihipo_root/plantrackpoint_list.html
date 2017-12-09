@@ -1,12 +1,4 @@
 {% extends 'sihipo_root/base/list.html' %}
-{% block list_header %}
-<th>Kode Rak</th>
-<th>Kode Tanaman</th>
-<th>Tanggal Tanam</th>
-<th>Panjang</th>
-<th>Lebar</th>
-<th>Tinggi</th>
-{% endblock %}
 {% block list_body %}
 <td><a href="{% url name|add:'_update' object.id %}">{{ object.plant_rack }}</a></td>
 <td>{{ object.plant_plant }}</td>
@@ -14,4 +6,5 @@
 <td>{{ object.p }}</td>
 <td>{{ object.l }}</td>
 <td>{{ object.t }}</td>
+<td>{{ object.active }}</td>
 {% endblock %}

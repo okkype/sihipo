@@ -8,6 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Si Hipo - Sistem Informasi Hidroponik</title>
+    <link href="{% static 'style.css' %}" rel="stylesheet" />
     <link href="{% static 'sb-admin-2/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" />
 	<link href="{% static 'sb-admin-2/vendor/metisMenu/metisMenu.min.css' %}" rel="stylesheet" />
 	<link href="{% static 'sb-admin-2/vendor/datatables-plugins/dataTables.bootstrap.css' %}" rel="stylesheet" />
@@ -31,7 +32,7 @@
                 	<img style="width: 220px;height: 32px; float: left;" src="{% static '/img/hipo-icon.png' %}" border="0" />
                 </a>
             </div>
-            <ul class="nav navbar-top-links navbar-right">
+            <ul class="nav navbar-top-links navbar-right hidden-xs">
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
@@ -92,22 +93,6 @@
                     <!-- /.dropdown-alerts -->
                 </li>
                 <!-- /.dropdown -->
-<!--                 <li class="dropdown"> -->
-<!--                     <a class="dropdown-toggle" data-toggle="dropdown" href="#"> -->
-<!--                         <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i> -->
-<!--                     </a> -->
-<!--                     <ul class="dropdown-menu dropdown-user"> -->
-<!--                         <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a> -->
-<!--                         </li> -->
-<!--                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a> -->
-<!--                         </li> -->
-<!--                         <li class="divider"></li> -->
-<!--                         <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a> -->
-<!--                         </li> -->
-<!--                     </ul> -->
-<!--                     /.dropdown-user -->
-<!--                 </li> -->
-                <!-- /.dropdown -->
             </ul>
             <!-- /.navbar-top-links -->
 
@@ -116,7 +101,7 @@
                     <ul class="nav" id="side-menu">
                         <li class="sidebar-search">
                            	<form method="get">
-                                <input type="search" name="filter" id="filter" class="form-control" placeholder="Cari..." value="{{ filter }}" />
+                                <input type="search" name="filter" id="filter" class="form-control" placeholder="Cari..." value="{{ filter|default_if_none:'' }}" />
                             </form>
                         </li>
                         <li>

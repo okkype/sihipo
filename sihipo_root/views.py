@@ -4,6 +4,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render
 from django.views.generic import TemplateView, ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.db.models import Q
 
 # START BASIC VIEW MOD
 def get_plant_context(obj, context):
@@ -19,12 +20,31 @@ class PlantListView(ListView):
         if self.request.GET.get('filter'):
             return 0
         return ListView.get_paginate_by(self, queryset)
+    
+    def get_ordering(self):
+        sort = self.request.GET.get('sort') or self.request.session.get('sort')
+        if sort and (sort in self.fields):
+            self.request.session['sort'] = sort
+            return sort
+        else:
+            return super(PlantListView, self).get_ordering()
         
     def get_context_data(self, **kwargs):
         context = get_plant_context(self, super(PlantListView, self).get_context_data(**kwargs))
-        context['filter'] = self.request.GET.get('filter', '')
+        context['table_fields'] = self.fields
+        context['filter'] = self.request.GET.get('filter')
         if context['filter']:
-            context['object_list'] = self.model.objects.filter(kode__icontains=context['filter'])
+            self.paginate_by = False
+            eval_obj = []
+            for table_field in context['table_fields']:
+                if self.model._meta.get_field(table_field).get_internal_type() == u'CharField':
+                    eval_obj.append('Q(%s__icontains=context[\'filter\'])' % (table_field))
+            if eval_obj:
+                context['object_list'] = eval('self.model.objects.filter(%s)' % ('|'.join(eval_obj)))
+        context['table_fields'] = self.fields
+        context['table_headers'] = {}
+        for table_field in context['table_fields']:
+            context['table_headers'][table_field] = self.model._meta.get_field(table_field).verbose_name
         return context
 
 class PlantCreateView(CreateView):

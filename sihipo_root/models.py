@@ -78,15 +78,15 @@ class PlantEvalThen(PlantBase):
         verbose_name = 'Evaluasi Tanaman (THEN)'
 
 class PlantEval(PlantBase):
-    plant_eval_if = models.ForeignKey(PlantEvalIf, models.PROTECT, limit_choices_to={'active': True})
-    plant_eval_then = models.ForeignKey(PlantEvalThen, models.PROTECT, limit_choices_to={'active': True})
+    plant_eval_if = models.ForeignKey(PlantEvalIf, models.PROTECT, verbose_name='Evaluasi Tanaman (IF)', limit_choices_to={'active': True})
+    plant_eval_then = models.ForeignKey(PlantEvalThen, models.PROTECT, verbose_name='Evaluasi Tanaman (THEN)', limit_choices_to={'active': True})
     
     class Meta:
         verbose_name = 'Evaluasi Tanaman'
         unique_together = ('plant_eval_if', 'plant_eval_then')
 
 class PlantEvalLog(PlantBase):
-    plant_eval = models.ForeignKey(PlantEval, models.PROTECT, limit_choices_to={'active': True})
+    plant_eval = models.ForeignKey(PlantEval, models.PROTECT, verbose_name='Evaluasi Tanaman', limit_choices_to={'active': True})
     
     class Meta:
         verbose_name = 'Log Evaluasi Tanaman'
@@ -101,7 +101,7 @@ class PlantPlant(PlantBase):
         verbose_name = 'Tanaman'
         
 class PlantOpt(PlantBase):
-    plant_plant = models.ForeignKey(PlantPlant, models.PROTECT, verbose_name="Kode Tanaman", limit_choices_to={'active': True})
+    plant_plant = models.ForeignKey(PlantPlant, models.PROTECT, verbose_name="Tanaman", limit_choices_to={'active': True})
     usia = models.FloatField('Usia Hari', default=0)
     
     def __str__(self):
@@ -112,7 +112,7 @@ class PlantOpt(PlantBase):
         unique_together = ('plant_plant', 'usia')
         
 class PlantOptDetail(PlantBase):
-    plant_opt = models.ForeignKey(PlantOpt, models.PROTECT, limit_choices_to={'active': True})
+    plant_opt = models.ForeignKey(PlantOpt, models.PROTECT, verbose_name='Kondisi Optimal Tanaman', limit_choices_to={'active': True})
     kode = models.CharField('Kode', max_length=3, choices=PlantBase.sensor_type)
     val = models.FloatField('Nilai')
     tol = FloatRangeField('Toleransi (%)', default=10, min_value=0, max_value=100)
@@ -135,7 +135,7 @@ class PlantSensor(PlantBase):
         verbose_name = 'Sensor Tanaman'
         
 class PlantSensorDetail(PlantBase):
-    plant_sensor = models.ForeignKey(PlantSensor, models.PROTECT, limit_choices_to={'active': True})
+    plant_sensor = models.ForeignKey(PlantSensor, models.PROTECT, verbose_name='Sensor Tanaman', limit_choices_to={'active': True})
     kode = models.CharField('Kode', max_length=3, choices=PlantBase.sensor_type)
     
     class Meta:
@@ -153,7 +153,7 @@ class PlantControl(PlantBase):
         verbose_name = 'Kontrol Tanaman'
         
 class PlantControlDetail(PlantBase):
-    plant_control = models.ForeignKey(PlantControl, models.PROTECT, limit_choices_to={'active': True})
+    plant_control = models.ForeignKey(PlantControl, models.PROTECT, verbose_name='Kontrol Tanaman', limit_choices_to={'active': True})
     kode = models.CharField('Kode', max_length=3, choices=PlantBase.control_pin)
     val = models.CharField('Nilai', max_length=2, choices=PlantBase.control_type, null=True, blank=True)
     
@@ -163,8 +163,8 @@ class PlantControlDetail(PlantBase):
         
 class PlantRack(PlantBase):
     kode = models.CharField('Kode Rak', max_length=20)
-    plant_sensor = models.ForeignKey(PlantSensor, models.PROTECT, limit_choices_to={'active': True})
-    plant_control = models.ForeignKey(PlantControl, models.PROTECT, limit_choices_to={'active': True})
+    plant_sensor = models.ForeignKey(PlantSensor, models.PROTECT, verbose_name='Sensor Tanaman', limit_choices_to={'active': True})
+    plant_control = models.ForeignKey(PlantControl, models.PROTECT, verbose_name='Kontrol Tanaman', limit_choices_to={'active': True})
     dt = models.DateTimeField('Tanggal Pasang', default=timezone.now, blank=True)
     p = models.FloatField('Panjang', null=True, blank=True)
     l = models.FloatField('Lebar', null=True, blank=True)
@@ -178,8 +178,8 @@ class PlantRack(PlantBase):
         verbose_name = 'Rak Tanaman'
         
 class PlantRackPoint(PlantBase):
-    plant_plant = models.ForeignKey(PlantPlant, models.PROTECT, limit_choices_to={'active': True})
-    plant_rack = models.ForeignKey(PlantRack, models.PROTECT, limit_choices_to={'active': True})
+    plant_plant = models.ForeignKey(PlantPlant, models.PROTECT, verbose_name='Tanaman', limit_choices_to={'active': True})
+    plant_rack = models.ForeignKey(PlantRack, models.PROTECT, verbose_name='Rak Tanaman', limit_choices_to={'active': True})
     dt = models.DateTimeField('Tanggal Tanam', default=timezone.now, blank=True)
     p = models.FloatField('Panjang', null=True, blank=True)
     l = models.FloatField('Lebar', null=True, blank=True)
@@ -193,8 +193,8 @@ class PlantRackPoint(PlantBase):
     
 class PlantControlLog(PlantBase):
     dt = models.DateTimeField('Start', default=timezone.now, blank=True)
-    plant_control = models.ForeignKey(PlantControl, models.PROTECT, limit_choices_to={'active': True})
-    plant_rack = models.ForeignKey(PlantRack, models.PROTECT, limit_choices_to={'active': True})
+    plant_control = models.ForeignKey(PlantControl, models.PROTECT, verbose_name='Kontrol Tanaman', limit_choices_to={'active': True})
+    plant_rack = models.ForeignKey(PlantRack, models.PROTECT, verbose_name='Rak Tanaman', limit_choices_to={'active': True})
     
     def __str__(self):
         return '%s_%s_%s' % (self.plant_control.kode, self.plant_rack.kode, self.dt)
@@ -204,7 +204,7 @@ class PlantControlLog(PlantBase):
         ordering = ['-dt']
         
 class PlantControlLogDetail(PlantBase):
-    plant_control_log = models.ForeignKey(PlantControlLog, models.PROTECT, limit_choices_to={'active': True})
+    plant_control_log = models.ForeignKey(PlantControlLog, models.PROTECT, verbose_name='Log Kontrol Tanaman', limit_choices_to={'active': True})
     kode = models.CharField('Kode', max_length=3, choices=PlantBase.control_pin)
     val = models.BooleanField('Nilai')
     
@@ -214,8 +214,8 @@ class PlantControlLogDetail(PlantBase):
         
 class PlantSensorLog(PlantBase):
     dt = models.DateTimeField('Start', default=timezone.now, blank=True)
-    plant_sensor = models.ForeignKey(PlantSensor, models.PROTECT, limit_choices_to={'active': True})
-    plant_rack = models.ForeignKey(PlantRack, models.PROTECT, limit_choices_to={'active': True})
+    plant_sensor = models.ForeignKey(PlantSensor, models.PROTECT, verbose_name='Sensor Tanaman', limit_choices_to={'active': True})
+    plant_rack = models.ForeignKey(PlantRack, models.PROTECT, verbose_name='Rak Tanaman', limit_choices_to={'active': True})
     
     def __str__(self):
         return '%s_%s_%s' % (self.plant_sensor.kode, self.plant_rack.kode, self.dt)
@@ -225,7 +225,7 @@ class PlantSensorLog(PlantBase):
         ordering = ['-dt']
         
 class PlantSensorLogDetail(PlantBase):
-    plant_sensor_log = models.ForeignKey(PlantSensorLog, models.PROTECT, limit_choices_to={'active': True})
+    plant_sensor_log = models.ForeignKey(PlantSensorLog, models.PROTECT, verbose_name='Log Sensor Tanaman', limit_choices_to={'active': True})
     kode = models.CharField('Kode', max_length=3, choices=PlantBase.sensor_type)
     val = models.FloatField('Nilai', null=True, blank=True)
     
