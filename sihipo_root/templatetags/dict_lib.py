@@ -15,3 +15,7 @@ def dict_get(dictionary, key):
 @register.filter(name='dict_obj')
 def dict_obj(dict_object):
     return dict_object.__dict__
+
+@register.filter(name='dict_class')
+def dict_class(class_object, attr):
+    return eval('class_object.%s' % (attr))

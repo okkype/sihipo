@@ -62,10 +62,26 @@ class PlantBase(models.Model):
         ('WICK', 'Wick'),
     )
 
+    log_state_type = (
+        (None, 'N/A'),
+        ('D', 'Draft'),
+        ('R', 'Read'),
+    )
+    
+    alert_type = (
+        (None, 'N/A'),
+        ('N', 'Notice'),
+        ('W', 'Warning'),
+        ('S', 'Severe'),
+    )
+
 # Create your models here.
 class PlantEvalIf(PlantBase):
     kode = models.CharField('Kode IF', unique=True, max_length=20)
     eval_if = models.TextField('Evaluate IF', unique=True)
+    
+    def __str__(self):
+        return '%s' % (self.kode)
     
     class Meta:
         verbose_name = 'Evaluasi Tanaman (IF)'
@@ -74,6 +90,9 @@ class PlantEvalThen(PlantBase):
     kode = models.CharField('Kode THEN', unique=True, max_length=20)
     eval_then = models.TextField('Evaluate THEN', unique=True)
     
+    def __str__(self):
+        return '%s' % (self.kode)
+    
     class Meta:
         verbose_name = 'Evaluasi Tanaman (THEN)'
 
@@ -81,11 +100,15 @@ class PlantEval(PlantBase):
     plant_eval_if = models.ForeignKey(PlantEvalIf, models.PROTECT, verbose_name='Evaluasi Tanaman (IF)', limit_choices_to={'active': True})
     plant_eval_then = models.ForeignKey(PlantEvalThen, models.PROTECT, verbose_name='Evaluasi Tanaman (THEN)', limit_choices_to={'active': True})
     
+    def __str__(self):
+        return '%s_%s' % (self.plant_eval_if.kode, self.plant_eval_then.kode)
+    
     class Meta:
         verbose_name = 'Evaluasi Tanaman'
         unique_together = ('plant_eval_if', 'plant_eval_then')
 
 class PlantEvalLog(PlantBase):
+    dt = models.DateTimeField('Waktu', default=timezone.now, blank=True)
     plant_eval = models.ForeignKey(PlantEval, models.PROTECT, verbose_name='Evaluasi Tanaman', limit_choices_to={'active': True})
     
     class Meta:
@@ -192,7 +215,8 @@ class PlantRackPoint(PlantBase):
         verbose_name = 'Point Tanaman'
     
 class PlantControlLog(PlantBase):
-    dt = models.DateTimeField('Start', default=timezone.now, blank=True)
+    dt = models.DateTimeField('Waktu', default=timezone.now, blank=True)
+    state = models.CharField('Status', max_length=2, choices=PlantBase.log_state_type, null=True, blank=True)
     plant_control = models.ForeignKey(PlantControl, models.PROTECT, verbose_name='Kontrol Tanaman', limit_choices_to={'active': True})
     plant_rack = models.ForeignKey(PlantRack, models.PROTECT, verbose_name='Rak Tanaman', limit_choices_to={'active': True})
     
@@ -213,7 +237,8 @@ class PlantControlLogDetail(PlantBase):
         unique_together = ('plant_control_log', 'kode')
         
 class PlantSensorLog(PlantBase):
-    dt = models.DateTimeField('Start', default=timezone.now, blank=True)
+    dt = models.DateTimeField('Waktu', default=timezone.now, blank=True)
+    state = models.CharField('Status', max_length=2, choices=PlantBase.log_state_type, null=True, blank=True)
     plant_sensor = models.ForeignKey(PlantSensor, models.PROTECT, verbose_name='Sensor Tanaman', limit_choices_to={'active': True})
     plant_rack = models.ForeignKey(PlantRack, models.PROTECT, verbose_name='Rak Tanaman', limit_choices_to={'active': True})
     
@@ -232,3 +257,11 @@ class PlantSensorLogDetail(PlantBase):
     class Meta:
         verbose_name = 'Detail Log Sensor Tanaman'
         unique_together = ('plant_sensor_log', 'kode')
+        
+class PlantAlert(PlantBase):
+    dt = models.DateTimeField('Waktu', default=timezone.now, blank=True)
+    state = models.CharField('Status', max_length=2, choices=PlantBase.alert_type, null=True, blank=True)
+    
+    class Meta:
+        verbose_name = 'Berita Tanaman'
+        ordering = ['-dt']

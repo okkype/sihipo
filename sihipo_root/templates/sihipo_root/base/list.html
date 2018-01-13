@@ -25,7 +25,7 @@
 						{% if forloop.first %}
 						<a href="{% url name|add:'_update' object.id %}">
 						{% endif %}
-						{{ object|dict_obj|dict_get:table_field|default_if_none:'-' }}
+						{{ object|dict_class:table_field|default_if_none:'-' }}
 						{% if forloop.first %}
 						</a>
 						{% endif %}

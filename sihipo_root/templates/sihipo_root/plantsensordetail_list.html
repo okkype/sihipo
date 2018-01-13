@@ -1,6 +1,1 @@
 {% extends 'sihipo_root/base/list.html' %}
-{% block list_body %}
-<td><a href="{% url name|add:'_update' object.id %}">{{ object.plant_sensor }}</a></td>
-<td>{{ object.kode }}</td>
-<td>{{ object.active }}</td>
-{% endblock %}

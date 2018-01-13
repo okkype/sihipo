@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.views.generic import TemplateView, ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.db.models import Q
+from django.http.response import HttpResponse
 
 # START BASIC VIEW MOD
 def get_plant_context(obj, context):
@@ -37,7 +38,7 @@ class PlantListView(ListView):
             self.paginate_by = False
             eval_obj = []
             for table_field in context['table_fields']:
-                if self.model._meta.get_field(table_field).get_internal_type() == u'CharField':
+                if self.model._meta.get_field(table_field).get_internal_type() in [u'CharField', u'TextField']:
                     eval_obj.append('Q(%s__icontains=context[\'filter\'])' % (table_field))
             if eval_obj:
                 context['object_list'] = eval('self.model.objects.filter(%s)' % ('|'.join(eval_obj)))
@@ -285,3 +286,235 @@ class PlantRackPointUpdate(PlantRackPointView, PlantUpdateView):
 
 class PlantRackPointDelete(PlantRackPointView, PlantDeleteView):
     pass
+
+# PlantSensorLog
+class PlantSensorLogView(object):
+    model = PlantSensorLog
+    fields = ['dt', 'plant_sensor', 'plant_rack', 'state']
+    success_url = reverse_lazy('plantsensorlog_list')
+
+class PlantSensorLogList(PlantSensorLogView, PlantListView):
+    pass
+
+class PlantSensorLogCreate(PlantSensorLogView, PlantCreateView):
+    pass
+
+class PlantSensorLogUpdate(PlantSensorLogView, PlantUpdateView):
+    def get_context_data(self, **kwargs):
+        context = super(PlantSensorLogUpdate, self).get_context_data(**kwargs)
+        context['link_list'] = [
+            {
+                'name':'Detail Log Sensor',
+                'link':reverse_lazy('plantsensorlogdetail_list')
+            }
+        ]
+        self.request.session['parent_id'] = context['object'].id
+        return context
+
+class PlantSensorLogDelete(PlantSensorLogView, PlantDeleteView):
+    pass
+
+# PlantSensorLogDetail
+class PlantSensorLogDetailView(object):
+    model = PlantSensorLogDetail
+    fields = ['plant_sensor_log', 'kode', 'val']
+    success_url = reverse_lazy('plantsensorlogdetail_list')
+
+class PlantSensorLogDetailList(PlantSensorLogDetailView, PlantListView):
+    def get_context_data(self, **kwargs):
+        context = super(PlantSensorLogDetailList, self).get_context_data(**kwargs)
+        context['object_list'] = self.model.objects.filter(plant_sensor_log=self.request.session.get('parent_id'))
+        return context
+
+class PlantSensorLogDetailCreate(PlantSensorLogDetailView, PlantCreateView):
+    def get_initial(self):
+        context = super(PlantSensorLogDetailCreate, self).get_initial()
+        context['plant_sensor_log'] = self.request.session.get('parent_id')
+        return context
+
+class PlantSensorLogDetailUpdate(PlantSensorLogDetailView, PlantUpdateView):
+    pass
+
+class PlantSensorLogDetailDelete(PlantSensorLogDetailView, PlantDeleteView):
+    pass
+    
+# PlantControlLog
+class PlantControlLogView(object):
+    model = PlantControlLog
+    fields = ['dt', 'plant_control', 'plant_rack', 'state']
+    success_url = reverse_lazy('plantcontrollog_list')
+
+class PlantControlLogList(PlantControlLogView, PlantListView):
+    pass
+
+class PlantControlLogCreate(PlantControlLogView, PlantCreateView):
+    pass
+
+class PlantControlLogUpdate(PlantControlLogView, PlantUpdateView):
+    def get_context_data(self, **kwargs):
+        context = super(PlantControlLogUpdate, self).get_context_data(**kwargs)
+        context['link_list'] = [
+            {
+                'name':'Detail Log Control',
+                'link':reverse_lazy('plantcontrollogdetail_list')
+            }
+        ]
+        self.request.session['parent_id'] = context['object'].id
+        return context
+
+class PlantControlLogDelete(PlantControlLogView, PlantDeleteView):
+    pass
+
+# PlantControlLogDetail
+class PlantControlLogDetailView(object):
+    model = PlantControlLogDetail
+    fields = ['plant_control_log', 'kode', 'val']
+    success_url = reverse_lazy('plantcontrollogdetail_list')
+
+class PlantControlLogDetailList(PlantControlLogDetailView, PlantListView):
+    def get_context_data(self, **kwargs):
+        context = super(PlantControlLogDetailList, self).get_context_data(**kwargs)
+        context['object_list'] = self.model.objects.filter(plant_control_log=self.request.session.get('parent_id'))
+        return context
+
+class PlantControlLogDetailCreate(PlantControlLogDetailView, PlantCreateView):
+    def get_initial(self):
+        context = super(PlantControlLogDetailCreate, self).get_initial()
+        context['plant_control_log'] = self.request.session.get('parent_id')
+        return context
+
+class PlantControlLogDetailUpdate(PlantControlLogDetailView, PlantUpdateView):
+    pass
+
+class PlantControlLogDetailDelete(PlantControlLogDetailView, PlantDeleteView):
+    pass
+
+# PlantEvalIf
+class PlantEvalIfView(object):
+    model = PlantEvalIf
+    fields = ['kode', 'eval_if', 'active']
+    success_url = reverse_lazy('plantevalif_list')
+
+class PlantEvalIfList(PlantEvalIfView, PlantListView):
+    pass
+
+class PlantEvalIfCreate(PlantEvalIfView, PlantCreateView):
+    pass
+
+class PlantEvalIfUpdate(PlantEvalIfView, PlantUpdateView):
+    pass
+
+class PlantEvalIfDelete(PlantEvalIfView, PlantDeleteView):
+    pass
+
+# PlantEvalThen
+class PlantEvalThenView(object):
+    model = PlantEvalThen
+    fields = ['kode', 'eval_then', 'active']
+    success_url = reverse_lazy('plantevalthen_list')
+
+class PlantEvalThenList(PlantEvalThenView, PlantListView):
+    pass
+
+class PlantEvalThenCreate(PlantEvalThenView, PlantCreateView):
+    pass
+
+class PlantEvalThenUpdate(PlantEvalThenView, PlantUpdateView):
+    pass
+
+class PlantEvalThenDelete(PlantEvalThenView, PlantDeleteView):
+    pass
+
+# PlantEval
+class PlantEvalView(object):
+    model = PlantEval
+    fields = ['plant_eval_if', 'plant_eval_then', 'active']
+    success_url = reverse_lazy('planteval_list')
+
+class PlantEvalList(PlantEvalView, PlantListView):
+    pass
+
+class PlantEvalCreate(PlantEvalView, PlantCreateView):
+    pass
+
+class PlantEvalUpdate(PlantEvalView, PlantUpdateView):
+    pass
+
+class PlantEvalDelete(PlantEvalView, PlantDeleteView):
+    pass
+
+# PlantEvalLog
+class PlantEvalLogView(object):
+    model = PlantEvalLog
+    fields = ['dt', 'plant_eval']
+    success_url = reverse_lazy('plantevallog_list')
+
+class PlantEvalLogList(PlantEvalLogView, PlantListView):
+    pass
+
+class PlantEvalLogCreate(PlantEvalLogView, PlantCreateView):
+    pass
+
+class PlantEvalLogUpdate(PlantEvalLogView, PlantUpdateView):
+    pass
+
+class PlantEvalLogDelete(PlantEvalLogView, PlantDeleteView):
+    pass
+    
+# PlantAlert
+class PlantAlertView(object):
+    model = PlantAlert
+    fields = ['dt', 'note', 'state', 'active']
+    success_url = reverse_lazy('plantalert_list')
+
+class PlantAlertList(PlantAlertView, PlantListView):
+    pass
+
+class PlantAlertCreate(PlantAlertView, PlantCreateView):
+    pass
+
+class PlantAlertUpdate(PlantAlertView, PlantUpdateView):
+    pass
+
+class PlantAlertDelete(PlantAlertView, PlantDeleteView):
+    pass
+
+def PlantAlertSimple(request):
+    body = '''
+    <li>
+        <a href="#">
+            <div style="color:green;">
+                <i class="fa fa-check-circle fa-fw"></i> New Comment
+                <span class="pull-right text-muted small">4 minutes ago</span>
+            </div>
+        </a>
+    </li>
+    <li class="divider"></li>
+    <li>
+        <a href="#">
+            <div style="color:yellow;">
+                <i class="fa fa-exclamation-circle fa-fw"></i> New Comment
+                <span class="pull-right text-muted small">4 minutes ago</span>
+            </div>
+        </a>
+    </li>
+    <li class="divider"></li>
+    <li>
+        <a href="#">
+            <div style="color:red;">
+                <i class="fa fa-times-circle fa-fw"></i> New Comment
+                <span class="pull-right text-muted small">4 minutes ago</span>
+            </div>
+        </a>
+    </li>
+    <li class="divider"></li>
+    '''
+    foot = '''
+    <li>
+        <a class="text-center" href="%s">
+            <strong>Lihat Semua Berita</strong>
+            <i class="fa fa-angle-right"></i>
+        </a>
+    </li>
+    ''' % (reverse_lazy('plantalert_list'))
+    return HttpResponse('%s%s' % (body, foot))
