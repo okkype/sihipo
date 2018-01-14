@@ -1,17 +1,22 @@
 from sihipo_root.models import *
 
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from django.shortcuts import render
 from django.views.generic import TemplateView, ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.db.models import Q
 from django.http.response import HttpResponse
+from django.utils.datetime_safe import strftime
 
 # START BASIC VIEW MOD
 def get_plant_context(obj, context):
     context['name'] = obj.model._meta.model_name
     context['verbose_name'] = obj.model._meta.verbose_name
     context['referer'] = obj.request.META.get('HTTP_REFERER')
+    context['datetime_fields'] = []
+    for field in obj.fields:
+        if obj.model._meta.get_field(field).get_internal_type() in [u'DateTimeField']:
+            context['datetime_fields'].append(field)
     return context
 
 class PlantListView(ListView):
@@ -37,7 +42,7 @@ class PlantListView(ListView):
         if context['filter']:
             self.paginate_by = False
             eval_obj = []
-            for table_field in context['table_fields']:
+            for table_field in self.fields:
                 if self.model._meta.get_field(table_field).get_internal_type() in [u'CharField', u'TextField']:
                     eval_obj.append('Q(%s__icontains=context[\'filter\'])' % (table_field))
             if eval_obj:
@@ -464,7 +469,7 @@ class PlantEvalLogDelete(PlantEvalLogView, PlantDeleteView):
 # PlantAlert
 class PlantAlertView(object):
     model = PlantAlert
-    fields = ['dt', 'note', 'state', 'active']
+    fields = ['dt', 'note', 'url', 'state', 'active']
     success_url = reverse_lazy('plantalert_list')
 
 class PlantAlertList(PlantAlertView, PlantListView):
@@ -480,35 +485,59 @@ class PlantAlertDelete(PlantAlertView, PlantDeleteView):
     pass
 
 def PlantAlertSimple(request):
-    body = '''
-    <li>
-        <a href="#">
-            <div style="color:green;">
-                <i class="fa fa-check-circle fa-fw"></i> New Comment
-                <span class="pull-right text-muted small">4 minutes ago</span>
-            </div>
-        </a>
-    </li>
-    <li class="divider"></li>
-    <li>
-        <a href="#">
-            <div style="color:yellow;">
-                <i class="fa fa-exclamation-circle fa-fw"></i> New Comment
-                <span class="pull-right text-muted small">4 minutes ago</span>
-            </div>
-        </a>
-    </li>
-    <li class="divider"></li>
-    <li>
-        <a href="#">
-            <div style="color:red;">
-                <i class="fa fa-times-circle fa-fw"></i> New Comment
-                <span class="pull-right text-muted small">4 minutes ago</span>
-            </div>
-        </a>
-    </li>
-    <li class="divider"></li>
-    '''
+    body = ''
+#     <li>
+#         <a href="#">
+#             <div style="color:green;">
+#                 <i class="fa fa-check-circle fa-fw"></i> New Comment
+#                 <span class="pull-right text-muted small">4 minutes ago</span>
+#             </div>
+#         </a>
+#     </li>
+#     <li class="divider"></li>
+#     <li>
+#         <a href="#">
+#             <div style="color:yellow;">
+#                 <i class="fa fa-exclamation-circle fa-fw"></i> New Comment
+#                 <span class="pull-right text-muted small">4 minutes ago</span>
+#             </div>
+#         </a>
+#     </li>
+#     <li class="divider"></li>
+#     <li>
+#         <a href="#">
+#             <div style="color:red;">
+#                 <i class="fa fa-times-circle fa-fw"></i> New Comment
+#                 <span class="pull-right text-muted small">4 minutes ago</span>
+#             </div>
+#         </a>
+#     </li>
+#     <li class="divider"></li>
+
+    alerts = PlantAlert.objects.filter(active=True)
+    for alert in alerts:
+        color = 'black'
+        icon = ''
+        if alert.state == 'N':
+            color = 'green'
+            icon = 'fa-check-circle'
+        elif alert.state == 'W':
+            color = 'orange'
+            icon = 'fa-exclamation-circle'
+        elif alert.state == 'S':
+            color = 'red'
+            icon = 'fa-times-circle'
+        body += '''
+        <li>
+            <a href="%s">
+                <div style="color:%s;">
+                    <i class="fa %s fa-fw"></i> %s
+                    <span class="pull-right text-muted small">%s</span>
+                </div>
+            </a>
+        </li>
+        <li class="divider"></li>
+        ''' % (alert.url, color, icon, alert.note, strftime(alert.dt, '%d/%b/%y %H:%M'))
     foot = '''
     <li>
         <a class="text-center" href="%s">

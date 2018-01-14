@@ -1,4 +1,5 @@
 {% extends 'sihipo_root/base/list.html' %}
+{% load dict_lib %}
 {% block list_header %}
 <th>Kode Rak</th>
 <th>Kode Kontrol</th>
@@ -10,10 +11,10 @@
 {% endblock %}
 {% block list_body %}
 <td><a href="{% url name|add:'_update' object.id %}">{{ object.kode }}</a></td>
-<td>{{ object.plant_control }}</td>
-<td>{{ object.plant_sensor }}</td>
-<td>{{ object.dt }}</td>
-<td>{{ object.p }} x {{ object.l }} x {{ object.t }}</td>
-<td>{{ object.type }}</td>
-<td>{{ object.active }}</td>
+<td>{{ object|dict_get_display:'plant_control'|default_if_none:'-' }}</td>
+<td>{{ object|dict_get_display:'plant_sensor'|default_if_none:'-' }}</td>
+<td>{{ object|dict_get_display:'dt'|default_if_none:'-' }}</td>
+<td>{{ object|dict_get_display:'p'|default_if_none:'-' }} x {{ object|dict_get_display:'l'|default_if_none:'-' }} x {{ object|dict_get_display:'t'|default_if_none:'-' }}</td>
+<td>{{ object|dict_get_display:'type'|default_if_none:'-' }}</td>
+<td>{{ object|dict_get_display:'active'|default_if_none:'-' }}</td>
 {% endblock %}

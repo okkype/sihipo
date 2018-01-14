@@ -7,14 +7,19 @@
 		<form role="form" method="post">
 			{% csrf_token %} 
 			<table>{% bootstrap_form form %}</table>
-			<input type="reset" value="Reset" class="btn btn-outline btn-warning" />
-			<input type="submit" value="Submit" class="btn btn-outline btn-success" />
+			<input type="reset" value="Reset" class="btn btn-outline btn-warning" />&nbsp;
+			<input type="submit" value="Submit" class="btn btn-outline btn-success" />&nbsp;
 			{% if object %}
 				{% for link in link_list %}
-					| <a href="{{ link.link }}" class="btn btn-outline btn-default">{{ link.name }}</a>
+					|&nbsp;<a href="{{ link.link }}" class="btn btn-outline btn-default">{{ link.name }}</a>
 				{% endfor %}
 			{% endif %}
 		</form>
 	</div>
 </div>
+{% endblock %}
+{% block jquery %}
+{% for datetime_field in datetime_fields %}
+	$('#id_{{ datetime_field }}').datetimepicker({format:'YYYY-MM-DD HH:mm:ss'});
+{% endfor %}
 {% endblock %}

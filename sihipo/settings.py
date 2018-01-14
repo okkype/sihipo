@@ -24,6 +24,7 @@ SECRET_KEY = 'm$+pzey8u)(7-^+d-hr33)p+k5vp44)h5la1q+kk(a_^-xg)y+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+HTML_MINIFY = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -50,6 +51,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'htmlmin.middleware.HtmlMinifyMiddleware',
+    'htmlmin.middleware.MarkRequestMiddleware',
 ]
 
 ROOT_URLCONF = 'sihipo.urls'

@@ -126,7 +126,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-    						<input type="button" value="&lt;" class="btn btn-outline btn-default" onclick="history.back()" />
+    						<input type="button" value="&lt;" class="btn btn-outline btn-default" onclick="history.back()" />&nbsp;
                         	{% block page-header %}<button class="btn btn-outline btn-default">{{ verbose_name }}</button>{% endblock %}
                         </h1>
                     </div>
@@ -141,7 +141,7 @@
 				        </div>
 				        <div class="col-xs-4" style="text-align: center;">
 				        	<span class="btn btn-outline btn-info btn-block">
-				        		Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+				        		{{ page_obj.number }}/{{ page_obj.paginator.num_pages }}
 				        	</span>
 				        </div>
 				        <div class="col-xs-4" style="text-align: right;">

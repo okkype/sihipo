@@ -260,6 +260,7 @@ class PlantSensorLogDetail(PlantBase):
         
 class PlantAlert(PlantBase):
     dt = models.DateTimeField('Waktu', default=timezone.now, blank=True)
+    url = models.URLField('URL Aksi', default='#')
     state = models.CharField('Status', max_length=2, choices=PlantBase.alert_type, null=True, blank=True)
     
     class Meta:
