@@ -16,6 +16,7 @@
 	<link href="{% static 'sb-admin-2/dist/css/sb-admin-2.css' %}" rel="stylesheet" />
 	<link href="{% static 'sb-admin-2/vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" />
 	<link href="{% static 'sb-admin-2/vendor/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css' %}" rel="stylesheet" />
+	{% block html_head %}{% endblock %}
 </head>
 
 <body>
@@ -35,7 +36,7 @@
                     <ul class="dropdown-menu dropdown-alerts"></ul>
                     <!-- /.dropdown-alerts -->
                 </div>
-                <a class="navbar-brand" href="/">
+                <a class="navbar-brand hidden-xs" href="/">
                 	<img style="width: 220px;height: 32px; float: left;" src="{% static '/img/hipo-icon.png' %}" border="0" />
                 </a>
             </div>
@@ -60,7 +61,7 @@
                             </form>
                         </li>
                         <li>
-                            <a href="/index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                            <a href="{% url 'dashboard' %}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-book fa-fw"></i> Log<span class="fa arrow"></span></a>
@@ -123,14 +124,16 @@
         <!-- Page Content -->
         <div id="page-wrapper">
             <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h1 class="page-header">
-    						<input type="button" value="&lt;" class="btn btn-outline btn-default" onclick="history.back()" />&nbsp;
-                        	{% block page-header %}<button class="btn btn-outline btn-default">{{ verbose_name }}</button>{% endblock %}
-                        </h1>
-                    </div>
-                </div>
+            	{% if verbose_name %}
+	                <div class="row">
+	                    <div class="col-lg-12">
+	                        <h1 class="page-header">
+	    						<input type="button" value="&lt;" class="btn btn-outline btn-default" onclick="history.back()" />&nbsp;
+	                        	{% block page-header %}<button class="btn btn-outline btn-default">{{ verbose_name }}</button>{% endblock %}
+	                        </h1>
+	                    </div>
+	                </div>
+                {% endif %}
                 {% block container %}{% endblock %}
 				{% if is_paginated %}
 					<div class="row">

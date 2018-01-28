@@ -4,6 +4,7 @@ from . import views
 
 
 urlpatterns = [
+    url(r'^$', views.DashboardView.as_view(), name='dashboard'),
     url(r'^plantplant/$', views.PlantPlantList.as_view(), name='plantplant_list'),
     url(r'^plantplant/create$', views.PlantPlantCreate.as_view(), name='plantplant_create'),
     url(r'^plantplant/update/(?P<pk>\d+)$', views.PlantPlantUpdate.as_view(), name='plantplant_update'),

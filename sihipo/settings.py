@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bootstrap3',
     'django_tables2',
+    'django_nvd3',
     'sihipo_root.apps.SihipoRootConfig',
 ]
 

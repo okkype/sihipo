@@ -6,7 +6,7 @@
 		<form role="form" method="post">
 			{% csrf_token %}
 			Anda yakin menghapus "{{ object }}" ?<hr />
-    		<input type="submit" value="Ya" class="btn btn-outline btn-success" />
+    		<input type="submit" value="Ya" class="btn btn-outline btn-success" />&nbsp;
     		<input type="button" value="Tidak" class="btn btn-outline btn-danger" onclick="history.back()" />
 		</form>
 	</div>

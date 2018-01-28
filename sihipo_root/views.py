@@ -7,6 +7,67 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.db.models import Q
 from django.http.response import HttpResponse
 from django.utils.datetime_safe import strftime
+import random , time, datetime
+from django.db.models.aggregates import Sum, Avg, Count
+# from datetime import datetime
+
+# START DASHBOARD
+class DashboardView(TemplateView):
+    template_name = 'dashboard.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super(DashboardView, self).get_context_data(**kwargs)
+        
+        day_count = 30
+        xdata_line = []
+        days = day_count
+        while days >= 0:
+            xdata_line.append(int(time.mktime((datetime.datetime.now() - datetime.timedelta(days=days)).timetuple()) * 1000))
+            days -= 1
+        tooltip_date_line = "%d %b %Y %H:%M:%S %p"
+        extra_serie_line = {"tooltip": {"y_start": "", "y_end": ""},
+                       "date_format": tooltip_date_line}
+        
+        chartdata_sensor = {'x': xdata_line}
+        chartseq_sensor = 1
+        for sensor_type in PlantBase.sensor_type:
+            if sensor_type[0] is not None:
+                chartdata_sensor['name%s' % (chartseq_sensor)] = sensor_type[1]
+                chartdata_sensor['extra%s' % (chartseq_sensor)] = extra_serie_line
+                ydata_sensor = []
+                days = day_count
+                while days >= 0:
+                    last_day = (datetime.datetime.now() - datetime.timedelta(days=days)).strftime('%Y-%m-%d')
+                    val = PlantSensorLogDetail.objects.filter(kode=sensor_type[0], plant_sensor_log__dt__range=('%s 00:00:00' % (last_day), '%s 23:59:59' % (last_day))).aggregate(Avg('val'))
+                    ydata_sensor.append(val['val__avg'] or 0.0)
+                    days -= 1
+                chartdata_sensor['y%s' % (chartseq_sensor)] = ydata_sensor
+                chartseq_sensor += 1
+        
+        context['charttype_sensor'] = 'lineChart'
+        context['chartdata_sensor'] = chartdata_sensor
+        context['extra_sensor'] = {
+            'x_is_date': True,
+            'x_axis_format': '%d/%b/%y',
+        }
+        
+        xdata_plant = []
+        ydata_plant = []
+        extra_serie_plant = {"tooltip": {"y_start": "", "y_end": ""}}
+        plant_types = PlantPlant.objects.filter(active=True)
+        for plant_type in plant_types:
+            val = PlantRackPoint.objects.filter(plant_plant=plant_type).aggregate(Count('plant_plant'))
+            if val['plant_plant__count']:
+                xdata_plant.append(plant_type.kode)
+                ydata_plant.append(val['plant_plant__count'])
+        chartdata_plant = {'x': xdata_plant, 'y1': ydata_plant, 'extra1': extra_serie_plant}
+        
+        context['charttype_plant'] = 'pieChart'
+        context['chartdata_plant'] = chartdata_plant
+
+        return context
+
+# END DASHBOARD
 
 # START BASIC VIEW MOD
 def get_plant_context(obj, context):

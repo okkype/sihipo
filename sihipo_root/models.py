@@ -65,7 +65,8 @@ class PlantBase(models.Model):
     log_state_type = (
         (None, 'N/A'),
         ('D', 'Draft'),
-        ('R', 'Read'),
+        ('P', 'Progress'),
+        ('C', 'Complete'),
     )
     
     alert_type = (
