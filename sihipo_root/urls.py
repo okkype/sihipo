@@ -5,6 +5,7 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.DashboardView.as_view(), name='dashboard'),
+    url(r'^setting$', views.SettingView.as_view(), name='setting'),
     url(r'^plantplant/$', views.PlantPlantList.as_view(), name='plantplant_list'),
     url(r'^plantplant/create$', views.PlantPlantCreate.as_view(), name='plantplant_create'),
     url(r'^plantplant/update/(?P<pk>\d+)$', views.PlantPlantUpdate.as_view(), name='plantplant_update'),
@@ -21,6 +22,7 @@ urlpatterns = [
     url(r'^plantsensor/create/$', views.PlantSensorCreate.as_view(), name='plantsensor_create'),
     url(r'^plantsensor/update/(?P<pk>\d+)$', views.PlantSensorUpdate.as_view(), name='plantsensor_update'),
     url(r'^plantsensor/delete/(?P<pk>\d+)$', views.PlantSensorDelete.as_view(), name='plantsensor_delete'),
+    url(r'^plantsensor/dashboard/$', views.PlantSensorDashboard.as_view(), name='plantsensor_dashboard'),
     url(r'^plantsensordetail/$', views.PlantSensorDetailList.as_view(), name='plantsensordetail_list'),
     url(r'^plantsensordetail/create/$', views.PlantSensorDetailCreate.as_view(), name='plantsensordetail_create'),
     url(r'^plantsensordetail/update/(?P<pk>\d+)$', views.PlantSensorDetailUpdate.as_view(), name='plantsensordetail_update'),
@@ -29,6 +31,7 @@ urlpatterns = [
     url(r'^plantcontrol/create/$', views.PlantControlCreate.as_view(), name='plantcontrol_create'),
     url(r'^plantcontrol/update/(?P<pk>\d+)$', views.PlantControlUpdate.as_view(), name='plantcontrol_update'),
     url(r'^plantcontrol/delete/(?P<pk>\d+)$', views.PlantControlDelete.as_view(), name='plantcontrol_delete'),
+    url(r'^plantcontrol/dashboard/$', views.PlantControlDashboard.as_view(), name='plantcontrol_dashboard'),
     url(r'^plantcontroldetail/$', views.PlantControlDetailList.as_view(), name='plantcontroldetail_list'),
     url(r'^plantcontroldetail/create/$', views.PlantControlDetailCreate.as_view(), name='plantcontroldetail_create'),
     url(r'^plantcontroldetail/update/(?P<pk>\d+)$', views.PlantControlDetailUpdate.as_view(), name='plantcontroldetail_update'),

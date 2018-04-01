@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bootstrap3',
-    'django_tables2',
+    'ckeditor',
+    # 'django_tables2',
     'django_nvd3',
     'sihipo_root.apps.SihipoRootConfig',
 ]
@@ -125,3 +126,4 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+# STATIC_ROOT = '/home/okky/Dokumen/projek/sihipo/sihipo/static/'

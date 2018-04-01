@@ -1,0 +1,45 @@
+{% extends 'sihipo_root/base/blank.html' %}
+{% load static %}
+{% load bootstrap3 %}
+{% block container %}
+<div class="row">
+	<div class="col-md-4 col-xs-12">
+		<form role="form" method="post">
+			{% csrf_token %}
+			<div class="form-group">
+				<label class="control-label" for="id_intval_sensor">Sensor Interval</label>
+				<input class="form-control" id="id_intval_sensor" name="intval_sensor" type="number" min="1" value="{% if intval_sensor_run %}{{ intval_sensor_run }}{% else %}1{% endif %}" />
+			</div>
+			<input class="btn btn-outline {% if thread_sensor_run %}btn-danger{% else %}btn-success{% endif %}" name="thread_sensor" type="submit" value="{% if thread_sensor_run %}Stop{% else %}Start{% endif %} Sensor Thread" />&nbsp;
+			<hr />
+		</form>
+	</div>
+	<div class="col-md-4 col-xs-12">
+		<form role="form" method="post">
+			{% csrf_token %}
+			<div class="form-group">
+				<label class="control-label" for="id_intval_control">Control Interval</label>
+				<input class="form-control" id="id_intval_control" name="intval_control" type="number" min="1" value="{% if intval_control_run %}{{ intval_control_run }}{% else %}1{% endif %}" />
+			</div>
+			<input class="btn btn-outline {% if thread_control_run %}btn-danger{% else %}btn-success{% endif %}" name="thread_control" type="submit" value="{% if thread_control_run %}Stop{% else %}Start{% endif %} Control Thread" />&nbsp;
+			<hr />
+		</form>
+	</div>
+	<div class="col-md-4 col-xs-12">
+		<form role="form" method="post">
+			{% csrf_token %}
+			<div class="form-group">
+				<label class="control-label" for="id_intval_eval">Eval Interval</label>
+				<input class="form-control" id="id_intval_eval" name="intval_eval" type="number" min="1" value="{% if intval_eval_run %}{{ intval_eval_run }}{% else %}1{% endif %}" />
+			</div>
+			<input class="btn btn-outline {% if thread_eval_run %}btn-danger{% else %}btn-success{% endif %}" name="thread_eval" type="submit" value="{% if thread_eval_run %}Stop{% else %}Start{% endif %} Eval Thread" />&nbsp;
+			<hr />
+		</form>
+	</div>
+</div>
+{% endblock %}
+{% block jquery %}
+{% for datetime_field in datetime_fields %}
+	$('#id_{{ datetime_field }}').datetimepicker({format:'YYYY-MM-DD HH:mm:ss'});
+{% endfor %}
+{% endblock %}

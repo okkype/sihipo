@@ -2,18 +2,12 @@
 {% load nvd3_tags %}
 {% block html_head %}
 	{% include_chart_jscss %}
-	{% load_chart charttype_plant chartdata_plant "container_plant" %}
-	{% load_chart charttype_sensor chartdata_sensor "container_sensor" extra_sensor %}
+	{% load_chart charttype chartdata "container" extra %}
 {% endblock %}
 {% block container %}
 	<div class="row">
 		<div class="col-lg-12">
-			<h3 class="page-header">Populasi Tanaman</h3>
-			{% include_container 'container_plant' '400' '100%' %}
-		</div>
-		<div class="col-lg-12">
-			<h3 class="page-header">Rata-rata Sensor</h3>
-			{% include_container 'container_sensor' '400' '100%' %}
+			{% include_container 'container' '400' '100%' %}
 		</div>
 	</div>
 {% endblock %}

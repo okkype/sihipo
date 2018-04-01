@@ -45,6 +45,7 @@ class PlantBase(models.Model):
 
     control_pin = (
         (None, 'N/A'),
+        ('D0', 'Digital 0'),
         ('D1', 'Digital 1'),
         ('D2', 'Digital 2'),
         ('D3', 'Digital 3'),
@@ -52,7 +53,6 @@ class PlantBase(models.Model):
         ('D5', 'Digital 5'),
         ('D6', 'Digital 6'),
         ('D7', 'Digital 7'),
-        ('D8', 'Digital 8'),
     )
 
     rack_type = (
@@ -65,8 +65,8 @@ class PlantBase(models.Model):
     log_state_type = (
         (None, 'N/A'),
         ('D', 'Draft'),
-        ('P', 'Progress'),
-        ('C', 'Complete'),
+        ('P', 'To Do / Progress'),
+        ('C', 'Done / Complete'),
     )
     
     alert_type = (
@@ -81,6 +81,16 @@ class PlantEvalIf(PlantBase):
     kode = models.CharField('Kode IF', unique=True, max_length=20)
     eval_if = models.TextField('Evaluate IF', unique=True)
     
+    @property
+    def execute(self):
+        try:
+            if eval(self.eval_if):
+                return True
+            else:
+                return False
+        except:
+            return False
+    
     def __str__(self):
         return '%s' % (self.kode)
     
@@ -90,6 +100,15 @@ class PlantEvalIf(PlantBase):
 class PlantEvalThen(PlantBase):
     kode = models.CharField('Kode THEN', unique=True, max_length=20)
     eval_then = models.TextField('Evaluate THEN', unique=True)
+    
+    @property
+    def execute(self):
+        try:
+            eval(self.eval_then)
+        except:
+            return False
+        finally:
+            return True
     
     def __str__(self):
         return '%s' % (self.kode)
@@ -114,6 +133,7 @@ class PlantEvalLog(PlantBase):
     
     class Meta:
         verbose_name = 'Log Evaluasi Tanaman'
+        ordering = ['-dt']
 
 class PlantPlant(PlantBase):
     kode = models.CharField('Kode Tanaman', unique=True, max_length=20)
@@ -219,7 +239,7 @@ class PlantControlLog(PlantBase):
     dt = models.DateTimeField('Waktu', default=timezone.now, blank=True)
     state = models.CharField('Status', max_length=2, choices=PlantBase.log_state_type, null=True, blank=True)
     plant_control = models.ForeignKey(PlantControl, models.PROTECT, verbose_name='Kontrol Tanaman', limit_choices_to={'active': True})
-    plant_rack = models.ForeignKey(PlantRack, models.PROTECT, verbose_name='Rak Tanaman', limit_choices_to={'active': True})
+    plant_rack = models.ForeignKey(PlantRack, models.PROTECT, verbose_name='Rak Tanaman', limit_choices_to={'active': True}, null=True, blank=True)
     
     def __str__(self):
         return '%s_%s_%s' % (self.plant_control.kode, self.plant_rack.kode, self.dt)
@@ -241,7 +261,7 @@ class PlantSensorLog(PlantBase):
     dt = models.DateTimeField('Waktu', default=timezone.now, blank=True)
     state = models.CharField('Status', max_length=2, choices=PlantBase.log_state_type, null=True, blank=True)
     plant_sensor = models.ForeignKey(PlantSensor, models.PROTECT, verbose_name='Sensor Tanaman', limit_choices_to={'active': True})
-    plant_rack = models.ForeignKey(PlantRack, models.PROTECT, verbose_name='Rak Tanaman', limit_choices_to={'active': True})
+    plant_rack = models.ForeignKey(PlantRack, models.PROTECT, verbose_name='Rak Tanaman', limit_choices_to={'active': True}, null=True, blank=True)
     
     def __str__(self):
         return '%s_%s_%s' % (self.plant_sensor.kode, self.plant_rack.kode, self.dt)
@@ -261,7 +281,7 @@ class PlantSensorLogDetail(PlantBase):
         
 class PlantAlert(PlantBase):
     dt = models.DateTimeField('Waktu', default=timezone.now, blank=True)
-    url = models.URLField('URL Aksi', default='#')
+    url = models.CharField('URL Aksi', max_length=255, default='#')
     state = models.CharField('Status', max_length=2, choices=PlantBase.alert_type, null=True, blank=True)
     
     class Meta:

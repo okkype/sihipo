@@ -1,4 +1,5 @@
 from sihipo_root.models import *
+from sihipo_root.threads import *
 
 from django.urls import reverse_lazy
 from django.shortcuts import render
@@ -7,18 +8,21 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.db.models import Q
 from django.http.response import HttpResponse
 from django.utils.datetime_safe import strftime
-import random , time, datetime
-from django.db.models.aggregates import Sum, Avg, Count
+from django.db.models.aggregates import Avg, Count
+
+import time, datetime
+import threading
 # from datetime import datetime
 
 # START DASHBOARD
 class DashboardView(TemplateView):
-    template_name = 'dashboard.html'
+    template_name = 'main.html'
     
     def get_context_data(self, **kwargs):
         context = super(DashboardView, self).get_context_data(**kwargs)
+        # context['verbose_name'] = 'Dashboard'
         
-        day_count = 30
+        day_count = 10
         xdata_line = []
         days = day_count
         while days >= 0:
@@ -55,10 +59,11 @@ class DashboardView(TemplateView):
         ydata_plant = []
         extra_serie_plant = {"tooltip": {"y_start": "", "y_end": ""}}
         plant_types = PlantPlant.objects.filter(active=True)
+        valAll = PlantRackPoint.objects.aggregate(Count('plant_plant'))
         for plant_type in plant_types:
             val = PlantRackPoint.objects.filter(plant_plant=plant_type).aggregate(Count('plant_plant'))
             if val['plant_plant__count']:
-                xdata_plant.append(plant_type.kode)
+                xdata_plant.append("%s (%s/%s)" % (plant_type.kode, val['plant_plant__count'], valAll['plant_plant__count']))
                 ydata_plant.append(val['plant_plant__count'])
         chartdata_plant = {'x': xdata_plant, 'y1': ydata_plant, 'extra1': extra_serie_plant}
         
@@ -68,6 +73,57 @@ class DashboardView(TemplateView):
         return context
 
 # END DASHBOARD
+
+# START SETTING
+class SettingView(TemplateView):
+    template_name = 'setting.html'
+    
+    def post(self, request, *args, **kwargs):
+        return self.get(request, *args, **kwargs)
+    
+    def get_context_data(self, **kwargs):
+        context = super(SettingView, self).get_context_data()
+        context['verbose_name'] = 'Setting'
+
+        for t in threading.enumerate():
+            if t.getName() == 'thread_sensor':
+                context['thread_sensor_run'] = True
+                context['intval_sensor_run'] = t.interval
+                if str(self.request.POST.get('thread_sensor')).startswith('Stop'):
+                    context['thread_sensor_run'] = False
+                    t.stop = True
+            if t.getName() == 'thread_control':
+                context['thread_control_run'] = True
+                context['intval_control_run'] = t.interval
+                if str(self.request.POST.get('thread_control')).startswith('Stop'):
+                    context['thread_control_run'] = False
+                    t.stop = True
+            if t.getName() == 'thread_eval':
+                context['thread_eval_run'] = True
+                context['intval_eval_run'] = t.interval
+                if str(self.request.POST.get('thread_eval')).startswith('Stop'):
+                    context['thread_eval_run'] = False
+                    t.stop = True
+                    
+        if str(self.request.POST.get('thread_sensor')).startswith('Start'):
+            context['thread_sensor_run'] = True
+            context['intval_sensor_run'] = int(self.request.POST.get('intval_sensor'))
+            tf = SensorThread(interval=context['intval_sensor_run'])
+            tf.start()
+        if str(self.request.POST.get('thread_control')).startswith('Start'):
+            context['thread_control_run'] = True
+            context['intval_control_run'] = int(self.request.POST.get('intval_control'))
+            tf = ControlThread(interval=context['intval_control_run'])
+            tf.start()
+        if str(self.request.POST.get('thread_eval')).startswith('Start'):
+            context['thread_eval_run'] = True
+            context['intval_eval_run'] = int(self.request.POST.get('intval_eval'))
+            tf = EvalThread(interval=context['intval_eval_run'])
+            tf.start()
+
+        return context
+    
+# END SETTING
 
 # START BASIC VIEW MOD
 def get_plant_context(obj, context):
@@ -219,6 +275,10 @@ class PlantSensorUpdate(PlantSensorView, PlantUpdateView):
             {
                 'name':'Detail Sensor',
                 'link':reverse_lazy('plantsensordetail_list')
+            },
+            {
+                'name':'Dashboard Sensor',
+                'link':reverse_lazy('plantsensor_dashboard')
             }
         ]
         self.request.session['parent_id'] = context['object'].id
@@ -226,6 +286,47 @@ class PlantSensorUpdate(PlantSensorView, PlantUpdateView):
 
 class PlantSensorDelete(PlantSensorView, PlantDeleteView):
     pass
+
+class PlantSensorDashboard(TemplateView):
+    template_name = 'dashboard.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super(PlantSensorDashboard, self).get_context_data(**kwargs)
+        context['verbose_name'] = 'Rata-rata Sensor'
+        
+        day_count = 30
+        xdata = []
+        days = day_count
+        while days >= 0:
+            xdata.append(int(time.mktime((datetime.datetime.now() - datetime.timedelta(days=days)).timetuple()) * 1000))
+            days -= 1
+        tooltip_date = "%d %b %Y %H:%M:%S %p"
+        extra_serie = {"tooltip": {"y_start": "", "y_end": ""},
+                       "date_format": tooltip_date}
+        
+        chartdata = {'x': xdata}
+        chartseq = 1
+        for sensor_type in PlantBase.sensor_type:
+            if sensor_type[0] is not None:
+                chartdata['name%s' % (chartseq)] = sensor_type[1]
+                chartdata['extra%s' % (chartseq)] = extra_serie
+                ydata = []
+                days = day_count
+                while days >= 0:
+                    last_day = (datetime.datetime.now() - datetime.timedelta(days=days)).strftime('%Y-%m-%d')
+                    val = PlantSensorLogDetail.objects.filter(kode=sensor_type[0], plant_sensor_log__plant_sensor=self.request.session.get('parent_id'), plant_sensor_log__dt__range=('%s 00:00:00' % (last_day), '%s 23:59:59' % (last_day))).aggregate(Avg('val'))
+                    ydata.append(val['val__avg'] or 0.0)
+                    days -= 1
+                chartdata['y%s' % (chartseq)] = ydata
+                chartseq += 1
+        context['charttype'] = 'lineWithFocusChart'
+        context['chartdata'] = chartdata
+        context['extra'] = {
+            'x_is_date': True,
+            'x_axis_format': '%d/%b/%y',
+        }
+
+        return context
 
 # PlantSensorDetail
 class PlantSensorDetailView(object):
@@ -268,8 +369,12 @@ class PlantControlUpdate(PlantControlView, PlantUpdateView):
         context = super(PlantControlUpdate, self).get_context_data(**kwargs)
         context['link_list'] = [
             {
-                'name':'Detail Sensor',
+                'name':'Detail Kontrol',
                 'link':reverse_lazy('plantcontroldetail_list')
+            },
+            {
+                'name':'Dashboard Kontrol',
+                'link':reverse_lazy('plantcontrol_dashboard')
             }
         ]
         self.request.session['parent_id'] = context['object'].id
@@ -277,6 +382,49 @@ class PlantControlUpdate(PlantControlView, PlantUpdateView):
 
 class PlantControlDelete(PlantControlView, PlantDeleteView):
     pass
+
+class PlantControlDashboard(TemplateView):
+    template_name = 'dashboard.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super(PlantControlDashboard, self).get_context_data(**kwargs)
+        context['verbose_name'] = 'Total Kontrol'
+        
+        day_count = 30
+        xdata = []
+        days = day_count
+        while days >= 0:
+            xdata.append(int(time.mktime((datetime.datetime.now() - datetime.timedelta(days=days)).timetuple()) * 1000))
+            days -= 1
+        tooltip_date = "%d %b %Y %H:%M:%S %p"
+        extra_serie = {"tooltip": {"y_start": "", "y_end": ""},
+                       "date_format": tooltip_date}
+        
+        chartdata = {'x': xdata}
+        chartseq = 1
+        for control_type in PlantBase.control_type:
+            if control_type[0] is not None:
+                control_details = PlantControlDetail.objects.filter(val=control_type[0], plant_control=self.request.session.get('parent_id'))
+                for control_detail in control_details:
+                    chartdata['name%s' % (chartseq)] = control_detail.get_val_display()
+                    chartdata['extra%s' % (chartseq)] = extra_serie
+                    ydata = []
+                    days = day_count
+                    while days >= 0:
+                        last_day = (datetime.datetime.now() - datetime.timedelta(days=days)).strftime('%Y-%m-%d')
+                        val = PlantControlLogDetail.objects.filter(kode=control_detail.kode, plant_control_log__plant_control=self.request.session.get('parent_id'), plant_control_log__dt__range=('%s 00:00:00' % (last_day), '%s 23:59:59' % (last_day))).aggregate(Count('val'))
+                        ydata.append(val['val__count'] or 0.0)
+                        days -= 1
+                    chartdata['y%s' % (chartseq)] = ydata
+                    chartseq += 1
+        context['charttype'] = 'lineWithFocusChart'
+        context['chartdata'] = chartdata
+        context['extra'] = {
+            'x_is_date': True,
+            'x_axis_format': '%d/%b/%y',
+        }
+
+        return context
 
 # PlantControlDetail
 class PlantControlDetailView(object):
@@ -383,7 +531,7 @@ class PlantSensorLogDelete(PlantSensorLogView, PlantDeleteView):
 # PlantSensorLogDetail
 class PlantSensorLogDetailView(object):
     model = PlantSensorLogDetail
-    fields = ['plant_sensor_log', 'kode', 'val']
+    fields = ['plant_sensor_log', 'kode', 'val', 'note']
     success_url = reverse_lazy('plantsensorlogdetail_list')
 
 class PlantSensorLogDetailList(PlantSensorLogDetailView, PlantListView):
@@ -407,7 +555,7 @@ class PlantSensorLogDetailDelete(PlantSensorLogDetailView, PlantDeleteView):
 # PlantControlLog
 class PlantControlLogView(object):
     model = PlantControlLog
-    fields = ['dt', 'plant_control', 'plant_rack', 'state']
+    fields = ['dt', 'plant_control', 'plant_rack', 'state', 'note']
     success_url = reverse_lazy('plantcontrollog_list')
 
 class PlantControlLogList(PlantControlLogView, PlantListView):
@@ -547,34 +695,6 @@ class PlantAlertDelete(PlantAlertView, PlantDeleteView):
 
 def PlantAlertSimple(request):
     body = ''
-#     <li>
-#         <a href="#">
-#             <div style="color:green;">
-#                 <i class="fa fa-check-circle fa-fw"></i> New Comment
-#                 <span class="pull-right text-muted small">4 minutes ago</span>
-#             </div>
-#         </a>
-#     </li>
-#     <li class="divider"></li>
-#     <li>
-#         <a href="#">
-#             <div style="color:yellow;">
-#                 <i class="fa fa-exclamation-circle fa-fw"></i> New Comment
-#                 <span class="pull-right text-muted small">4 minutes ago</span>
-#             </div>
-#         </a>
-#     </li>
-#     <li class="divider"></li>
-#     <li>
-#         <a href="#">
-#             <div style="color:red;">
-#                 <i class="fa fa-times-circle fa-fw"></i> New Comment
-#                 <span class="pull-right text-muted small">4 minutes ago</span>
-#             </div>
-#         </a>
-#     </li>
-#     <li class="divider"></li>
-
     alerts = PlantAlert.objects.filter(active=True)
     for alert in alerts:
         color = 'black'
