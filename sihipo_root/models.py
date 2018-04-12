@@ -75,6 +75,12 @@ class PlantBase(models.Model):
         ('W', 'Warning'),
         ('S', 'Severe'),
     )
+    
+    device_type = (
+        (None, 'N/A'),
+        ('SIHIPO_C', 'Device Kontrol'),
+        ('SIHIPO_S', 'Device Device'),
+    )
 
 # Create your models here.
 class PlantEvalIf(PlantBase):
@@ -167,10 +173,21 @@ class PlantOptDetail(PlantBase):
     class Meta:
         verbose_name = 'Detail Kondisi Optimal Tanaman'
         unique_together = ('plant_opt', 'kode')
+        
+class PlantDevice(PlantBase):
+    kode = models.CharField('Kode Device', max_length=20, unique=True)
+    url = models.URLField('URL Device', unique=True)
+    dev_id = models.CharField('ID Device', max_length=20, unique=True)
+    dev_type = models.CharField('Tipe Device', max_length=10, choices=PlantBase.device_type)
     
-class PlantSensor(PlantBase):
-    kode = models.CharField('Kode Sensor', max_length=20, unique=True)
-    url = models.URLField('URL Sensor', unique=True)
+    def __str__(self):
+        return self.kode
+    
+    class Meta:
+        verbose_name = 'Device Tanaman'
+    
+class PlantSensor(PlantDevice):    
+    dev_type = models.CharField('Tipe Device', max_length=10, choices=PlantBase.device_type, default='SIHIPO_S')
     
     def __str__(self):
         return self.kode
@@ -186,9 +203,8 @@ class PlantSensorDetail(PlantBase):
         verbose_name = 'Detail Sensor Tanaman'
         unique_together = ('plant_sensor', 'kode')
     
-class PlantControl(PlantBase):
-    kode = models.CharField('Kode Kontrol', max_length=20, unique=True)
-    url = models.URLField('URL Kontrol', unique=True)
+class PlantControl(PlantDevice):    
+    dev_type = models.CharField('Tipe Device', max_length=10, choices=PlantBase.device_type, default='SIHIPO_C')
     
     def __str__(self):
         return self.kode

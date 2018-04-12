@@ -26,3 +26,10 @@ def dict_get_display(class_object, attr):
         return eval('class_object.get_%s_display()' % (attr))
     except:
         return eval('class_object.%s' % (attr))
+
+@register.filter(name='dict_get_field_type')
+def dict_get_field_type(class_object, table_field):
+    try:
+        return class_object._meta.get_field(table_field).get_internal_type()
+    except:
+        return False

@@ -130,6 +130,8 @@ def get_plant_context(obj, context):
     context['name'] = obj.model._meta.model_name
     context['verbose_name'] = obj.model._meta.verbose_name
     context['referer'] = obj.request.META.get('HTTP_REFERER')
+    context['search_field'] = [u'CharField', u'TextField']
+    context['numeric_field'] = [u'IntegerField', u'FloatField']
     context['datetime_fields'] = []
     for field in obj.fields:
         if obj.model._meta.get_field(field).get_internal_type() in [u'DateTimeField']:
@@ -160,7 +162,7 @@ class PlantListView(ListView):
             self.paginate_by = False
             eval_obj = []
             for table_field in self.fields:
-                if self.model._meta.get_field(table_field).get_internal_type() in [u'CharField', u'TextField']:
+                if self.model._meta.get_field(table_field).get_internal_type() in context['search_field']:
                     eval_obj.append('Q(%s__icontains=context[\'filter\'])' % (table_field))
             if eval_obj:
                 context['object_list'] = eval('self.model.objects.filter(%s)' % ('|'.join(eval_obj)))
@@ -259,7 +261,7 @@ class PlantOptDetailDelete(PlantOptDetailView, PlantDeleteView):
 # PlantSensor
 class PlantSensorView(object):
     model = PlantSensor
-    fields = ['kode', 'url', 'active']
+    fields = ['kode', 'url', 'dev_id', 'dev_type', 'active']
     success_url = reverse_lazy('plantsensor_list')
 
 class PlantSensorList(PlantSensorView, PlantListView):
@@ -355,7 +357,7 @@ class PlantSensorDetailDelete(PlantSensorDetailView, PlantDeleteView):
 # PlantControl
 class PlantControlView(object):
     model = PlantControl
-    fields = ['kode', 'url', 'active']
+    fields = ['kode', 'url', 'dev_id', 'dev_type', 'active']
     success_url = reverse_lazy('plantcontrol_list')
 
 class PlantControlList(PlantControlView, PlantListView):

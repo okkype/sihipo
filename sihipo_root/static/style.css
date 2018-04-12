@@ -3,6 +3,25 @@
     src: url(Lato-Regular.ttf);
 }
 
+@font-face {
+    font-family: panton;
+    src: url(Panton-Regular.otf);
+}
+
+@font-face {
+    font-family: itc;
+    src: url(itc.ttf);
+}
+
 * {
-	font-family: lato;
+	font-family: panton;
+}
+
+td {
+	text-align: justify;
+}
+
+td[data-type=numeric] {
+	text-align: right;
+	font-weight: 900;
 }

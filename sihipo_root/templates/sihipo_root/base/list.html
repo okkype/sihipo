@@ -1,4 +1,4 @@
-{% extends 'sihipo_root/base/blank.html' %}
+{% extends 'blank.html' %}
 {% load static %}
 {% load dict_lib %}
 {% block container %}
@@ -21,7 +21,7 @@
 					<tr>
 						{% block list_body %}
 						{% for table_field in table_fields %}
-						<td>
+						<td {% if object|dict_get_field_type:table_field in numeric_field %}data-type="numeric"{% endif %}>
 						{% if forloop.first %}
 						<a href="{% url name|add:'_update' object.id %}">
 						{% endif %}
