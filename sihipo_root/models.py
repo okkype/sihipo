@@ -177,8 +177,7 @@ class PlantOptDetail(PlantBase):
 class PlantDevice(PlantBase):
     kode = models.CharField('Kode Device', max_length=20, unique=True)
     url = models.URLField('URL Device', unique=True)
-    dev_id = models.CharField('ID Device', max_length=20, unique=True)
-    dev_type = models.CharField('Tipe Device', max_length=10, choices=PlantBase.device_type)
+    tipe = models.CharField('Tipe Device', max_length=10, choices=PlantBase.device_type)
     
     def __str__(self):
         return self.kode
@@ -187,7 +186,11 @@ class PlantDevice(PlantBase):
         verbose_name = 'Device Tanaman'
     
 class PlantSensor(PlantDevice):    
-    dev_type = models.CharField('Tipe Device', max_length=10, choices=PlantBase.device_type, default='SIHIPO_S')
+    # dev_type = models.CharField('Tipe Device', max_length=10, choices=PlantBase.device_type, default='SIHIPO_S')
+    
+    def __init__(self, *args, **kwargs):
+        super(PlantSensor, self).__init__(*args, **kwargs)
+        self.tipe = 'SIHIPO_S'
     
     def __str__(self):
         return self.kode
@@ -204,7 +207,11 @@ class PlantSensorDetail(PlantBase):
         unique_together = ('plant_sensor', 'kode')
     
 class PlantControl(PlantDevice):    
-    dev_type = models.CharField('Tipe Device', max_length=10, choices=PlantBase.device_type, default='SIHIPO_C')
+    # dev_type = models.CharField('Tipe Device', max_length=10, choices=PlantBase.device_type, default='SIHIPO_C')
+    
+    def __init__(self, *args, **kwargs):
+        super(PlantControl, self).__init__(*args, **kwargs)
+        self.tipe = 'SIHIPO_C'
     
     def __str__(self):
         return self.kode

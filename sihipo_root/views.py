@@ -9,14 +9,16 @@ from django.db.models import Q
 from django.http.response import HttpResponse
 from django.utils.datetime_safe import strftime
 from django.db.models.aggregates import Avg, Count
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 import time, datetime
 import threading
 # from datetime import datetime
 
 # START DASHBOARD
-class DashboardView(TemplateView):
+class DashboardView(LoginRequiredMixin, TemplateView):
     template_name = 'main.html'
+    login_url = '/login/'
     
     def get_context_data(self, **kwargs):
         context = super(DashboardView, self).get_context_data(**kwargs)
@@ -75,8 +77,9 @@ class DashboardView(TemplateView):
 # END DASHBOARD
 
 # START SETTING
-class SettingView(TemplateView):
+class SettingView(LoginRequiredMixin, TemplateView):
     template_name = 'setting.html'
+    login_url = '/login/'
     
     def post(self, request, *args, **kwargs):
         return self.get(request, *args, **kwargs)
@@ -138,7 +141,8 @@ def get_plant_context(obj, context):
             context['datetime_fields'].append(field)
     return context
 
-class PlantListView(ListView):
+class PlantListView(LoginRequiredMixin, ListView):
+    login_url = '/login/'
     paginate_by = 10
     
     def get_paginate_by(self, queryset):
@@ -172,17 +176,39 @@ class PlantListView(ListView):
             context['table_headers'][table_field] = self.model._meta.get_field(table_field).verbose_name
         return context
 
-class PlantCreateView(CreateView):
+class PlantCreateView(LoginRequiredMixin, CreateView):
+    login_url = '/login/'
+    
+    def form_valid(self, form):
+        ret = super(PlantCreateView, self).form_valid(form)
+        obj = form.save()
+        obj.created_by = self.request.user
+        obj.updated_by = self.request.user
+        obj.save()
+        return ret
+    
     def get_context_data(self, **kwargs):
         context = get_plant_context(self, super(PlantCreateView, self).get_context_data(**kwargs))
         return context
 
-class PlantUpdateView(UpdateView):
+class PlantUpdateView(LoginRequiredMixin, UpdateView):
+    login_url = '/login/'
+    
+    def form_valid(self, form):
+        ret = super(PlantUpdateView, self).form_valid(form)
+        obj = form.save()
+        # obj.created_by = self.request.user
+        obj.updated_by = self.request.user
+        obj.save()
+        return ret
+    
     def get_context_data(self, **kwargs):
         context = get_plant_context(self, super(PlantUpdateView, self).get_context_data(**kwargs))
         return context
 
-class PlantDeleteView(DeleteView):
+class PlantDeleteView(LoginRequiredMixin, DeleteView):
+    login_url = '/login/'
+    
     def get_context_data(self, **kwargs):
         context = get_plant_context(self, super(PlantDeleteView, self).get_context_data(**kwargs))
         return context
@@ -261,7 +287,7 @@ class PlantOptDetailDelete(PlantOptDetailView, PlantDeleteView):
 # PlantSensor
 class PlantSensorView(object):
     model = PlantSensor
-    fields = ['kode', 'url', 'dev_id', 'dev_type', 'active']
+    fields = ['kode', 'url', 'active']
     success_url = reverse_lazy('plantsensor_list')
 
 class PlantSensorList(PlantSensorView, PlantListView):
@@ -357,7 +383,7 @@ class PlantSensorDetailDelete(PlantSensorDetailView, PlantDeleteView):
 # PlantControl
 class PlantControlView(object):
     model = PlantControl
-    fields = ['kode', 'url', 'dev_id', 'dev_type', 'active']
+    fields = ['kode', 'url', 'active']
     success_url = reverse_lazy('plantcontrol_list')
 
 class PlantControlList(PlantControlView, PlantListView):

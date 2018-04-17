@@ -1,11 +1,14 @@
 from django.conf.urls import url, include
+from django.contrib.auth import views as auth_views
 
 from . import views
 
 
 urlpatterns = [
     url(r'^$', views.DashboardView.as_view(), name='dashboard'),
-    url(r'^setting$', views.SettingView.as_view(), name='setting'),
+    url(r'^login/$', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
+    url(r'^logout/$', auth_views.LogoutView.as_view(template_name='login.html'), name='logout'),
+    url(r'^setting/$', views.SettingView.as_view(), name='setting'),
     url(r'^plantplant/$', views.PlantPlantList.as_view(), name='plantplant_list'),
     url(r'^plantplant/create$', views.PlantPlantCreate.as_view(), name='plantplant_create'),
     url(r'^plantplant/update/(?P<pk>\d+)$', views.PlantPlantUpdate.as_view(), name='plantplant_update'),
@@ -80,5 +83,5 @@ urlpatterns = [
     url(r'^plantalert/create$', views.PlantAlertCreate.as_view(), name='plantalert_create'),
     url(r'^plantalert/update/(?P<pk>\d+)$', views.PlantAlertUpdate.as_view(), name='plantalert_update'),
     url(r'^plantalert/delete/(?P<pk>\d+)$', views.PlantAlertDelete.as_view(), name='plantalert_delete'),
-    url(r'^plantalert/simple$', views.PlantAlertSimple, name='plantalert_simple'),
+    url(r'^plantalert/simple/$', views.PlantAlertSimple, name='plantalert_simple'),
 ]
