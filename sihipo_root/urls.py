@@ -84,4 +84,7 @@ urlpatterns = [
     url(r'^plantalert/update/(?P<pk>\d+)$', views.PlantAlertUpdate.as_view(), name='plantalert_update'),
     url(r'^plantalert/delete/(?P<pk>\d+)$', views.PlantAlertDelete.as_view(), name='plantalert_delete'),
     url(r'^plantalert/simple/$', views.PlantAlertSimple, name='plantalert_simple'),
+    url(r'^plantalert/count/$', views.PlantAlertCount, name='plantalert_count'),
+    url(r'^plantalert/de/$', views.PlantAlertDe, name='plantalert_de'),
+    url(r'^plantalert/de/(?P<pk>\d+)$', views.PlantAlertDe, name='plantalert_de'),
 ]

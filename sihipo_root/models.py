@@ -84,8 +84,9 @@ class PlantBase(models.Model):
 
 # Create your models here.
 class PlantEvalIf(PlantBase):
-    kode = models.CharField('Kode IF', unique=True, max_length=20)
-    eval_if = models.TextField('Evaluate IF', unique=True)
+    kode = models.CharField('Kode Kondisi', unique=True, max_length=20)
+    eval_if = models.TextField('Kode Python', unique=True)
+    prior = models.IntegerField('Prioritas', unique=True, default=10)
     
     @property
     def execute(self):
@@ -94,33 +95,37 @@ class PlantEvalIf(PlantBase):
                 return True
             else:
                 return False
-        except:
+        except Exception as e:
+            print e
             return False
     
     def __str__(self):
         return '%s' % (self.kode)
     
     class Meta:
-        verbose_name = 'Evaluasi Tanaman (IF)'
+        verbose_name = 'Kondisi'
+        ordering = ['prior']
         
 class PlantEvalThen(PlantBase):
-    kode = models.CharField('Kode THEN', unique=True, max_length=20)
-    eval_then = models.TextField('Evaluate THEN', unique=True)
+    kode = models.CharField('Kode Aksi', unique=True, max_length=20)
+    eval_then = models.TextField('Kode Python', unique=True)
     
     @property
     def execute(self):
+        __exec__ = True
         try:
-            eval(self.eval_then)
-        except:
+            exec(self.eval_then)
+        except Exception as e:
+            print e
             return False
         finally:
-            return True
+            return __exec__
     
     def __str__(self):
         return '%s' % (self.kode)
     
     class Meta:
-        verbose_name = 'Evaluasi Tanaman (THEN)'
+        verbose_name = 'Aksi'
 
 class PlantEval(PlantBase):
     plant_eval_if = models.ForeignKey(PlantEvalIf, models.PROTECT, verbose_name='Evaluasi Tanaman (IF)', limit_choices_to={'active': True})
@@ -287,7 +292,7 @@ class PlantSensorLog(PlantBase):
     plant_rack = models.ForeignKey(PlantRack, models.PROTECT, verbose_name='Rak Tanaman', limit_choices_to={'active': True}, null=True, blank=True)
     
     def __str__(self):
-        return '%s_%s_%s' % (self.plant_sensor.kode, self.plant_rack.kode, self.dt)
+        return '%s_%s_%s' % (self.plant_sensor.kode, self.plant_rack and self.plant_rack.kode or '', self.dt)
     
     class Meta:
         verbose_name = 'Log Sensor Tanaman'

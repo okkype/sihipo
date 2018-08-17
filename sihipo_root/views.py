@@ -634,11 +634,11 @@ class PlantControlLogDetailDelete(PlantControlLogDetailView, PlantDeleteView):
 # PlantEvalIf
 class PlantEvalIfView(object):
     model = PlantEvalIf
-    fields = ['kode', 'eval_if', 'active']
+    fields = ['kode', 'eval_if', 'prior', 'active']
     success_url = reverse_lazy('plantevalif_list')
 
 class PlantEvalIfList(PlantEvalIfView, PlantListView):
-    pass
+    fields = ['kode', 'prior', 'active']
 
 class PlantEvalIfCreate(PlantEvalIfView, PlantCreateView):
     pass
@@ -656,7 +656,7 @@ class PlantEvalThenView(object):
     success_url = reverse_lazy('plantevalthen_list')
 
 class PlantEvalThenList(PlantEvalThenView, PlantListView):
-    pass
+    fields = ['kode', 'active']
 
 class PlantEvalThenCreate(PlantEvalThenView, PlantCreateView):
     pass
@@ -738,7 +738,7 @@ def PlantAlertSimple(request):
             icon = 'fa-times-circle'
         body += '''
         <li>
-            <a href="%s">
+            <a href="#" onclick="notif_go(%s,'%s')">
                 <div style="color:%s;">
                     <i class="fa %s fa-fw"></i> %s
                     <span class="pull-right text-muted small">%s</span>
@@ -746,7 +746,7 @@ def PlantAlertSimple(request):
             </a>
         </li>
         <li class="divider"></li>
-        ''' % (alert.url, color, icon, alert.note, strftime(alert.dt, '%d/%b/%y %H:%M'))
+        ''' % (alert.id, alert.url, color, icon, alert.note, strftime(alert.dt, '%d/%b/%y %H:%M'))
     foot = '''
     <li>
         <a class="text-center" href="%s">
@@ -755,4 +755,15 @@ def PlantAlertSimple(request):
         </a>
     </li>
     ''' % (reverse_lazy('plantalert_list'))
-    return HttpResponse('%s%s' % (body, foot))
+    return HttpResponse('%s%s' % (body, foot), content_type='text/plain')
+
+def PlantAlertCount(request):
+    alerts = PlantAlert.objects.filter(active=True).count()
+    return HttpResponse('%s' % (alerts), content_type='text/plain')
+
+def PlantAlertDe(request, pk = False):
+    if pk:
+        alert = PlantAlert.objects.get(pk=pk)
+        alert.active = False
+        alert.save()
+    return HttpResponse('%s' % (1), content_type='text/plain')

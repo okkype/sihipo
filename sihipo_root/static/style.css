@@ -13,7 +13,7 @@
     src: url(itc.ttf);
 }
 
-* {
+body {
 	font-family: panton;
 }
 
@@ -24,4 +24,9 @@ td {
 td[data-type=numeric] {
 	text-align: right;
 	font-weight: 900;
+}
+
+textarea, .CodeMirror {
+	font-family: courier, monospace !important;
+	resize: vertical;
 }

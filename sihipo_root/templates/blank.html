@@ -16,6 +16,7 @@
 	<link href="{% static 'sb-admin-2/dist/css/sb-admin-2.css' %}" rel="stylesheet" />
 	<link href="{% static 'sb-admin-2/vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" />
 	<link href="{% static 'sb-admin-2/vendor/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css' %}" rel="stylesheet" />
+	<link href="{% static 'codemirror/lib/codemirror.css' %}" rel="stylesheet" />
 	{% block html_head %}{% endblock %}
 </head>
 
@@ -31,7 +32,7 @@
                 </button>
                 <div class="dropdown navbar-toggle" style="border: none;">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-bell"></i>
+                        <span class="badge badge-danger badge-notif">0</span>
                     </a>
                     <ul class="dropdown-menu dropdown-alerts"></ul>
                     <!-- /.dropdown-alerts -->
@@ -46,7 +47,7 @@
             <ul class="nav navbar-top-links navbar-right hidden-xs">
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
+                        <span class="badge badge-danger badge-notif">0</span>
                     </a>
                     <ul class="dropdown-menu dropdown-alerts"></ul>
                     <!-- /.dropdown-alerts -->
@@ -54,11 +55,13 @@
                 <!-- /.dropdown -->
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                        <i class="fa fa-user fa-fw"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
                         <!-- <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
                         </li> -->
+                        <!-- <li><a href="{% url 'plantalert_list' %}"><i class="fa fa-book fa-fw"></i> Berita</a>
+					    </li> -->
                         <li><a href="/admin"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
@@ -102,10 +105,10 @@
                             <a href="#"><i class="fa fa-dashboard fa-fw"></i> Logika<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="{% url 'plantevalif_list' %}">Evaluasi (IF)</a>
+                                    <a href="{% url 'plantevalif_list' %}">Kondisi</a>
                                 </li>
                                 <li>
-                                    <a href="{% url 'plantevalthen_list' %}">Evaluasi (THEN)</a>
+                                    <a href="{% url 'plantevalthen_list' %}">Aksi</a>
                                 </li>
                                 <li>
                                     <a href="{% url 'planteval_list' %}">Evaluasi</a>
@@ -120,10 +123,7 @@
                                     <a href="{% url 'plantplant_list' %}">Tanaman</a>
                                 </li>
                                 <li>
-                                    <a href="{% url 'plantopt_list' %}">Kondisi Optimal Tanaman</a>
-                                </li>
-                                <li>
-                                    <a href="{% url 'plantrack_list' %}">Rak Tanam</a>
+                                    <a href="{% url 'plantopt_list' %}">Kondisi Optimal</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
@@ -138,10 +138,16 @@
                                     <a href="{% url 'plantcontrol_list' %}">Kontrol</a>
                                 </li>
                                 <li>
+                                    <a href="{% url 'plantrack_list' %}">Rak Tanam</a>
+                                </li>
+                                <li>
                                     <a href="{% url 'setting' %}">Thread</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
+                        </li>
+                        <li class="visible-xs">
+                            <a href="{% url 'logout' %}"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                 </div>
@@ -157,7 +163,7 @@
 	                <div class="row">
 	                    <div class="col-lg-12">
 	                        <h3 class="page-header">
-	    						<input type="button" value="&lt;" onclick="history.back()" />&nbsp;
+	    						<input type="button" value="&lt;" onclick="history.back()" style="border-radius: 50%;font-family: courier;" />&nbsp;
 	                        	{% block page-header %}{{ verbose_name }}{% endblock %}
 	                        </h3>
 	                    </div>
@@ -196,22 +202,48 @@
     <script src="{% static 'sb-admin-2/vendor/datatables-plugins/dataTables.bootstrap.min.js' %}"></script>
     <script src="{% static 'sb-admin-2/vendor/datatables-responsive/dataTables.responsive.js' %}"></script>
     <script src="{% static 'sb-admin-2/dist/js/sb-admin-2.js' %}"></script>
+    <script src="{% static 'codemirror/lib/codemirror.js' %}"></script>
+	<script src="{% static 'codemirror/mode/python/python.js' %}"></script>
+	<script src="{% static 'codemirror/addon/selection/active-line.js' %}"></script>
+	<script src="{% static 'codemirror/addon/edit/matchbrackets.js' %}"></script>
     <script type="text/javascript">
+	    function simple_notif() {
+	    	$.get('{% url 'plantalert_simple' %}').done(function (data) {
+	    		$('.dropdown-alerts').html(data);
+	    	});
+	    }
+	    function notif_count() {
+	    	$.get('{% url 'plantalert_count' %}').done(function (data) {
+	    		$('.badge-notif').html(data);
+	    		setTimeout(notif_count, 1000);
+	    	});
+	    }
+	    function notif_go(id, url) {
+	    	$.get('{% url 'plantalert_de' %}' + id).done(function (data) {
+	    		location.href = url;
+	    	});
+	    }
+	    function code_edit(id) {
+	    	var editor = CodeMirror.fromTextArea(document.getElementById(id), {
+	    		mode: {
+					name: "python",
+					version: 3,
+					singleLineStringErrors: false
+	            },
+				lineNumbers: true,
+				indentUnit: 4,
+				matchBrackets: true
+	    	});
+	    }
+        {% block javascript %}{% endblock %}
 	    $(document).ready(function() {
+	    	notif_count();
+	    	$('.dropdown-toggle').click(simple_notif);
 	        $('.data-tables').DataTable({
 	            responsive: true
 	        });
 	        {% block jquery %}{% endblock %}
 	    });
-	    last_data = "";
-	    window.setInterval(function () {
-	    	$.get('{% url 'plantalert_simple' %}').done(function (data) {
-	    		if (data != last_data) {
-	    			$('.dropdown-alerts').html(data);
-	    			last_data = data;
-	    		}
-	    	});
-	    }, 1000);
     </script>
 </body>
 
