@@ -2,11 +2,11 @@ from sihipo_root.models import *
 from sihipo_root.threads import *
 
 from django.urls import reverse_lazy
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.db.models import Q
-from django.http.response import HttpResponse
+from django.http.response import HttpResponse, HttpResponseRedirect
 from django.utils.datetime_safe import strftime
 from django.db.models.aggregates import Avg, Count
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -123,7 +123,11 @@ class SettingView(LoginRequiredMixin, TemplateView):
             context['intval_eval_run'] = int(self.request.POST.get('intval_eval'))
             tf = EvalThread(interval=context['intval_eval_run'])
             tf.start()
-
+        try:
+            f = open('/var/lib/misc/dnsmasq.leases','r')
+            context['ip_list'] = f.read()
+        except Exception as e:
+            context['ip_list'] = '%s' % (e)
         return context
     
 # END SETTING
@@ -208,6 +212,15 @@ class PlantUpdateView(LoginRequiredMixin, UpdateView):
 
 class PlantDeleteView(LoginRequiredMixin, DeleteView):
     login_url = '/login/'
+    
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object.active:
+            self.object.active = False
+            self.object.save()
+            return HttpResponseRedirect(self.get_success_url())
+        else:
+            return super(PlantDeleteView, self).delete(self, request, *args, **kwargs)
     
     def get_context_data(self, **kwargs):
         context = get_plant_context(self, super(PlantDeleteView, self).get_context_data(**kwargs))
@@ -767,3 +780,10 @@ def PlantAlertDe(request, pk = False):
         alert.active = False
         alert.save()
     return HttpResponse('%s' % (1), content_type='text/plain')
+
+# def PlantDuplicate(request, model=False, pk=False):
+#     if model and pk:
+#         obj = eval('%s.objects.get(pk=%s)' % (model, pk))
+#         obj.pk = None
+#         obj.save()
+#     return redirect(request.META.get('HTTP_REFERER'))

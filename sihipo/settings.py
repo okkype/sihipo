@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     # 'django.contrib.sites',
     # 'registration',
     'bootstrap3',
-    'ckeditor',
+    # 'ckeditor',
     # 'django_tables2',
     'django_nvd3',
     'sihipo_root.apps.SihipoRootConfig',

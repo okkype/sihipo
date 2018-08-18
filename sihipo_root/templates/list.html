@@ -13,7 +13,7 @@
 					<th><a href="?sort={{ table_field }}">{{ table_headers|dict_get:table_field }}</a></th>
 					{% endfor %}
 					{% endblock %}
-					<th style="text-align: center; width: 40px;"><a href="{% url name|add:'_create' %}" class="btn btn-outline btn-success btn-xs">+</a></th>
+					<th style="text-align: center; width: 90px;"><a href="{% url name|add:'_create' %}" class="btn btn-outline btn-success btn-xs" style="font-family: courier;">Add</a></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -32,7 +32,10 @@
 						</td>
 						{% endfor %}
 						{% endblock %}
-						<td style="text-align: center;"><a href="{% url name|add:'_delete' object.id %}" class="btn btn-outline btn-danger btn-xs">x</a></td>
+						<td style="text-align: center;">
+							<a href="{% url name|add:'_duplicate' object.id %}" class="btn btn-outline btn-info btn-xs" style="font-family: courier;">Dup</a>
+							<a href="{% url name|add:'_delete' object.id %}" class="btn btn-outline btn-danger btn-xs" style="font-family: courier;">Del</a>
+						</td>
 					</tr>
 				{% endfor %}
 			</tbody>

@@ -36,7 +36,14 @@
 			<hr />
 		</form>
 	</div>
+	<div class="col-md-12 col-xs-12">
+		<label class="control-label" for="ip_list">IP List (/var/lib/misc/dnsmasq.leases)</label>
+		<textarea id="ip_list">{{ ip_list }}</textarea>
+	</div>
 </div>
+{% endblock %}
+{% block javascript %}
+	code_edit('ip_list');
 {% endblock %}
 {% block jquery %}
 {% for datetime_field in datetime_fields %}
