@@ -55,7 +55,7 @@ class SensorThread(threading.Thread):
                         if sensor_log_empty:
                             sensor_log.delete()
                 except Exception as e:
-                    print e
+                    print(e)
             time.sleep(self.interval)
 
 class ControlThread(threading.Thread):

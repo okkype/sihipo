@@ -97,7 +97,7 @@ class PlantEvalIf(PlantBase):
             else:
                 return False
         except Exception as e:
-            print e
+            print(e)
             return False
     
     def __str__(self):
@@ -117,7 +117,7 @@ class PlantEvalThen(PlantBase):
         try:
             exec(self.eval_then)
         except Exception as e:
-            print e
+            print(e)
             return False
         finally:
             return __exec__
