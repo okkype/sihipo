@@ -150,7 +150,7 @@ class PlantListView(LoginRequiredMixin, ListView):
     paginate_by = 10
     
     def get_paginate_by(self, queryset):
-        if self.request.GET.get('filter'):
+        if self.request.GET.get('filter') or self.request.session.get('parent_id'):
             return 0
         return ListView.get_paginate_by(self, queryset)
     
@@ -166,6 +166,7 @@ class PlantListView(LoginRequiredMixin, ListView):
         context = get_plant_context(self, super(PlantListView, self).get_context_data(**kwargs))
         context['table_fields'] = self.fields
         context['filter'] = self.request.GET.get('filter')
+        # context['parent_id'] = self.request.session.get('parent_id')
         if context['filter']:
             self.paginate_by = False
             eval_obj = []

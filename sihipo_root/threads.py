@@ -40,14 +40,18 @@ class SensorThread(threading.Thread):
                         sensor_log.save()
                         sensor_log_empty = True
                         for sensor_type in PlantBase.sensor_type:
-                            value = data.get('value').get(sensor_type[0])
-                            if value:
-                                sensor_log_empty = False
-                                sensor_log_detail = PlantSensorLogDetail()
-                                sensor_log_detail.plant_sensor_log = sensor_log
-                                sensor_log_detail.kode = sensor_type[0]
-                                sensor_log_detail.val = value
-                                sensor_log_detail.save()
+                            sensor_detail_off = PlantSensorDetail.objects.filter(plant_sensor=sensor, kode=sensor_type[0], active=False).count()
+                            if sensor_detail_off:
+                                pass
+                            else:
+                                value = data and data.get('value') and data.get('value').get(sensor_type[0])
+                                if value:
+                                    sensor_log_empty = False
+                                    sensor_log_detail = PlantSensorLogDetail()
+                                    sensor_log_detail.plant_sensor_log = sensor_log
+                                    sensor_log_detail.kode = sensor_type[0]
+                                    sensor_log_detail.val = value
+                                    sensor_log_detail.save()
                         if sensor_log_empty:
                             sensor_log.delete()
                 except Exception as e:
