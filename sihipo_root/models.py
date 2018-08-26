@@ -21,8 +21,13 @@ class PlantBase(models.Model):
     created_by = models.ForeignKey('auth.User', models.SET_NULL, related_name='created_by', null=True, blank=True)
     updated = models.DateTimeField(auto_now=True)
     updated_by = models.ForeignKey('auth.User', models.SET_NULL, related_name='updated_by', null=True, blank=True)
+    model_name = models.TextField('Nama Model', null=True, blank=True)
     note = models.TextField('Catatan', null=True, blank=True)
     active = models.BooleanField('Aktif', default=True)
+    
+    def __init__(self, *args, **kwargs):
+        super(PlantBase, self).__init__(*args, **kwargs)
+        self.model_name = self._meta.model_name
     
     sensor_type = (
         (None, 'N/A'),
@@ -131,6 +136,13 @@ class PlantEvalThen(PlantBase):
 class PlantEval(PlantBase):
     plant_eval_if = models.ForeignKey(PlantEvalIf, models.PROTECT, verbose_name='Kondisi', limit_choices_to={'active': True})
     plant_eval_then = models.ForeignKey(PlantEvalThen, models.PROTECT, verbose_name='Aksi', limit_choices_to={'active': True})
+    
+    @property
+    def execute(self):
+        if self.plant_eval_if.execute:
+            return self.plant_eval_then.execute
+        else:
+            return False
     
     def __str__(self):
         return '%s_%s' % (self.plant_eval_if.kode, self.plant_eval_then.kode)
