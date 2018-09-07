@@ -89,10 +89,20 @@ class PlantBase(models.Model):
     )
 
 # Create your models here.
+class PlantEvalGroup(PlantBase):
+    kode = models.CharField('Kode Group', unique=True, max_length=20)
+    
+    def __str__(self):
+        return '%s' % (self.kode)
+    
+    class Meta:
+        verbose_name = 'Group Logika'
+    
 class PlantEvalIf(PlantBase):
     kode = models.CharField('Kode Kondisi', unique=True, max_length=20)
     eval_if = models.TextField('Kode Python', unique=True)
-    prior = models.IntegerField('Prioritas', unique=True, default=10)
+    plant_eval_group = models.ForeignKey(PlantEvalGroup, models.PROTECT, verbose_name='Group', limit_choices_to={'active': True}, null=True, blank=True)
+    prior = models.IntegerField('Prioritas', default=10)
     
     @property
     def execute(self):
@@ -110,7 +120,8 @@ class PlantEvalIf(PlantBase):
     
     class Meta:
         verbose_name = 'Kondisi'
-        ordering = ['prior']
+        unique_together = ('plant_eval_group', 'prior')
+        ordering = ['plant_eval_group', 'prior']
         
 class PlantEvalThen(PlantBase):
     kode = models.CharField('Kode Aksi', unique=True, max_length=20)

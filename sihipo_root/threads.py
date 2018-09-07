@@ -139,14 +139,24 @@ class EvalThread(threading.Thread):
             if self.stop:
                 break
             elif (hour in self.hours) and (minute in self.minutes) and (second in self.seconds):
-                eifs = PlantEvalIf.objects.filter(active=True)
+                eifs = PlantEvalIf.objects.filter(active=True, plant_eval_group__isnull=True)
                 for eif in eifs:
                     if eif.execute:
                         es = PlantEval.objects.filter(active=True, plant_eval_if=eif)
                         for e in es:
                             if e.plant_eval_then.execute:
                                 PlantEvalLog(plant_eval=e).save()
-                        break
+                        # break
+                egs = PlantEvalGroup.objects.filter(active=True)
+                for eg in egs:
+                    eifs = PlantEvalIf.objects.filter(active=True, plant_eval_group=eg)
+                    for eif in eifs:
+                        if eif.execute:
+                            es = PlantEval.objects.filter(active=True, plant_eval_if=eif)
+                            for e in es:
+                                if e.plant_eval_then.execute:
+                                    PlantEvalLog(plant_eval=e).save()
+                            break
             time.sleep(self.interval)
             
 #         while not self.stop:

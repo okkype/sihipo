@@ -645,20 +645,47 @@ class PlantControlLogDetailUpdate(PlantControlLogDetailView, PlantUpdateView):
 class PlantControlLogDetailDelete(PlantControlLogDetailView, PlantDeleteView):
     pass
 
+# PlantEvalGroup
+class PlantEvalGroupView(object):
+    model = PlantEvalGroup
+    fields = ['kode', 'active']
+    success_url = reverse_lazy('plantevalgroup_list')
+
+class PlantEvalGroupList(PlantEvalGroupView, PlantListView):
+    pass
+
+class PlantEvalGroupCreate(PlantEvalGroupView, PlantCreateView):
+    pass
+
+class PlantEvalGroupUpdate(PlantEvalGroupView, PlantUpdateView):
+    pass
+
+class PlantEvalGroupDelete(PlantEvalGroupView, PlantDeleteView):
+    pass
+
 # PlantEvalIf
 class PlantEvalIfView(object):
     model = PlantEvalIf
-    fields = ['kode', 'eval_if', 'prior', 'active']
+    fields = ['kode', 'eval_if', 'plant_eval_group', 'prior', 'active']
     success_url = reverse_lazy('plantevalif_list')
 
 class PlantEvalIfList(PlantEvalIfView, PlantListView):
-    fields = ['kode', 'prior', 'active']
+    fields = ['kode', 'plant_eval_group', 'prior', 'active']
 
 class PlantEvalIfCreate(PlantEvalIfView, PlantCreateView):
     pass
 
 class PlantEvalIfUpdate(PlantEvalIfView, PlantUpdateView):
-    pass
+    def get_context_data(self, **kwargs):
+        context = super(PlantEvalIfUpdate, self).get_context_data(**kwargs)
+        context['link_list'] = [
+            {
+                'name':'Aksi',
+                'link':reverse_lazy('planteval_list')
+            }
+        ]
+        self.request.session['parent_id'] = context['object'].id
+        return context
 
 class PlantEvalIfDelete(PlantEvalIfView, PlantDeleteView):
     pass
@@ -688,10 +715,18 @@ class PlantEvalView(object):
     success_url = reverse_lazy('planteval_list')
 
 class PlantEvalList(PlantEvalView, PlantListView):
-    pass
+    fields = ['plant_eval_then', 'active']
+    
+    def get_context_data(self, **kwargs):
+        context = super(PlantEvalList, self).get_context_data(**kwargs)
+        context['object_list'] = self.model.objects.filter(plant_eval_if=self.request.session.get('parent_id'))
+        return context
 
 class PlantEvalCreate(PlantEvalView, PlantCreateView):
-    pass
+    def get_initial(self):
+        context = super(PlantEvalCreate, self).get_initial()
+        context['plant_eval_if'] = self.request.session.get('parent_id')
+        return context
 
 class PlantEvalUpdate(PlantEvalView, PlantUpdateView):
     pass
