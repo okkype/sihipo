@@ -15,9 +15,9 @@ class SensorThread(threading.Thread):
     seconds = range(0, 60)
     stop = False
     
-    def __init__(self, group=None, target=None, name='thread_sensor', args=(), kwargs=None, verbose=None, interval=1):
+    def __init__(self, group=None, target=None, name='thread_sensor', args=(), kwargs=None, interval=1):
         self.interval = interval
-        threading.Thread.__init__(self, group=group, target=target, name=name, args=args, kwargs=kwargs, verbose=verbose)
+        threading.Thread.__init__(self, group=group, target=target, name=name, args=args, kwargs=kwargs)
          
     def run(self):
         while True:
@@ -65,9 +65,9 @@ class ControlThread(threading.Thread):
     seconds = range(0, 60)
     stop = False
     
-    def __init__(self, group=None, target=None, name='thread_control', args=(), kwargs=None, verbose=None, interval=1):
+    def __init__(self, group=None, target=None, name='thread_control', args=(), kwargs=None, interval=1):
         self.interval = interval
-        threading.Thread.__init__(self, group=group, target=target, name=name, args=args, kwargs=kwargs, verbose=verbose)
+        threading.Thread.__init__(self, group=group, target=target, name=name, args=args, kwargs=kwargs)
          
     def run(self):
         while True:
@@ -127,9 +127,9 @@ class EvalThread(threading.Thread):
     seconds = range(0, 60)
     stop = False
     
-    def __init__(self, group=None, target=None, name='thread_eval', args=(), kwargs=None, verbose=None, interval=1):
+    def __init__(self, group=None, target=None, name='thread_eval', args=(), kwargs=None, interval=1):
         self.interval = interval
-        threading.Thread.__init__(self, group=group, target=target, name=name, args=args, kwargs=kwargs, verbose=verbose)
+        threading.Thread.__init__(self, group=group, target=target, name=name, args=args, kwargs=kwargs)
          
     def run(self):
         while True:

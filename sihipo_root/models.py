@@ -125,7 +125,7 @@ class PlantEvalIf(PlantBase):
         
 class PlantEvalThen(PlantBase):
     kode = models.CharField('Kode Aksi', unique=True, max_length=20)
-    eval_then = models.TextField('Kode Python', unique=True)
+    eval_then = models.TextField('Kode Python', unique=True, default="# Gunakan __exec__ untuk mengembalikan nilai")
     
     @property
     def execute(self):
