@@ -863,7 +863,7 @@
   "fields": {
     "created": "2018-09-15T21:49:56.443",
     "created_by": 1,
-    "updated": "2018-09-15T21:49:56.508",
+    "updated": "2018-09-16T06:52:02.133",
     "updated_by": 1,
     "model_name": "plantbase",
     "note": null,
@@ -1030,7 +1030,7 @@
   "pk": 67,
   "fields": {
     "kode": "CEK_SUHU_20",
-    "eval_then": "# Gunakan __exec__ untuk mengembalikan nilai\r\nfrom datetime import datetime\r\n\r\n__exec__ = False\r\n\r\nhours = range(0, 24)\r\nminutes = [0] # range(0, 60)\r\nseconds = [0] # range(0, 60)\r\n\r\nhour = datetime.now().hour\r\nminute = datetime.now().minute\r\nsecond = datetime.now().second\r\n\r\nif (hour in hours) and (minute in minutes) and (second in seconds):\r\n    racks = PlantRack.objects.filter(active=True)\r\n    for rack in racks:\r\n        sensor_log = PlantSensorLog.objects.filter(active=True, plant_sensor=rack.plant_sensor).first()\r\n        if sensor_log:\r\n            sensor_ta = PlantSensorLogDetail.objects.filter(active=True, kode=\"TA\", plant_sensor_log=sensor_log).first()\r\n            sensor_tw = PlantSensorLogDetail.objects.filter(active=True, kode=\"TW\", plant_sensor_log=sensor_log).first()\r\n            if sensor_ta and (sensor_ta > 30):\r\n                __exec__ = True\r\n            if sensor_tw and (sensor_tw > 20):\r\n            \t__exec__ = True"
+    "eval_then": "# Gunakan __exec__ untuk mengembalikan nilai\r\nfrom datetime import datetime\r\n\r\n__exec__ = False\r\n\r\nhours = range(0, 24)\r\nminutes = range(0, 60)\r\nseconds = [0] # range(0, 60)\r\n\r\nhour = datetime.now().hour\r\nminute = datetime.now().minute\r\nsecond = datetime.now().second\r\n\r\nif (hour in hours) and (minute in minutes) and (second in seconds):\r\n    racks = PlantRack.objects.filter(active=True)\r\n    for rack in racks:\r\n        sensor_log = PlantSensorLog.objects.filter(active=True, plant_sensor=rack.plant_sensor).first()\r\n        if sensor_log:\r\n            sensor_ta = PlantSensorLogDetail.objects.filter(active=True, kode=\"TA\", plant_sensor_log=sensor_log).first()\r\n            sensor_tw = PlantSensorLogDetail.objects.filter(active=True, kode=\"TW\", plant_sensor_log=sensor_log).first()\r\n            if sensor_ta and (sensor_ta > 30):\r\n                __exec__ = True\r\n            if sensor_tw and (sensor_tw > 20):\r\n            \t__exec__ = True"
   }
 },
 {
