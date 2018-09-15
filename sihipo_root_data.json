@@ -1,0 +1,1566 @@
+[
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 1,
+  "fields": {
+    "created": "2018-08-31T08:08:04.504",
+    "created_by": 1,
+    "updated": "2018-08-31T08:08:04.566",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": "",
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 2,
+  "fields": {
+    "created": "2018-08-31T08:08:26.471",
+    "created_by": 1,
+    "updated": "2018-08-31T08:08:26.607",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": "",
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 3,
+  "fields": {
+    "created": "2018-08-31T08:08:35.570",
+    "created_by": 1,
+    "updated": "2018-08-31T08:08:35.704",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": "",
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 4,
+  "fields": {
+    "created": "2018-08-31T08:08:51.102",
+    "created_by": 1,
+    "updated": "2018-08-31T08:08:51.149",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": "",
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 5,
+  "fields": {
+    "created": "2018-08-31T08:09:25.957",
+    "created_by": 1,
+    "updated": "2018-08-31T08:09:26.092",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": "",
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 6,
+  "fields": {
+    "created": "2018-08-31T08:09:41.257",
+    "created_by": 1,
+    "updated": "2018-08-31T08:09:41.390",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": "",
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 7,
+  "fields": {
+    "created": "2018-08-31T08:09:57.689",
+    "created_by": 1,
+    "updated": "2018-08-31T08:09:57.738",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": "",
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 8,
+  "fields": {
+    "created": "2018-08-31T08:10:07.136",
+    "created_by": 1,
+    "updated": "2018-08-31T08:10:08.109",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": "",
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 9,
+  "fields": {
+    "created": "2018-08-31T08:10:16.386",
+    "created_by": 1,
+    "updated": "2018-08-31T08:10:16.517",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": "",
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 10,
+  "fields": {
+    "created": "2018-08-31T08:11:11.655",
+    "created_by": 1,
+    "updated": "2018-08-31T08:11:11.790",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": "",
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 11,
+  "fields": {
+    "created": "2018-08-31T08:11:24.593",
+    "created_by": 1,
+    "updated": "2018-08-31T08:11:24.722",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": "",
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 12,
+  "fields": {
+    "created": "2018-08-31T08:12:08.929",
+    "created_by": 1,
+    "updated": "2018-08-31T08:12:09.069",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": "",
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 13,
+  "fields": {
+    "created": "2018-08-31T08:12:23.241",
+    "created_by": 1,
+    "updated": "2018-08-31T08:12:23.280",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": "",
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 14,
+  "fields": {
+    "created": "2018-08-31T08:13:38.234",
+    "created_by": 1,
+    "updated": "2018-08-31T08:13:38.451",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": "",
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 15,
+  "fields": {
+    "created": "2018-08-31T08:14:37.127",
+    "created_by": 1,
+    "updated": "2018-08-31T08:14:37.348",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": "",
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 16,
+  "fields": {
+    "created": "2018-08-31T08:36:04.548",
+    "created_by": 1,
+    "updated": "2018-08-31T08:36:04.612",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 17,
+  "fields": {
+    "created": "2018-08-31T08:36:40.576",
+    "created_by": 1,
+    "updated": "2018-08-31T08:36:41.373",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 18,
+  "fields": {
+    "created": "2018-08-31T08:37:29.186",
+    "created_by": 1,
+    "updated": "2018-08-31T08:37:29.245",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": "",
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 19,
+  "fields": {
+    "created": "2018-08-31T08:38:12.074",
+    "created_by": 1,
+    "updated": "2018-08-31T08:38:12.327",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 20,
+  "fields": {
+    "created": "2018-08-31T08:38:47.881",
+    "created_by": 1,
+    "updated": "2018-08-31T08:38:47.945",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 21,
+  "fields": {
+    "created": "2018-08-31T08:41:11.549",
+    "created_by": 1,
+    "updated": "2018-08-31T08:41:11.854",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": "",
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 22,
+  "fields": {
+    "created": "2018-08-31T08:47:08.418",
+    "created_by": 1,
+    "updated": "2018-08-31T08:47:10.141",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 23,
+  "fields": {
+    "created": "2018-08-31T08:47:29.672",
+    "created_by": 1,
+    "updated": "2018-08-31T08:47:31.474",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 24,
+  "fields": {
+    "created": "2018-08-31T08:47:52.670",
+    "created_by": 1,
+    "updated": "2018-08-31T08:47:54.215",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": "",
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 25,
+  "fields": {
+    "created": "2018-08-31T08:53:59.071",
+    "created_by": 1,
+    "updated": "2018-08-31T08:53:59.943",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 26,
+  "fields": {
+    "created": "2018-08-31T08:54:36.002",
+    "created_by": 1,
+    "updated": "2018-08-31T08:54:36.277",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 27,
+  "fields": {
+    "created": "2018-08-31T08:55:31.912",
+    "created_by": 1,
+    "updated": "2018-08-31T08:55:31.982",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": "",
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 28,
+  "fields": {
+    "created": "2018-08-31T08:59:54.440",
+    "created_by": 1,
+    "updated": "2018-08-31T08:59:54.780",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 29,
+  "fields": {
+    "created": "2018-08-31T09:00:30.853",
+    "created_by": 1,
+    "updated": "2018-08-31T09:00:31.096",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 30,
+  "fields": {
+    "created": "2018-08-31T09:01:29.982",
+    "created_by": 1,
+    "updated": "2018-08-31T09:01:30.246",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": "",
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 31,
+  "fields": {
+    "created": "2018-08-31T09:06:00.056",
+    "created_by": 1,
+    "updated": "2018-08-31T09:06:00.106",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 32,
+  "fields": {
+    "created": "2018-08-31T09:06:13.025",
+    "created_by": 1,
+    "updated": "2018-08-31T09:06:13.170",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 33,
+  "fields": {
+    "created": "2018-08-31T09:06:29.487",
+    "created_by": 1,
+    "updated": "2018-08-31T09:06:29.728",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": "",
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 34,
+  "fields": {
+    "created": "2018-08-31T09:07:45.792",
+    "created_by": 1,
+    "updated": "2018-08-31T09:07:46.210",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 35,
+  "fields": {
+    "created": "2018-08-31T09:08:16.599",
+    "created_by": 1,
+    "updated": "2018-08-31T09:08:16.656",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 36,
+  "fields": {
+    "created": "2018-08-31T09:09:42.311",
+    "created_by": 1,
+    "updated": "2018-08-31T09:09:42.368",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": "",
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 37,
+  "fields": {
+    "created": "2018-08-31T09:10:02.531",
+    "created_by": 1,
+    "updated": "2018-08-31T09:10:02.679",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 38,
+  "fields": {
+    "created": "2018-08-31T09:10:24.010",
+    "created_by": 1,
+    "updated": "2018-08-31T09:10:24.070",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 39,
+  "fields": {
+    "created": "2018-08-31T09:10:54.413",
+    "created_by": 1,
+    "updated": "2018-08-31T09:10:54.656",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": "",
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 40,
+  "fields": {
+    "created": "2018-08-31T09:11:28.925",
+    "created_by": 1,
+    "updated": "2018-08-31T09:11:28.998",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 41,
+  "fields": {
+    "created": "2018-08-31T09:11:49.188",
+    "created_by": 1,
+    "updated": "2018-08-31T09:11:49.259",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 42,
+  "fields": {
+    "created": "2018-08-31T09:12:49.991",
+    "created_by": 1,
+    "updated": "2018-08-31T09:12:50.614",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": "",
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 43,
+  "fields": {
+    "created": "2018-08-31T09:14:42.768",
+    "created_by": 1,
+    "updated": "2018-08-31T09:14:42.833",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 44,
+  "fields": {
+    "created": "2018-08-31T09:15:10.022",
+    "created_by": 1,
+    "updated": "2018-08-31T09:15:10.085",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 45,
+  "fields": {
+    "created": "2018-08-31T09:15:28.506",
+    "created_by": 1,
+    "updated": "2018-08-31T09:15:28.557",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": "",
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 46,
+  "fields": {
+    "created": "2018-08-31T09:15:57.971",
+    "created_by": 1,
+    "updated": "2018-08-31T09:15:58.156",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 47,
+  "fields": {
+    "created": "2018-08-31T09:16:20.221",
+    "created_by": 1,
+    "updated": "2018-08-31T09:16:20.386",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 48,
+  "fields": {
+    "created": "2018-08-31T09:16:38.699",
+    "created_by": 1,
+    "updated": "2018-08-31T09:16:39.690",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": "",
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 49,
+  "fields": {
+    "created": "2018-08-31T09:18:21.377",
+    "created_by": 1,
+    "updated": "2018-08-31T09:18:21.437",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 50,
+  "fields": {
+    "created": "2018-08-31T09:18:43.022",
+    "created_by": 1,
+    "updated": "2018-08-31T09:18:43.081",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 51,
+  "fields": {
+    "created": "2018-08-31T09:20:02.062",
+    "created_by": 1,
+    "updated": "2018-08-31T09:20:02.110",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": "",
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 52,
+  "fields": {
+    "created": "2018-08-31T09:20:39.432",
+    "created_by": 1,
+    "updated": "2018-08-31T09:20:39.493",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 53,
+  "fields": {
+    "created": "2018-08-31T09:20:59.932",
+    "created_by": 1,
+    "updated": "2018-08-31T09:21:00.011",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 54,
+  "fields": {
+    "created": "2018-08-31T09:23:49.747",
+    "created_by": 1,
+    "updated": "2018-08-31T09:23:51.551",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": "",
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 55,
+  "fields": {
+    "created": "2018-08-31T09:24:37.236",
+    "created_by": 1,
+    "updated": "2018-08-31T09:24:38.753",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 56,
+  "fields": {
+    "created": "2018-08-31T09:25:34.503",
+    "created_by": 1,
+    "updated": "2018-08-31T09:25:34.564",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 57,
+  "fields": {
+    "created": "2018-09-08T00:21:36.185",
+    "created_by": 1,
+    "updated": "2018-09-15T21:48:28.654",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": false
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 58,
+  "fields": {
+    "created": "2018-09-08T01:13:26.690",
+    "created_by": 1,
+    "updated": "2018-09-08T11:02:18.198",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 59,
+  "fields": {
+    "created": "2018-09-08T01:15:49.246",
+    "created_by": 1,
+    "updated": "2018-09-15T21:48:21.324",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 60,
+  "fields": {
+    "created": "2018-09-08T01:18:37.730",
+    "created_by": 1,
+    "updated": "2018-09-08T01:18:37.822",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 61,
+  "fields": {
+    "created": "2018-09-08T11:08:43.970",
+    "created_by": 1,
+    "updated": "2018-09-15T21:48:36.568",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": false
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 62,
+  "fields": {
+    "created": "2018-09-08T11:09:45.958",
+    "created_by": 1,
+    "updated": "2018-09-15T21:48:42.594",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": false
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 63,
+  "fields": {
+    "created": "2018-09-08T11:10:07.460",
+    "created_by": 1,
+    "updated": "2018-09-15T21:48:50.117",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": false
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 64,
+  "fields": {
+    "created": "2018-09-08T11:11:50.419",
+    "created_by": 1,
+    "updated": "2018-09-08T11:11:50.486",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 65,
+  "fields": {
+    "created": "2018-09-08T11:12:26.374",
+    "created_by": 1,
+    "updated": "2018-09-08T11:12:26.518",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 66,
+  "fields": {
+    "created": "2018-09-08T11:13:00.323",
+    "created_by": 1,
+    "updated": "2018-09-08T11:13:00.381",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 67,
+  "fields": {
+    "created": "2018-09-15T21:49:56.443",
+    "created_by": 1,
+    "updated": "2018-09-15T21:49:56.508",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": false
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 68,
+  "fields": {
+    "created": "2018-09-15T21:50:38.599",
+    "created_by": 1,
+    "updated": "2018-09-15T21:50:38.677",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 69,
+  "fields": {
+    "created": "2018-09-15T21:53:02.759",
+    "created_by": 1,
+    "updated": "2018-09-15T21:53:02.823",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 70,
+  "fields": {
+    "created": "2018-09-15T21:53:20.973",
+    "created_by": 1,
+    "updated": "2018-09-15T21:53:21.283",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 71,
+  "fields": {
+    "created": "2018-09-15T22:33:42.534",
+    "created_by": 1,
+    "updated": "2018-09-15T22:33:45.151",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 72,
+  "fields": {
+    "created": "2018-09-15T22:34:12.624",
+    "created_by": 1,
+    "updated": "2018-09-15T22:34:14.170",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantevalif",
+  "pk": 58,
+  "fields": {
+    "kode": "CEK_OPTIMAL",
+    "eval_if": "PlantEvalThen.objects.filter(active=True, kode=\"CEK_OPTIMAL\").first() \\\r\nand PlantEvalThen.objects.filter(active=True, kode=\"CEK_OPTIMAL\").first().execute",
+    "plant_eval_group": null,
+    "prior": 10
+  }
+},
+{
+  "model": "sihipo_root.plantevalif",
+  "pk": 64,
+  "fields": {
+    "kode": "CEK_PER_MENIT",
+    "eval_if": "PlantEvalThen.objects.filter(active=True, kode=\"CEK_PER_MENIT\").first() \\\r\nand PlantEvalThen.objects.filter(active=True, kode=\"CEK_PER_MENIT\").first().execute",
+    "plant_eval_group": null,
+    "prior": 10
+  }
+},
+{
+  "model": "sihipo_root.plantevalif",
+  "pk": 65,
+  "fields": {
+    "kode": "CEK_PER_JAM",
+    "eval_if": "PlantEvalThen.objects.filter(active=True, kode=\"CEK_PER_JAM\").first() \\\r\nand PlantEvalThen.objects.filter(active=True, kode=\"CEK_PER_JAM\").first().execute",
+    "plant_eval_group": null,
+    "prior": 10
+  }
+},
+{
+  "model": "sihipo_root.plantevalif",
+  "pk": 66,
+  "fields": {
+    "kode": "CEK_PER_HARI",
+    "eval_if": "PlantEvalThen.objects.filter(active=True, kode=\"CEK_PER_HARI\").first() \\\r\nand PlantEvalThen.objects.filter(active=True, kode=\"CEK_PER_HARI\").first().execute",
+    "plant_eval_group": null,
+    "prior": 10
+  }
+},
+{
+  "model": "sihipo_root.plantevalif",
+  "pk": 69,
+  "fields": {
+    "kode": "CEK_SUHU_20",
+    "eval_if": "PlantEvalThen.objects.filter(active=True, kode=\"CEK_SUHU_20\").first() \\\r\nand PlantEvalThen.objects.filter(active=True, kode=\"CEK_SUHU_20\").first().execute",
+    "plant_eval_group": null,
+    "prior": 10
+  }
+},
+{
+  "model": "sihipo_root.plantevalthen",
+  "pk": 57,
+  "fields": {
+    "kode": "CEK_OPTIMAL",
+    "eval_then": "# Gunakan __exec__ untuk mengembalikan nilai\r\nfrom datetime import datetime\r\n\r\n__exec__ = False\r\n\r\nhours = range(0, 24)\r\nminutes = [0] # range(0, 60)\r\nseconds = [0] # range(0, 60)\r\n\r\nhour = datetime.now().hour\r\nminute = datetime.now().minute\r\nsecond = datetime.now().second\r\n\r\nif (hour in hours) and (minute in minutes) and (second in seconds):\r\n    racks = PlantRack.objects.filter(active=True)\r\n    for rack in racks:\r\n        points = PlantRackPoint.objects.filter(active=True, plant_rack=rack)\r\n        for point in points:\r\n            opts = PlantOpt.objects.filter(active=True, plant_plant=point.plant_plant)\r\n            for opt in opts:\r\n                details = PlantOptDetail.objects.filter(active=True, plant_opt=opt)\r\n                for detail in details:\r\n                    sensor_log = PlantSensorLog.objects.filter(active=True, plant_sensor=rack.plant_sensor).first()\r\n                    if sensor_log:\r\n                        sensor_log_detail = PlantSensorLogDetail.objects.filter(active=True, kode=detail.kode, plant_sensor_log=sensor_log).first()\r\n                        if sensor_log_detail:\r\n                            if (sensor_log_detail.val < (detail.val - (detail.val * detail.tol / 100.0))) or (sensor_log_detail.val > (detail.val + (detail.val * detail.tol / 100.0))):\r\n                                __exec__ = True"
+  }
+},
+{
+  "model": "sihipo_root.plantevalthen",
+  "pk": 59,
+  "fields": {
+    "kode": "ALERT_OPTIMAL",
+    "eval_then": "# Gunakan __exec__ untuk mengembalikan nilai\r\nracks = PlantRack.objects.filter(active=True)\r\nfor rack in racks:\r\n    points = PlantRackPoint.objects.filter(active=True, plant_rack=rack)\r\n    for point in points:\r\n        opts = PlantOpt.objects.filter(active=True, plant_plant=point.plant_plant)\r\n        for opt in opts:\r\n            detail_ph = PlantOptDetail.objects.filter(active=True, plant_opt=opt, kode=\"PH\").first()\r\n            detail_ec = PlantOptDetail.objects.filter(active=True, plant_opt=opt, kode=\"EC\").first()\r\n            sensor_log = PlantSensorLog.objects.filter(active=True, plant_sensor=rack.plant_sensor).first()\r\n            if sensor_log:\r\n                sensor_ph = PlantSensorLogDetail.objects.filter(active=True, kode=\"PH\", plant_sensor_log=sensor_log).first()\r\n                sensor_ec = PlantSensorLogDetail.objects.filter(active=True, kode=\"EC\", plant_sensor_log=sensor_log).first()\r\n                if detail_ec and detail_ph and sensor_ec and sensor_ph:\r\n                    if ((sensor_ec.val < (detail_ec.val - (detail_ec.val * detail_ec.tol / 100.0))) and (sensor_ph.val > (detail_ph.val + (detail_ph.val * detail_ph.tol / 100.0)))) or ((sensor_ec.val > (detail_ec.val - (detail_ec.val * detail_ec.tol / 100.0))) and (sensor_ph.val < (detail_ph.val + (detail_ph.val * detail_ph.tol / 100.0)))):\r\n                        plant_alert = PlantAlert()\r\n                        plant_alert.state = \"S\"\r\n                        plant_alert.note = \"Nutrisi rak %s, point %s tidak stabil, mohon segera kuras dan ganti!\" % (rack, point)\r\n                        plant_alert.save()\r\n                    elif (sensor_ec.val > (detail_ec.val - (detail_ec.val * detail_ec.tol / 100.0))) and (sensor_ph.val > (detail_ph.val + (detail_ph.val * detail_ph.tol / 100.0))):\r\n                        plant_alert = PlantAlert()\r\n                        plant_alert.state = \"W\"\r\n                        plant_alert.note = \"Nutrisi rak %s, point %s lebih dari normal, mohon segera tambahkan air!\" % (rack, point)\r\n                        plant_alert.save()\r\n                    elif (sensor_ec.val < (detail_ec.val - (detail_ec.val * detail_ec.tol / 100.0))) and (sensor_ph.val < (detail_ph.val + (detail_ph.val * detail_ph.tol / 100.0))):\r\n                        plant_alert = PlantAlert()\r\n                        plant_alert.state = \"W\"\r\n                        plant_alert.note = \"Nutrisi rak %s, point %s kurang dari normal, mohon segera tambahkan nutrisi!\" % (rack, point)\r\n                        plant_alert.save()\r\n                else:\r\n                    if detail_ec and sensor_ec:\r\n                        if sensor_ec.val > (detail_ec.val - (detail_ec.val * detail_ec.tol / 100.0)):\r\n                            plant_alert = PlantAlert()\r\n                            plant_alert.state = \"W\"\r\n                            plant_alert.note = \"EC rak %s, point %s lebih dari normal, mohon segera tambahkan air!\" % (rack, point)\r\n                            plant_alert.save()\r\n                        elif sensor_ec.val < (detail_ec.val - (detail_ec.val * detail_ec.tol / 100.0)):\r\n                            plant_alert = PlantAlert()\r\n                            plant_alert.state = \"W\"\r\n                            plant_alert.note = \"EC rak %s, point %s kurang dari normal, mohon segera tambahkan nitrisi!\" % (rack, point)\r\n                            plant_alert.save()\r\n                        if sensor_ph.val > (detail_ph.val - (detail_ph.val * detail_ph.tol / 100.0)):\r\n                            plant_alert = PlantAlert()\r\n                            plant_alert.state = \"W\"\r\n                            plant_alert.note = \"PH rak %s, point %s lebih dari normal, mohon segera tambahkan air!\" % (rack, point)\r\n                            plant_alert.save()\r\n                        elif sensor_ph.val < (detail_ph.val - (detail_ph.val * detail_ph.tol / 100.0)):\r\n                            plant_alert = PlantAlert()\r\n                            plant_alert.state = \"W\"\r\n                            plant_alert.note = \"PH rak %s, point %s kurang dari normal, mohon segera tambahkan penambah PH!\" % (rack, point)\r\n                            plant_alert.save()"
+  }
+},
+{
+  "model": "sihipo_root.plantevalthen",
+  "pk": 61,
+  "fields": {
+    "kode": "CEK_PER_JAM",
+    "eval_then": "# Gunakan __exec__ untuk mengembalikan nilai\r\nfrom datetime import datetime\r\n\r\n__exec__ = False\r\n\r\nhours = range(0, 24)\r\nminutes = [0] # range(0, 60)\r\nseconds = [0] # range(0, 60)\r\n\r\nhour = datetime.now().hour\r\nminute = datetime.now().minute\r\nsecond = datetime.now().second\r\n\r\nif (hour in hours) and (minute in minutes) and (second in seconds):\r\n    __exec__ = True"
+  }
+},
+{
+  "model": "sihipo_root.plantevalthen",
+  "pk": 62,
+  "fields": {
+    "kode": "CEK_PER_HARI",
+    "eval_then": "# Gunakan __exec__ untuk mengembalikan nilai\r\nfrom datetime import datetime\r\n\r\n__exec__ = False\r\n\r\nhours = [0] # range(0, 24)\r\nminutes = [0] # range(0, 60)\r\nseconds = [0] # range(0, 60)\r\n\r\nhour = datetime.now().hour\r\nminute = datetime.now().minute\r\nsecond = datetime.now().second\r\n\r\nif (hour in hours) and (minute in minutes) and (second in seconds):\r\n    __exec__ = True"
+  }
+},
+{
+  "model": "sihipo_root.plantevalthen",
+  "pk": 63,
+  "fields": {
+    "kode": "CEK_PER_MENIT",
+    "eval_then": "# Gunakan __exec__ untuk mengembalikan nilai\r\nfrom datetime import datetime\r\n\r\n__exec__ = False\r\n\r\nhours = range(0, 24)\r\nminutes = range(0, 60)\r\nseconds = [0] # range(0, 60)\r\n\r\nhour = datetime.now().hour\r\nminute = datetime.now().minute\r\nsecond = datetime.now().second\r\n\r\nif (hour in hours) and (minute in minutes) and (second in seconds):\r\n    __exec__ = True"
+  }
+},
+{
+  "model": "sihipo_root.plantevalthen",
+  "pk": 67,
+  "fields": {
+    "kode": "CEK_SUHU_20",
+    "eval_then": "# Gunakan __exec__ untuk mengembalikan nilai\r\nfrom datetime import datetime\r\n\r\n__exec__ = False\r\n\r\nhours = range(0, 24)\r\nminutes = [0] # range(0, 60)\r\nseconds = [0] # range(0, 60)\r\n\r\nhour = datetime.now().hour\r\nminute = datetime.now().minute\r\nsecond = datetime.now().second\r\n\r\nif (hour in hours) and (minute in minutes) and (second in seconds):\r\n    racks = PlantRack.objects.filter(active=True)\r\n    for rack in racks:\r\n        sensor_log = PlantSensorLog.objects.filter(active=True, plant_sensor=rack.plant_sensor).first()\r\n        if sensor_log:\r\n            sensor_ta = PlantSensorLogDetail.objects.filter(active=True, kode=\"TA\", plant_sensor_log=sensor_log).first()\r\n            sensor_tw = PlantSensorLogDetail.objects.filter(active=True, kode=\"TW\", plant_sensor_log=sensor_log).first()\r\n            if sensor_ta and (sensor_ta > 30):\r\n                __exec__ = True\r\n            if sensor_tw and (sensor_tw > 20):\r\n            \t__exec__ = True"
+  }
+},
+{
+  "model": "sihipo_root.plantevalthen",
+  "pk": 68,
+  "fields": {
+    "kode": "ALERT_SUHU_20",
+    "eval_then": "# Gunakan __exec__ untuk mengembalikan nilai\r\nracks = PlantRack.objects.filter(active=True)\r\nfor rack in racks:\r\n    sensor_log = PlantSensorLog.objects.filter(active=True, plant_sensor=rack.plant_sensor).first()\r\n    if sensor_log:\r\n        sensor_ta = PlantSensorLogDetail.objects.filter(active=True, kode=\"TA\", plant_sensor_log=sensor_log).first()\r\n        sensor_tw = PlantSensorLogDetail.objects.filter(active=True, kode=\"TW\", plant_sensor_log=sensor_log).first()\r\n        if sensor_ta and (sensor_ta > 30):\r\n            plant_alert = PlantAlert()\r\n            plant_alert.state = \"W\"\r\n            plant_alert.note = \"Suhu udara rak %s, melebihi 30 Celsius!\" % (rack)\r\n            plant_alert.save()\r\n        if sensor_tw and (sensor_tw > 20):\r\n            plant_alert = PlantAlert()\r\n            plant_alert.state = \"W\"\r\n            plant_alert.note = \"Suhu air rak %s, melebihi 20 Celsius!\" % (rack)\r\n            plant_alert.save()"
+  }
+},
+{
+  "model": "sihipo_root.plantevalthen",
+  "pk": 71,
+  "fields": {
+    "kode": "RELAY_SUHU_20",
+    "eval_then": "# Gunakan __exec__ untuk mengembalikan nilai\r\nracks = PlantRack.objects.filter(active=True)\r\nfor rack in racks:\r\n    sensor_log = PlantSensorLog.objects.filter(active=True, plant_sensor=rack.plant_sensor).first()\r\n    # control_details = PlantControlDetail.objects.filter(active=True, plant_control=rack.plant_control)\r\n    if sensor_log and control_details:\r\n        sensor_ta = PlantSensorLogDetail.objects.filter(active=True, kode=\"TA\", plant_sensor_log=sensor_log).first()\r\n        sensor_tw = PlantSensorLogDetail.objects.filter(active=True, kode=\"TW\", plant_sensor_log=sensor_log).first()\r\n        if sensor_ta and (sensor_ta > 30):\r\n            plant_control_log = PlantControlLog()\r\n            plant_control_log.state = \"P\"\r\n            plant_control_log.plant_control = rack.plant_control\r\n            plant_control_log.plant_rack = rack\r\n            plant_control_log.save()\r\n            plant_control_log_empty = True\r\n            control_details = PlantControlDetail.objects.filter(active=True, plant_control=rack.plant_control, val=\"W\")\r\n            for control_detail in control_details:\r\n            \tplant_control_log_detail = PlantControlLogDetail()\r\n            \tplant_control_log_detail.plant_control_log = plant_control_log\r\n            \tplant_control_log_detail.kode = control_detail.kode\r\n            \tplant_control_log_detail.val = True\r\n            \tplant_control_log_detail.save()\r\n            \tplant_control_log_empty = False\r\n            if plant_control_log_empty:\r\n            \tplant_control_log.delete()\r\n        if sensor_tw and (sensor_tw > 20):\r\n            plant_control_log = PlantControlLog()\r\n            plant_control_log.state = \"P\"\r\n            plant_control_log.plant_control = rack.plant_control\r\n            plant_control_log.plant_rack = rack\r\n            plant_control_log.save()\r\n            plant_control_log_empty = True\r\n            control_details = PlantControlDetail.objects.filter(active=True, plant_control=rack.plant_control, val=\"S\")\r\n            for control_detail in control_details:\r\n            \tplant_control_log_detail = PlantControlLogDetail()\r\n            \tplant_control_log_detail.plant_control_log = plant_control_log\r\n            \tplant_control_log_detail.kode = control_detail.kode\r\n            \tplant_control_log_detail.val = True\r\n            \tplant_control_log_detail.save()\r\n            \tplant_control_log_empty = False\r\n            if plant_control_log_empty:\r\n            \tplant_control_log.delete()"
+  }
+},
+{
+  "model": "sihipo_root.planteval",
+  "pk": 60,
+  "fields": {
+    "plant_eval_if": 58,
+    "plant_eval_then": 59
+  }
+},
+{
+  "model": "sihipo_root.planteval",
+  "pk": 70,
+  "fields": {
+    "plant_eval_if": 69,
+    "plant_eval_then": 68
+  }
+},
+{
+  "model": "sihipo_root.planteval",
+  "pk": 72,
+  "fields": {
+    "plant_eval_if": 69,
+    "plant_eval_then": 71
+  }
+},
+{
+  "model": "sihipo_root.plantplant",
+  "pk": 1,
+  "fields": {
+    "kode": "SELEDRI"
+  }
+},
+{
+  "model": "sihipo_root.plantplant",
+  "pk": 2,
+  "fields": {
+    "kode": "MENTIMUN"
+  }
+},
+{
+  "model": "sihipo_root.plantplant",
+  "pk": 3,
+  "fields": {
+    "kode": "TERONG"
+  }
+},
+{
+  "model": "sihipo_root.plantplant",
+  "pk": 4,
+  "fields": {
+    "kode": "ENDIVE"
+  }
+},
+{
+  "model": "sihipo_root.plantplant",
+  "pk": 5,
+  "fields": {
+    "kode": "LETTUCE_LEMBARAN"
+  }
+},
+{
+  "model": "sihipo_root.plantplant",
+  "pk": 6,
+  "fields": {
+    "kode": "LETTUCE_BULAT"
+  }
+},
+{
+  "model": "sihipo_root.plantplant",
+  "pk": 7,
+  "fields": {
+    "kode": "MELON"
+  }
+},
+{
+  "model": "sihipo_root.plantplant",
+  "pk": 8,
+  "fields": {
+    "kode": "CABAI"
+  }
+},
+{
+  "model": "sihipo_root.plantplant",
+  "pk": 9,
+  "fields": {
+    "kode": "BAYAM"
+  }
+},
+{
+  "model": "sihipo_root.plantplant",
+  "pk": 10,
+  "fields": {
+    "kode": "STRAWBERRY"
+  }
+},
+{
+  "model": "sihipo_root.plantplant",
+  "pk": 11,
+  "fields": {
+    "kode": "TOMAT"
+  }
+},
+{
+  "model": "sihipo_root.plantplant",
+  "pk": 12,
+  "fields": {
+    "kode": "KANGKUNG"
+  }
+},
+{
+  "model": "sihipo_root.plantplant",
+  "pk": 13,
+  "fields": {
+    "kode": "SAWI"
+  }
+},
+{
+  "model": "sihipo_root.plantplant",
+  "pk": 14,
+  "fields": {
+    "kode": "PAKCOY"
+  }
+},
+{
+  "model": "sihipo_root.plantopt",
+  "pk": 15,
+  "fields": {
+    "plant_plant": 1,
+    "usia": 0.0
+  }
+},
+{
+  "model": "sihipo_root.plantopt",
+  "pk": 18,
+  "fields": {
+    "plant_plant": 2,
+    "usia": 0.0
+  }
+},
+{
+  "model": "sihipo_root.plantopt",
+  "pk": 21,
+  "fields": {
+    "plant_plant": 3,
+    "usia": 0.0
+  }
+},
+{
+  "model": "sihipo_root.plantopt",
+  "pk": 24,
+  "fields": {
+    "plant_plant": 4,
+    "usia": 0.0
+  }
+},
+{
+  "model": "sihipo_root.plantopt",
+  "pk": 27,
+  "fields": {
+    "plant_plant": 5,
+    "usia": 0.0
+  }
+},
+{
+  "model": "sihipo_root.plantopt",
+  "pk": 30,
+  "fields": {
+    "plant_plant": 6,
+    "usia": 0.0
+  }
+},
+{
+  "model": "sihipo_root.plantopt",
+  "pk": 33,
+  "fields": {
+    "plant_plant": 7,
+    "usia": 0.0
+  }
+},
+{
+  "model": "sihipo_root.plantopt",
+  "pk": 36,
+  "fields": {
+    "plant_plant": 8,
+    "usia": 0.0
+  }
+},
+{
+  "model": "sihipo_root.plantopt",
+  "pk": 39,
+  "fields": {
+    "plant_plant": 9,
+    "usia": 0.0
+  }
+},
+{
+  "model": "sihipo_root.plantopt",
+  "pk": 42,
+  "fields": {
+    "plant_plant": 10,
+    "usia": 0.0
+  }
+},
+{
+  "model": "sihipo_root.plantopt",
+  "pk": 45,
+  "fields": {
+    "plant_plant": 11,
+    "usia": 0.0
+  }
+},
+{
+  "model": "sihipo_root.plantopt",
+  "pk": 48,
+  "fields": {
+    "plant_plant": 12,
+    "usia": 0.0
+  }
+},
+{
+  "model": "sihipo_root.plantopt",
+  "pk": 51,
+  "fields": {
+    "plant_plant": 13,
+    "usia": 0.0
+  }
+},
+{
+  "model": "sihipo_root.plantopt",
+  "pk": 54,
+  "fields": {
+    "plant_plant": 14,
+    "usia": 0.0
+  }
+},
+{
+  "model": "sihipo_root.plantoptdetail",
+  "pk": 16,
+  "fields": {
+    "plant_opt": 15,
+    "kode": "EC",
+    "val": 1.95,
+    "tol": 23.0
+  }
+},
+{
+  "model": "sihipo_root.plantoptdetail",
+  "pk": 17,
+  "fields": {
+    "plant_opt": 15,
+    "kode": "PH",
+    "val": 6.5,
+    "tol": 4.0
+  }
+},
+{
+  "model": "sihipo_root.plantoptdetail",
+  "pk": 19,
+  "fields": {
+    "plant_opt": 18,
+    "kode": "EC",
+    "val": 2.0,
+    "tol": 20.0
+  }
+},
+{
+  "model": "sihipo_root.plantoptdetail",
+  "pk": 20,
+  "fields": {
+    "plant_opt": 18,
+    "kode": "PH",
+    "val": 5.5,
+    "tol": 4.0
+  }
+},
+{
+  "model": "sihipo_root.plantoptdetail",
+  "pk": 22,
+  "fields": {
+    "plant_opt": 21,
+    "kode": "EC",
+    "val": 2.0,
+    "tol": 10.0
+  }
+},
+{
+  "model": "sihipo_root.plantoptdetail",
+  "pk": 23,
+  "fields": {
+    "plant_opt": 21,
+    "kode": "PH",
+    "val": 6.0,
+    "tol": 4.0
+  }
+},
+{
+  "model": "sihipo_root.plantoptdetail",
+  "pk": 25,
+  "fields": {
+    "plant_opt": 24,
+    "kode": "EC",
+    "val": 1.15,
+    "tol": 30.0
+  }
+},
+{
+  "model": "sihipo_root.plantoptdetail",
+  "pk": 26,
+  "fields": {
+    "plant_opt": 24,
+    "kode": "PH",
+    "val": 5.5,
+    "tol": 4.0
+  }
+},
+{
+  "model": "sihipo_root.plantoptdetail",
+  "pk": 28,
+  "fields": {
+    "plant_opt": 27,
+    "kode": "EC",
+    "val": 0.55,
+    "tol": 45.0
+  }
+},
+{
+  "model": "sihipo_root.plantoptdetail",
+  "pk": 29,
+  "fields": {
+    "plant_opt": 27,
+    "kode": "PH",
+    "val": 6.0,
+    "tol": 4.0
+  }
+},
+{
+  "model": "sihipo_root.plantoptdetail",
+  "pk": 31,
+  "fields": {
+    "plant_opt": 30,
+    "kode": "EC",
+    "val": 1.0,
+    "tol": 40.0
+  }
+},
+{
+  "model": "sihipo_root.plantoptdetail",
+  "pk": 32,
+  "fields": {
+    "plant_opt": 30,
+    "kode": "PH",
+    "val": 6.0,
+    "tol": 4.0
+  }
+},
+{
+  "model": "sihipo_root.plantoptdetail",
+  "pk": 34,
+  "fields": {
+    "plant_opt": 33,
+    "kode": "EC",
+    "val": 1.6,
+    "tol": 37.0
+  }
+},
+{
+  "model": "sihipo_root.plantoptdetail",
+  "pk": 35,
+  "fields": {
+    "plant_opt": 33,
+    "kode": "PH",
+    "val": 5.75,
+    "tol": 4.0
+  }
+},
+{
+  "model": "sihipo_root.plantoptdetail",
+  "pk": 37,
+  "fields": {
+    "plant_opt": 36,
+    "kode": "EC",
+    "val": 2.3,
+    "tol": 21.0
+  }
+},
+{
+  "model": "sihipo_root.plantoptdetail",
+  "pk": 38,
+  "fields": {
+    "plant_opt": 36,
+    "kode": "PH",
+    "val": 6.05,
+    "tol": 4.0
+  }
+},
+{
+  "model": "sihipo_root.plantoptdetail",
+  "pk": 40,
+  "fields": {
+    "plant_opt": 39,
+    "kode": "EC",
+    "val": 2.65,
+    "tol": 32.0
+  }
+},
+{
+  "model": "sihipo_root.plantoptdetail",
+  "pk": 41,
+  "fields": {
+    "plant_opt": 39,
+    "kode": "PH",
+    "val": 6.0,
+    "tol": 4.0
+  }
+},
+{
+  "model": "sihipo_root.plantoptdetail",
+  "pk": 43,
+  "fields": {
+    "plant_opt": 42,
+    "kode": "EC",
+    "val": 2.15,
+    "tol": 16.0
+  }
+},
+{
+  "model": "sihipo_root.plantoptdetail",
+  "pk": 44,
+  "fields": {
+    "plant_opt": 42,
+    "kode": "PH",
+    "val": 6.0,
+    "tol": 4.0
+  }
+},
+{
+  "model": "sihipo_root.plantoptdetail",
+  "pk": 46,
+  "fields": {
+    "plant_opt": 45,
+    "kode": "EC",
+    "val": 2.3,
+    "tol": 21.0
+  }
+},
+{
+  "model": "sihipo_root.plantoptdetail",
+  "pk": 47,
+  "fields": {
+    "plant_opt": 45,
+    "kode": "PH",
+    "val": 6.25,
+    "tol": 4.0
+  }
+},
+{
+  "model": "sihipo_root.plantoptdetail",
+  "pk": 49,
+  "fields": {
+    "plant_opt": 48,
+    "kode": "EC",
+    "val": 2.65,
+    "tol": 32.0
+  }
+},
+{
+  "model": "sihipo_root.plantoptdetail",
+  "pk": 50,
+  "fields": {
+    "plant_opt": 48,
+    "kode": "PH",
+    "val": 6.0,
+    "tol": 4.0
+  }
+},
+{
+  "model": "sihipo_root.plantoptdetail",
+  "pk": 52,
+  "fields": {
+    "plant_opt": 51,
+    "kode": "EC",
+    "val": 0.55,
+    "tol": 45.0
+  }
+},
+{
+  "model": "sihipo_root.plantoptdetail",
+  "pk": 53,
+  "fields": {
+    "plant_opt": 51,
+    "kode": "PH",
+    "val": 6.0,
+    "tol": 4.0
+  }
+},
+{
+  "model": "sihipo_root.plantoptdetail",
+  "pk": 55,
+  "fields": {
+    "plant_opt": 54,
+    "kode": "EC",
+    "val": 0.55,
+    "tol": 45.0
+  }
+},
+{
+  "model": "sihipo_root.plantoptdetail",
+  "pk": 56,
+  "fields": {
+    "plant_opt": 54,
+    "kode": "PH",
+    "val": 6.0,
+    "tol": 4.0
+  }
+}
+]
