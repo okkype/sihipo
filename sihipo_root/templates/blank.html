@@ -215,7 +215,7 @@
 	    function notif_count() {
 	    	$.get('{% url 'plantalert_count' %}').done(function (data) {
 	    		$('.badge-notif').html(data);
-	    		setTimeout(notif_count, 1000);
+	    		setTimeout(notif_count, 10000);
 	    	});
 	    }
 	    function notif_go(id, url) {

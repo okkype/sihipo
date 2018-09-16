@@ -148,9 +148,10 @@ def get_plant_context(obj, context):
 class PlantListView(LoginRequiredMixin, ListView):
     login_url = '/login/'
     paginate_by = 10
+    is_child = False
     
     def get_paginate_by(self, queryset):
-        if self.request.GET.get('filter') or self.request.session.get('parent_id'):
+        if self.request.GET.get('filter') or (self.is_child and self.request.session.get('parent_id')):
             return 0
         return ListView.get_paginate_by(self, queryset)
     
@@ -164,6 +165,8 @@ class PlantListView(LoginRequiredMixin, ListView):
         
     def get_context_data(self, **kwargs):
         context = get_plant_context(self, super(PlantListView, self).get_context_data(**kwargs))
+        if not self.is_child and self.request.session.get('parent_id'):
+            del self.request.session['parent_id']
         context['table_fields'] = self.fields
         context['filter'] = self.request.GET.get('filter')
         # context['parent_id'] = self.request.session.get('parent_id')
@@ -279,6 +282,7 @@ class PlantOptDetailView(object):
     model = PlantOptDetail
     fields = ['plant_opt', 'kode', 'val', 'tol', 'active']
     success_url = reverse_lazy('plantoptdetail_list')
+    is_child = True
 
 class PlantOptDetailList(PlantOptDetailView, PlantListView):
     def get_context_data(self, **kwargs):
@@ -375,6 +379,7 @@ class PlantSensorDetailView(object):
     model = PlantSensorDetail
     fields = ['plant_sensor', 'kode', 'active']
     success_url = reverse_lazy('plantsensordetail_list')
+    is_child = True
 
 class PlantSensorDetailList(PlantSensorDetailView, PlantListView):
     def get_context_data(self, **kwargs):
@@ -473,6 +478,7 @@ class PlantControlDetailView(object):
     model = PlantControlDetail
     fields = ['plant_control', 'kode', 'val', 'active']
     success_url = reverse_lazy('plantcontroldetail_list')
+    is_child = True
 
 class PlantControlDetailList(PlantControlDetailView, PlantListView):
     def get_context_data(self, **kwargs):
@@ -524,6 +530,7 @@ class PlantRackPointView(object):
     model = PlantRackPoint
     fields = ['plant_rack', 'plant_plant', 'dt', 'p', 'l', 't', 'active']
     success_url = reverse_lazy('plantrackpoint_list')
+    is_child = True
 
 class PlantRackPointList(PlantRackPointView, PlantListView):
     def get_context_data(self, **kwargs):
@@ -575,6 +582,7 @@ class PlantSensorLogDetailView(object):
     model = PlantSensorLogDetail
     fields = ['plant_sensor_log', 'kode', 'val', 'note']
     success_url = reverse_lazy('plantsensorlogdetail_list')
+    is_child = True
 
 class PlantSensorLogDetailList(PlantSensorLogDetailView, PlantListView):
     def get_context_data(self, **kwargs):
@@ -626,6 +634,7 @@ class PlantControlLogDetailView(object):
     model = PlantControlLogDetail
     fields = ['plant_control_log', 'kode', 'val']
     success_url = reverse_lazy('plantcontrollogdetail_list')
+    is_child = True
 
 class PlantControlLogDetailList(PlantControlLogDetailView, PlantListView):
     def get_context_data(self, **kwargs):
@@ -713,6 +722,7 @@ class PlantEvalView(object):
     model = PlantEval
     fields = ['plant_eval_if', 'plant_eval_then', 'active']
     success_url = reverse_lazy('planteval_list')
+    is_child = True
 
 class PlantEvalList(PlantEvalView, PlantListView):
     fields = ['plant_eval_then', 'active']
