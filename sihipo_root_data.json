@@ -992,7 +992,7 @@
   "pk": 58,
   "fields": {
     "kode": "CEK_OPTIMAL",
-    "eval_if": "PlantEvalThen.objects.filter(active=True, kode=\"CEK_OPTIMAL\").first() \\\r\nand PlantEvalThen.objects.filter(active=True, kode=\"CEK_OPTIMAL\").first().execute",
+    "eval_if": "PlantEvalThen.objects.filter(kode=\"CEK_OPTIMAL\").first() \\\r\nand PlantEvalThen.objects.filter(kode=\"CEK_OPTIMAL\").first().execute",
     "plant_eval_group": null,
     "prior": 10
   }
@@ -1002,7 +1002,7 @@
   "pk": 64,
   "fields": {
     "kode": "CEK_PER_MENIT",
-    "eval_if": "PlantEvalThen.objects.filter(active=True, kode=\"CEK_PER_MENIT\").first() \\\r\nand PlantEvalThen.objects.filter(active=True, kode=\"CEK_PER_MENIT\").first().execute",
+    "eval_if": "PlantEvalThen.objects.filter(kode=\"CEK_PER_MENIT\").first() \\\r\nand PlantEvalThen.objects.filter(kode=\"CEK_PER_MENIT\").first().execute",
     "plant_eval_group": null,
     "prior": 10
   }
@@ -1012,7 +1012,7 @@
   "pk": 65,
   "fields": {
     "kode": "CEK_PER_JAM",
-    "eval_if": "PlantEvalThen.objects.filter(active=True, kode=\"CEK_PER_JAM\").first() \\\r\nand PlantEvalThen.objects.filter(active=True, kode=\"CEK_PER_JAM\").first().execute",
+    "eval_if": "PlantEvalThen.objects.filter(kode=\"CEK_PER_JAM\").first() \\\r\nand PlantEvalThen.objects.filter(kode=\"CEK_PER_JAM\").first().execute",
     "plant_eval_group": null,
     "prior": 10
   }
@@ -1022,7 +1022,7 @@
   "pk": 66,
   "fields": {
     "kode": "CEK_PER_HARI",
-    "eval_if": "PlantEvalThen.objects.filter(active=True, kode=\"CEK_PER_HARI\").first() \\\r\nand PlantEvalThen.objects.filter(active=True, kode=\"CEK_PER_HARI\").first().execute",
+    "eval_if": "PlantEvalThen.objects.filter(kode=\"CEK_PER_HARI\").first() \\\r\nand PlantEvalThen.objects.filter(kode=\"CEK_PER_HARI\").first().execute",
     "plant_eval_group": null,
     "prior": 10
   }
@@ -1032,7 +1032,7 @@
   "pk": 69,
   "fields": {
     "kode": "CEK_SUHU_20",
-    "eval_if": "PlantEvalThen.objects.filter(active=True, kode=\"CEK_SUHU_20\").first() \\\r\nand PlantEvalThen.objects.filter(active=True, kode=\"CEK_SUHU_20\").first().execute",
+    "eval_if": "PlantEvalThen.objects.filter(kode=\"CEK_SUHU_20\").first() \\\r\nand PlantEvalThen.objects.filter(kode=\"CEK_SUHU_20\").first().execute",
     "plant_eval_group": null,
     "prior": 10
   }
@@ -1042,7 +1042,7 @@
   "pk": 75,
   "fields": {
     "kode": "CEK_BATERAI",
-    "eval_if": "PlantEvalThen.objects.filter(active=True, kode=\"CEK_BATERAI\").first() \\\r\nand PlantEvalThen.objects.filter(active=True, kode=\"CEK_BATERAI\").first().execute",
+    "eval_if": "PlantEvalThen.objects.filter(kode=\"CEK_BATERAI\").first() \\\r\nand PlantEvalThen.objects.filter(kode=\"CEK_BATERAI\").first().execute",
     "plant_eval_group": null,
     "prior": 10
   }
