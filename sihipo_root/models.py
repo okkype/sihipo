@@ -131,7 +131,9 @@ class PlantEvalThen(PlantBase):
     def execute(self):
         __exec__ = True
         try:
-            exec(self.eval_then)
+            param = {'__exec__':__exec__}
+            exec('from sihipo_root.models import *\r\n%s' % (self.eval_then), param)
+            __exec__ = param['__exec__']
         except Exception as e:
             print(e)
             return False

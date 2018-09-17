@@ -782,7 +782,7 @@ class PlantAlertDelete(PlantAlertView, PlantDeleteView):
 
 def PlantAlertSimple(request):
     body = ''
-    alerts = PlantAlert.objects.filter(active=True)
+    alerts = PlantAlert.objects.filter(active=True)[:10]
     for alert in alerts:
         color = 'black'
         icon = ''
