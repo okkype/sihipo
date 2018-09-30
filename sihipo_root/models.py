@@ -38,6 +38,7 @@ class PlantBase(models.Model):
         ('TA', 'Suhu Udara'),
         ('LW', 'Level Air'),
         ('BL', 'Level Baterai'),
+        ('PA', 'Usia Tanam'),
     )
     
     control_type = (
