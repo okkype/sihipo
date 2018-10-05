@@ -24,7 +24,7 @@ SECRET_KEY = 'm$+pzey8u)(7-^+d-hr33)p+k5vp44)h5la1q+kk(a_^-xg)y+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-HTML_MINIFY = True
+HTML_MINIFY = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -32,31 +32,31 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    # 'ckeditor',
+    # 'django.contrib.sites',
+    # 'django_tables2',
+    # 'registration',
+    'bootstrap3',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.sessions',
     'django.contrib.staticfiles',
-    # 'django.contrib.sites',
-    # 'registration',
-    'bootstrap3',
-    # 'ckeditor',
-    # 'django_tables2',
     'django_nvd3',
     'sihipo_root.apps.SihipoRootConfig',
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'htmlmin.middleware.HtmlMinifyMiddleware',
+    # 'htmlmin.middleware.MarkRequestMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'htmlmin.middleware.HtmlMinifyMiddleware',
-    'htmlmin.middleware.MarkRequestMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.security.SecurityMiddleware',
 ]
 
 ROOT_URLCONF = 'sihipo.urls'
