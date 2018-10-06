@@ -14,7 +14,8 @@
 }
 
 body {
-	font-family: panton;
+	font-family: panton !important;
+	font-size: 10px !important;
 }
 
 td {
