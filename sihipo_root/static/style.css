@@ -15,11 +15,18 @@
 
 body {
 	font-family: panton !important;
-	font-size: 10px !important;
+	font-size: 12px !important;
 }
 
 td {
 	text-align: justify;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+td:hover {
+	overflow: visible;
+	white-space: normal;
 }
 
 td[data-type=numeric] {

@@ -237,6 +237,7 @@
 	    }
         {% block javascript %}{% endblock %}
 	    $(document).ready(function() {
+		$('#page-wrapper').focus();
 	    	notif_count();
 	    	$('.dropdown-toggle').click(simple_notif);
 	        $('.data-tables').DataTable({
