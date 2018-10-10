@@ -15,6 +15,13 @@ import time, datetime
 import threading
 # from datetime import datetime
 
+# START HOME
+class HomeView(LoginRequiredMixin, TemplateView):
+    template_name = 'home.html'
+    login_url = '/login/'
+    
+# END HOME
+
 # START DASHBOARD
 class DashboardView(LoginRequiredMixin, TemplateView):
     template_name = 'main.html'
