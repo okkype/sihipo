@@ -30,7 +30,7 @@
 			{% csrf_token %}
 			<div class="form-group">
 				<label class="control-label" for="id_intval_eval">Eval Interval</label>
-				<input class="form-control" id="id_intval_eval" name="intval_eval" type="number" min="1" value="{% if intval_eval_run %}{{ intval_eval_run }}{% else %}1{% endif %}" />
+				<input class="form-control" id="id_intval_eval" name="intval_eval" type="hidden" min="1" value="{% if intval_eval_run %}{{ intval_eval_run }}{% else %}1{% endif %}" />
 			</div>
 			<input class="btn btn-outline {% if thread_eval_run %}btn-danger{% else %}btn-success{% endif %}" name="thread_eval" type="submit" value="{% if thread_eval_run %}Stop{% else %}Start{% endif %} Eval Thread" />&nbsp;
 			<hr />
