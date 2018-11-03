@@ -1,3 +1,4 @@
+{% load pwa %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -7,7 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+    {% progressive_web_app_meta %}
     <title>Si Hipo - Sistem Informasi Hidroponik</title>
+    <link href="{% static 'img/hipo-icon-2.png' %}" rel="icon" sizes="any" type="image/png" />
     <link href="{% static 'style.css' %}" rel="stylesheet" />
     <link href="{% static 'sb-admin-2/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" />
 	<link href="{% static 'sb-admin-2/vendor/metisMenu/metisMenu.min.css' %}" rel="stylesheet" />
