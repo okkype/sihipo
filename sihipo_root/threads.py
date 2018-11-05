@@ -1,6 +1,6 @@
 from sihipo_root.models import *
 
-from django.db.models.aggregates import Max
+from django.db.models.aggregates import Max, Min
 from datetime import datetime
 
 import threading
@@ -77,7 +77,7 @@ class ControlThread(threading.Thread):
             if self.stop:
                 break
             elif (hour in self.hours) and (minute in self.minutes) and (second in self.seconds):
-                controls_max = PlantControlLog.objects.filter(state__in=['P', 'C']).values('plant_control').annotate(Max('dt')).order_by()
+                controls_max = PlantControlLog.objects.filter(state__in=['P']).values('plant_control').annotate(Min('dt')).order_by()
                 for control_max in controls_max:
                     control = PlantControlLog.objects.filter(plant_control=control_max['plant_control'], dt=control_max['dt__max']).first()
                     pins_on = control.plantcontrollogdetail_set.filter(val=1)
