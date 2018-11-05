@@ -1,3 +1,4 @@
+{% load pwa %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -7,7 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+    {% progressive_web_app_meta %}
     <title>Si Hipo - Sistem Informasi Hidroponik</title>
+    <link href="{% static 'img/hipo-icon-2.png' %}" rel="icon" sizes="any" type="image/png" />
     <link href="{% static 'style.css' %}" rel="stylesheet" />
     <link href="{% static 'sb-admin-2/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" />
 	<link href="{% static 'sb-admin-2/vendor/metisMenu/metisMenu.min.css' %}" rel="stylesheet" />
@@ -38,10 +41,10 @@
                     <!-- /.dropdown-alerts -->
                 </div>
                 <a class="navbar-brand visible-xs" href="/">
-                	<img style="width: 24px;height: 24px; float: left;" src="{% static '/img/hipo-icon-2.png' %}" border="0" />
+                	<img style="width: 24px;height: 24px; float: left;" src="{% static 'img/hipo-icon-2.png' %}" border="0" />
                 </a>
                 <a class="navbar-brand hidden-xs" href="/">
-                	<img style="width: 220px;height: 24px; float: left;" src="{% static '/img/hipo-icon.png' %}" border="0" />
+                	<img style="width: 220px;height: 24px; float: left;" src="{% static 'img/hipo-icon.png' %}" border="0" />
                 </a>
             </div>
             <ul class="nav navbar-top-links navbar-right hidden-xs">

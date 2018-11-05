@@ -15,7 +15,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
@@ -38,12 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # 'django.contrib.sites',
-    # 'registration',
     'bootstrap3',
-    # 'ckeditor',
-    # 'django_tables2',
     'django_nvd3',
+    'pwa',
     'sihipo_root.apps.SihipoRootConfig',
 ]
 
@@ -129,3 +125,17 @@ USE_TZ = False
 
 STATIC_URL = '/static/'
 # STATIC_ROOT = '/home/okky/Dokumen/projek/sihipo/sihipo/static/'
+
+PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'sihipo_root/static/js', 'serviceworker.js')
+PWA_APP_NAME = 'SIHIPO'
+PWA_APP_DESCRIPTION = "Sistem Informasi Hidroponik"
+PWA_APP_THEME_COLOR = '#0A0302'
+PWA_APP_BACKGROUND_COLOR = '#ffffff'
+PWA_APP_DISPLAY = 'standalone'
+PWA_APP_START_URL = '/'
+PWA_APP_ICONS = [
+    {
+        'src': '/static/img/hipo-icon-2.png',
+        'sizes': '160x160'
+    }
+]

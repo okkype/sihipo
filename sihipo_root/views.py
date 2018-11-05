@@ -117,17 +117,17 @@ class SettingView(LoginRequiredMixin, TemplateView):
                     
         if str(self.request.POST.get('thread_sensor')).startswith('Start'):
             context['thread_sensor_run'] = True
-            context['intval_sensor_run'] = int(self.request.POST.get('intval_sensor'))
+            context['intval_sensor_run'] = int(self.request.POST.get('intval_sensor', 1))
             tf = SensorThread(interval=context['intval_sensor_run'])
             tf.start()
         if str(self.request.POST.get('thread_control')).startswith('Start'):
             context['thread_control_run'] = True
-            context['intval_control_run'] = int(self.request.POST.get('intval_control'))
+            context['intval_control_run'] = int(self.request.POST.get('intval_control', 1))
             tf = ControlThread(interval=context['intval_control_run'])
             tf.start()
         if str(self.request.POST.get('thread_eval')).startswith('Start'):
             context['thread_eval_run'] = True
-            context['intval_eval_run'] = int(self.request.POST.get('intval_eval'))
+            context['intval_eval_run'] = int(self.request.POST.get('intval_eval', 1))
             tf = EvalThread(interval=context['intval_eval_run'])
             tf.start()
         try:
