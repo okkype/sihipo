@@ -77,9 +77,9 @@ class ControlThread(threading.Thread):
             if self.stop:
                 break
             elif (hour in self.hours) and (minute in self.minutes) and (second in self.seconds):
-                controls_max = PlantControlLog.objects.filter(state__in=['P']).values('plant_control').annotate(Min('dt')).order_by()
-                for control_max in controls_max:
-                    control = PlantControlLog.objects.filter(plant_control=control_max['plant_control'], dt=control_max['dt__max']).first()
+                controls_min = PlantControlLog.objects.filter(state__in=['P']).values('plant_control').annotate(Min('dt')).order_by()
+                for control_min in controls_min:
+                    control = PlantControlLog.objects.filter(plant_control=control_min['plant_control'], dt=control_min['dt__min']).first()
                     pins_on = control.plantcontrollogdetail_set.filter(val=1)
                     pins_off = control.plantcontrollogdetail_set.filter(val=0)
                     pins_toggle = control.plantcontrollogdetail_set.filter(val=2)
