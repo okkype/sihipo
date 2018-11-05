@@ -915,7 +915,7 @@
   "fields": {
     "created": "2018-09-15T22:33:42.534",
     "created_by": 1,
-    "updated": "2018-09-15T22:33:45.151",
+    "updated": "2018-11-05T09:05:56.284",
     "updated_by": 1,
     "model_name": "plantbase",
     "note": null,
@@ -988,6 +988,110 @@
   }
 },
 {
+  "model": "sihipo_root.plantbase",
+  "pk": 77,
+  "fields": {
+    "created": "2018-11-05T09:21:43.635",
+    "created_by": 1,
+    "updated": "2018-11-05T09:21:44.099",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 78,
+  "fields": {
+    "created": "2018-11-05T09:22:40.868",
+    "created_by": 1,
+    "updated": "2018-11-05T09:22:41.372",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 79,
+  "fields": {
+    "created": "2018-11-05T09:26:17.541",
+    "created_by": 1,
+    "updated": "2018-11-05T09:26:17.927",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 80,
+  "fields": {
+    "created": "2018-11-05T09:27:57.329",
+    "created_by": 1,
+    "updated": "2018-11-05T09:27:57.712",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": false
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 81,
+  "fields": {
+    "created": "2018-11-05T09:29:02.465",
+    "created_by": 1,
+    "updated": "2018-11-05T09:29:02.856",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 82,
+  "fields": {
+    "created": "2018-11-05T09:29:41.667",
+    "created_by": 1,
+    "updated": "2018-11-05T09:29:42.042",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 83,
+  "fields": {
+    "created": "2018-11-05T09:30:02.360",
+    "created_by": 1,
+    "updated": "2018-11-05T09:30:02.732",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": true
+  }
+},
+{
+  "model": "sihipo_root.plantbase",
+  "pk": 84,
+  "fields": {
+    "created": "2018-11-05T09:30:31.556",
+    "created_by": 1,
+    "updated": "2018-11-05T09:30:31.933",
+    "updated_by": 1,
+    "model_name": "plantbase",
+    "note": null,
+    "active": true
+  }
+},
+{
   "model": "sihipo_root.plantevalif",
   "pk": 58,
   "fields": {
@@ -1043,6 +1147,16 @@
   "fields": {
     "kode": "CEK_BATERAI",
     "eval_if": "PlantEvalThen.objects.filter(kode=\"CEK_BATERAI\").first() \\\r\nand PlantEvalThen.objects.filter(kode=\"CEK_BATERAI\").first().execute",
+    "plant_eval_group": null,
+    "prior": 10
+  }
+},
+{
+  "model": "sihipo_root.plantevalif",
+  "pk": 81,
+  "fields": {
+    "kode": "CEK_PER_5MENIT",
+    "eval_if": "PlantEvalThen.objects.filter(kode=\"CEK_PER_5MENIT\").first() \\\r\nand PlantEvalThen.objects.filter(kode=\"CEK_PER_5MENIT\").first().execute",
     "plant_eval_group": null,
     "prior": 10
   }
@@ -1108,7 +1222,7 @@
   "pk": 71,
   "fields": {
     "kode": "RELAY_SUHU_20",
-    "eval_then": "# Gunakan __exec__ untuk mengembalikan nilai\r\nracks = PlantRack.objects.filter(active=True)\r\nfor rack in racks:\r\n    sensor_log = PlantSensorLog.objects.filter(active=True, plant_sensor=rack.plant_sensor).first()\r\n    # control_details = PlantControlDetail.objects.filter(active=True, plant_control=rack.plant_control)\r\n    if sensor_log:\r\n        sensor_ta = PlantSensorLogDetail.objects.filter(active=True, kode=\"TA\", plant_sensor_log=sensor_log).first()\r\n        sensor_tw = PlantSensorLogDetail.objects.filter(active=True, kode=\"TW\", plant_sensor_log=sensor_log).first()\r\n        if sensor_ta and (sensor_ta.val > 30):\r\n            plant_control_log = PlantControlLog()\r\n            plant_control_log.state = \"P\"\r\n            plant_control_log.plant_control = rack.plant_control\r\n            plant_control_log.plant_rack = rack\r\n            plant_control_log.save()\r\n            plant_control_log_empty = True\r\n            control_details = PlantControlDetail.objects.filter(active=True, plant_control=rack.plant_control, val=\"S\")\r\n            for control_detail in control_details:\r\n            \tplant_control_log_detail = PlantControlLogDetail()\r\n            \tplant_control_log_detail.plant_control_log = plant_control_log\r\n            \tplant_control_log_detail.kode = control_detail.kode\r\n            \tplant_control_log_detail.val = True\r\n            \tplant_control_log_detail.save()\r\n            \tplant_control_log_empty = False\r\n            if plant_control_log_empty:\r\n            \tplant_control_log.delete()\r\n        if sensor_tw and (sensor_tw.val > 20):\r\n            plant_control_log = PlantControlLog()\r\n            plant_control_log.state = \"P\"\r\n            plant_control_log.plant_control = rack.plant_control\r\n            plant_control_log.plant_rack = rack\r\n            plant_control_log.save()\r\n            plant_control_log_empty = True\r\n            control_details = PlantControlDetail.objects.filter(active=True, plant_control=rack.plant_control, val=\"W\")\r\n            for control_detail in control_details:\r\n            \tplant_control_log_detail = PlantControlLogDetail()\r\n            \tplant_control_log_detail.plant_control_log = plant_control_log\r\n            \tplant_control_log_detail.kode = control_detail.kode\r\n            \tplant_control_log_detail.val = True\r\n            \tplant_control_log_detail.save()\r\n            \tplant_control_log_empty = False\r\n            if plant_control_log_empty:\r\n            \tplant_control_log.delete()"
+    "eval_then": "# Gunakan __exec__ untuk mengembalikan nilai\r\nracks = PlantRack.objects.filter(active=True)\r\nfor rack in racks:\r\n    sensor_log = PlantSensorLog.objects.filter(active=True, plant_sensor=rack.plant_sensor).first()\r\n    # control_details = PlantControlDetail.objects.filter(active=True, plant_control=rack.plant_control)\r\n    if sensor_log:\r\n        sensor_ta = PlantSensorLogDetail.objects.filter(active=True, kode=\"TA\", plant_sensor_log=sensor_log).first()\r\n        sensor_tw = PlantSensorLogDetail.objects.filter(active=True, kode=\"TW\", plant_sensor_log=sensor_log).first()\r\n        if sensor_ta and (sensor_ta.val > 30):\r\n            plant_control_log = PlantControlLog()\r\n            plant_control_log.state = \"P\"\r\n            plant_control_log.plant_control = rack.plant_control\r\n            plant_control_log.plant_rack = rack\r\n            plant_control_log.save()\r\n            plant_control_log_empty = True\r\n            control_details = PlantControlDetail.objects.filter(active=True, plant_control=rack.plant_control, val=\"S\")\r\n            for control_detail in control_details:\r\n            \tplant_control_log_detail = PlantControlLogDetail()\r\n            \tplant_control_log_detail.plant_control_log = plant_control_log\r\n            \tplant_control_log_detail.kode = control_detail.kode\r\n            \tplant_control_log_detail.val = 0\r\n            \tplant_control_log_detail.save()\r\n            \tplant_control_log_empty = False\r\n            if plant_control_log_empty:\r\n            \tplant_control_log.delete()\r\n        if sensor_tw and (sensor_tw.val > 20):\r\n            plant_control_log = PlantControlLog()\r\n            plant_control_log.state = \"P\"\r\n            plant_control_log.plant_control = rack.plant_control\r\n            plant_control_log.plant_rack = rack\r\n            plant_control_log.save()\r\n            plant_control_log_empty = True\r\n            control_details = PlantControlDetail.objects.filter(active=True, plant_control=rack.plant_control, val=\"W\")\r\n            for control_detail in control_details:\r\n            \tplant_control_log_detail = PlantControlLogDetail()\r\n            \tplant_control_log_detail.plant_control_log = plant_control_log\r\n            \tplant_control_log_detail.kode = control_detail.kode\r\n            \tplant_control_log_detail.val = 0\r\n            \tplant_control_log_detail.save()\r\n            \tplant_control_log_empty = False\r\n            if plant_control_log_empty:\r\n            \tplant_control_log.delete()"
   }
 },
 {
@@ -1125,6 +1239,38 @@
   "fields": {
     "kode": "ALERT_BATERAI",
     "eval_then": "# Gunakan __exec__ untuk mengembalikan nilai\r\nracks = PlantRack.objects.filter(active=True)\r\nfor rack in racks:\r\n    sensor_log = PlantSensorLog.objects.filter(active=True, plant_sensor=rack.plant_sensor).first()\r\n    if sensor_log:\r\n        sensor_bl = PlantSensorLogDetail.objects.filter(active=True, kode=\"BL\", plant_sensor_log=sensor_log).first()\r\n        if sensor_bl and (sensor_bl.val < 15):\r\n            plant_alert = PlantAlert()\r\n            plant_alert.state = \"W\"\r\n            plant_alert.note = \"Baterai rak %s, kurang dari 15 persen, segera isi ulang!\" % (rack)\r\n            plant_alert.save()"
+  }
+},
+{
+  "model": "sihipo_root.plantevalthen",
+  "pk": 77,
+  "fields": {
+    "kode": "RELAY_WPUMP_TGL",
+    "eval_then": "# Gunakan __exec__ untuk mengembalikan nilai\r\nracks = PlantRack.objects.filter(active=True)\r\nfor rack in racks:\r\n    plant_control_log = PlantControlLog()\r\n    plant_control_log.state = \"P\"\r\n    plant_control_log.plant_control = rack.plant_control\r\n    plant_control_log.plant_rack = rack\r\n    plant_control_log.save()\r\n    plant_control_log_empty = True\r\n    control_details = PlantControlDetail.objects.filter(active=True, plant_control=rack.plant_control, val=\"W\")\r\n    for control_detail in control_details:\r\n        plant_control_log_detail = PlantControlLogDetail()\r\n        plant_control_log_detail.plant_control_log = plant_control_log\r\n        plant_control_log_detail.kode = control_detail.kode\r\n        plant_control_log_detail.val = 2\r\n        plant_control_log_detail.save()\r\n        plant_control_log_empty = False\r\n    if plant_control_log_empty:\r\n        plant_control_log.delete()"
+  }
+},
+{
+  "model": "sihipo_root.plantevalthen",
+  "pk": 78,
+  "fields": {
+    "kode": "RELAY_GLAMP_TGL",
+    "eval_then": "# Gunakan __exec__ untuk mengembalikan nilai\r\nracks = PlantRack.objects.filter(active=True)\r\nfor rack in racks:\r\n    plant_control_log = PlantControlLog()\r\n    plant_control_log.state = \"P\"\r\n    plant_control_log.plant_control = rack.plant_control\r\n    plant_control_log.plant_rack = rack\r\n    plant_control_log.save()\r\n    plant_control_log_empty = True\r\n    control_details = PlantControlDetail.objects.filter(active=True, plant_control=rack.plant_control, val=\"L\")\r\n    for control_detail in control_details:\r\n        plant_control_log_detail = PlantControlLogDetail()\r\n        plant_control_log_detail.plant_control_log = plant_control_log\r\n        plant_control_log_detail.kode = control_detail.kode\r\n        plant_control_log_detail.val = 2\r\n        plant_control_log_detail.save()\r\n        plant_control_log_empty = False\r\n    if plant_control_log_empty:\r\n        plant_control_log.delete()"
+  }
+},
+{
+  "model": "sihipo_root.plantevalthen",
+  "pk": 79,
+  "fields": {
+    "kode": "RELAY_MIXER_TGL",
+    "eval_then": "# Gunakan __exec__ untuk mengembalikan nilai\r\nracks = PlantRack.objects.filter(active=True)\r\nfor rack in racks:\r\n    plant_control_log = PlantControlLog()\r\n    plant_control_log.state = \"P\"\r\n    plant_control_log.plant_control = rack.plant_control\r\n    plant_control_log.plant_rack = rack\r\n    plant_control_log.save()\r\n    plant_control_log_empty = True\r\n    control_details = PlantControlDetail.objects.filter(active=True, plant_control=rack.plant_control, val=\"M\")\r\n    for control_detail in control_details:\r\n        plant_control_log_detail = PlantControlLogDetail()\r\n        plant_control_log_detail.plant_control_log = plant_control_log\r\n        plant_control_log_detail.kode = control_detail.kode\r\n        plant_control_log_detail.val = 2\r\n        plant_control_log_detail.save()\r\n        plant_control_log_empty = False\r\n    if plant_control_log_empty:\r\n        plant_control_log.delete()"
+  }
+},
+{
+  "model": "sihipo_root.plantevalthen",
+  "pk": 80,
+  "fields": {
+    "kode": "CEK_PER_5MENIT",
+    "eval_then": "# Gunakan __exec__ untuk mengembalikan nilai\r\nfrom datetime import datetime, date\r\n\r\n__exec__ = False\r\n\r\nhours = range(0, 24)\r\nminutes = range(0, 60, 5)\r\nseconds = [0] # range(0, 60)\r\n\r\nhour = datetime.now().hour\r\nminute = datetime.now().minute\r\nsecond = datetime.now().second\r\n\r\nif (hour in hours) and (minute in minutes) and (second in seconds):\r\n    __exec__ = True"
   }
 },
 {
@@ -1157,6 +1303,30 @@
   "fields": {
     "plant_eval_if": 75,
     "plant_eval_then": 74
+  }
+},
+{
+  "model": "sihipo_root.planteval",
+  "pk": 82,
+  "fields": {
+    "plant_eval_if": 65,
+    "plant_eval_then": 78
+  }
+},
+{
+  "model": "sihipo_root.planteval",
+  "pk": 83,
+  "fields": {
+    "plant_eval_if": 66,
+    "plant_eval_then": 79
+  }
+},
+{
+  "model": "sihipo_root.planteval",
+  "pk": 84,
+  "fields": {
+    "plant_eval_if": 81,
+    "plant_eval_then": 77
   }
 },
 {

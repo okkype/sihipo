@@ -80,14 +80,18 @@ class ControlThread(threading.Thread):
                 controls_max = PlantControlLog.objects.filter(state__in=['P', 'C']).values('plant_control').annotate(Max('dt')).order_by()
                 for control_max in controls_max:
                     control = PlantControlLog.objects.filter(plant_control=control_max['plant_control'], dt=control_max['dt__max']).first()
-                    pins_on = control.plantcontrollogdetail_set.filter(val=True)
-                    pins_off = control.plantcontrollogdetail_set.filter(val=False)
+                    pins_on = control.plantcontrollogdetail_set.filter(val=1)
+                    pins_off = control.plantcontrollogdetail_set.filter(val=0)
+                    pins_toggle = control.plantcontrollogdetail_set.filter(val=2)
                     pins_on_list = []
                     pins_off_list = []
+                    pins_toggle_list = []
                     for pin_on in pins_on:
                         pins_on_list.append('p=%s' % (pin_on.kode[1:]))
                     for pin_off in pins_off:
                         pins_off_list.append('p=%s' % (pin_off.kode[1:]))
+                    for pin_toggle in pins_toggle:
+                        pins_toggle_list.append('p=%s' % (pin_toggle.kode[1:]))
                     if pins_on_list:
                         url = '%s/1?%s' % (control.plant_control.url.strip('/'), '&'.join(pins_on_list))
                         res = ''
@@ -105,6 +109,21 @@ class ControlThread(threading.Thread):
                         control.save()
                     if pins_off_list:
                         url = '%s/0?%s' % (control.plant_control.url.strip('/'), '&'.join(pins_off_list))
+                        res = ''
+                        try:
+                            res = requests.get(url).text
+                        except Exception as e:
+                            res = e
+                        finally:
+                            pass
+                        control.note = res
+                        control.state = 'C'
+                        racks = PlantRack.objects.filter(plant_control=control.plant_control, active=True)
+                        for rack in racks:
+                            control.plant_rack = rack
+                        control.save()
+                    if pins_toggle_list:
+                        url = '%s/2?%s' % (control.plant_control.url.strip('/'), '&'.join(pins_toggle_list))
                         res = ''
                         try:
                             res = requests.get(url).text
