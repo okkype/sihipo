@@ -4,9 +4,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.utils import timezone
 
-import telegram
-from sihipo.settings import TELEGRAM_TOKEN, TELEGRAM_CHAT_ID
-from sihipo_root.threads import TelegramThread
+import threading
 
 # Create your models here.
 
@@ -370,8 +368,9 @@ class PlantAlert(PlantBase):
     
     def save(self, *args, **kwargs):
         super(PlantAlert, self).save(*args, **kwargs)
-        telegram_thread = TelegramThread(text=self.note)
-        telegram_thread.run()
+        for t in threading.enumerate():
+            if t.getName() == 'thread_telegram':
+                t.text = self.note
 
     class Meta:
         verbose_name = 'Berita Tanaman'

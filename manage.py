@@ -19,21 +19,4 @@ if __name__ == "__main__":
                 "forget to activate a virtual environment?"
             )
         raise
-
-    try:
-        from telegram.ext import CommandHandler, Updater
-        from sihipo.settings import TELEGRAM_TOKEN
-
-        def start(bot, update):
-            chat_id = update.message.chat_id
-            bot.send_message(chat_id=chat_id, text='Your Chat ID = %s' % (chat_id))
-
-        updater = Updater(token=TELEGRAM_TOKEN)
-        dispatcher = updater.dispatcher
-        start_handler = CommandHandler('start', start)
-        dispatcher.add_handler(start_handler)
-        updater.start_polling()
-    except Exception as e:
-        print(e)
-
     execute_from_command_line(sys.argv)

@@ -7,7 +7,10 @@ import threading
 import requests
 import time
 import json
+
+import telegram
 from sihipo.settings import TELEGRAM_TOKEN, TELEGRAM_CHAT_ID
+from telegram.ext import CommandHandler, Updater
 
 
 class SensorThread(threading.Thread):
@@ -184,16 +187,39 @@ class EvalThread(threading.Thread):
 
             
 class TelegramThread(threading.Thread):
-
+    stop = False
     text = ''
+    __text__ = ''
+    bot = telegram.Bot(token=TELEGRAM_TOKEN)
+    updater = Updater(token=TELEGRAM_TOKEN)
+    chat_id = TELEGRAM_CHAT_ID
 
-    def __init__(self, group=None, target=None, name=None, args=(), kwargs=None, verbose=None, text=''):
-        self.text = text
+    def __init__(self, group=None, target=None, name='thread_telegram', args=(), kwargs=None, verbose=None):
         threading.Thread.__init__(self, group=group, target=target, name=name, args=args, kwargs=kwargs, verbose=verbose)
 
     def run(self):
         try:
-            bot = telegram.Bot(token=TELEGRAM_TOKEN)
-            bot.send_message(chat_id=TELEGRAM_CHAT_ID, text=self.text)
+
+            def start(bot, update):
+                chat_id = update.message.chat_id
+                bot.send_message(chat_id=chat_id, text='Chat ID = %s\nUntuk mengubah Chat ID anda, silahkan buka sihipo/settings.py kemudian cari TELEGRAM_CHAT_ID' % (chat_id))
+    
+            dispatcher = self.updater.dispatcher
+            start_handler = CommandHandler('start', start)
+            dispatcher.add_handler(start_handler)
+            self.updater.start_polling()
+            while True:
+                if self.stop:
+                    self.updater.stop()
+                    break
+                else:
+                    try:
+                        if self.text and (self.text != self.__text__):
+                            if not self.chat_id or (self.chat_id == '0'):
+                                self.chat_id = TELEGRAM_CHAT_ID
+                            self.bot.send_message(chat_id=self.chat_id, text='%s\nhttp://sihipo.net' % (self.text))
+                            self.__text__ = self.text
+                    except Exception as e:
+                        print(e)
         except Exception as e:
             print(e)

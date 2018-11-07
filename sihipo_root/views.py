@@ -13,6 +13,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 import time, datetime
 import threading
+from sihipo.settings import TELEGRAM_CHAT_ID
 # from datetime import datetime
 
 
@@ -117,6 +118,13 @@ class SettingView(LoginRequiredMixin, TemplateView):
                 if str(self.request.POST.get('thread_eval')).startswith('Stop'):
                     context['thread_eval_run'] = False
                     t.stop = True
+            if t.getName() == 'thread_telegram':
+                context['thread_telegram_run'] = True
+                context['intval_telegram_run'] = t.chat_id
+                if str(self.request.POST.get('thread_telegram')).startswith('Stop'):
+                    context['thread_telegram_run'] = False
+                    context['intval_telegram_run'] = '0'
+                    t.stop = True
                     
         if str(self.request.POST.get('thread_sensor')).startswith('Start'):
             context['thread_sensor_run'] = True
@@ -132,6 +140,12 @@ class SettingView(LoginRequiredMixin, TemplateView):
             context['thread_eval_run'] = True
             context['intval_eval_run'] = int(self.request.POST.get('intval_eval', 1))
             tf = EvalThread(interval=context['intval_eval_run'])
+            tf.start()
+        if str(self.request.POST.get('thread_telegram')).startswith('Start'):
+            context['thread_telegram_run'] = True
+            context['intval_telegram_run'] = int(self.request.POST.get('intval_telegram', TELEGRAM_CHAT_ID)) or TELEGRAM_CHAT_ID
+            tf = TelegramThread()
+            tf.chat_id = context['intval_telegram_run']
             tf.start()
         try:
             f = open('/var/lib/misc/dnsmasq.leases', 'r')
