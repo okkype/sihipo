@@ -202,7 +202,7 @@ class TelegramThread(threading.Thread):
 
             def start(bot, update):
                 chat_id = update.message.chat_id
-                bot.send_message(chat_id=chat_id, text='Chat ID = %s\nUntuk mengubah Chat ID anda, silahkan buka sihipo/settings.py kemudian cari TELEGRAM_CHAT_ID' % (chat_id))
+                bot.send_message(chat_id=chat_id, text='Chat ID yang anda dapatkan adalah %s\nUntuk mengubah Chat ID bawaan perangkat anda, silahkan buka sihipo/settings.py kemudian cari TELEGRAM_CHAT_ID' % (chat_id))
     
             dispatcher = self.updater.dispatcher
             start_handler = CommandHandler('start', start)
