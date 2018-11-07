@@ -15,12 +15,14 @@ import time, datetime
 import threading
 # from datetime import datetime
 
+
 # START HOME
 class HomeView(LoginRequiredMixin, TemplateView):
     template_name = 'home.html'
     login_url = '/login/'
     
 # END HOME
+
 
 # START DASHBOARD
 class DashboardView(LoginRequiredMixin, TemplateView):
@@ -83,6 +85,7 @@ class DashboardView(LoginRequiredMixin, TemplateView):
 
 # END DASHBOARD
 
+
 # START SETTING
 class SettingView(LoginRequiredMixin, TemplateView):
     template_name = 'setting.html'
@@ -131,13 +134,14 @@ class SettingView(LoginRequiredMixin, TemplateView):
             tf = EvalThread(interval=context['intval_eval_run'])
             tf.start()
         try:
-            f = open('/var/lib/misc/dnsmasq.leases','r')
+            f = open('/var/lib/misc/dnsmasq.leases', 'r')
             context['ip_list'] = f.read()
         except Exception as e:
             context['ip_list'] = '%s' % (e)
         return context
     
 # END SETTING
+
 
 # START BASIC VIEW MOD
 def get_plant_context(obj, context):
@@ -151,6 +155,7 @@ def get_plant_context(obj, context):
         if obj.model._meta.get_field(field).get_internal_type() in [u'DateTimeField']:
             context['datetime_fields'].append(field)
     return context
+
 
 class PlantListView(LoginRequiredMixin, ListView):
     login_url = '/login/'
@@ -191,6 +196,7 @@ class PlantListView(LoginRequiredMixin, ListView):
             context['table_headers'][table_field] = self.model._meta.get_field(table_field).verbose_name
         return context
 
+
 class PlantCreateView(LoginRequiredMixin, CreateView):
     login_url = '/login/'
     
@@ -206,6 +212,7 @@ class PlantCreateView(LoginRequiredMixin, CreateView):
         context = get_plant_context(self, super(PlantCreateView, self).get_context_data(**kwargs))
         return context
 
+
 class PlantUpdateView(LoginRequiredMixin, UpdateView):
     login_url = '/login/'
     
@@ -220,6 +227,7 @@ class PlantUpdateView(LoginRequiredMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = get_plant_context(self, super(PlantUpdateView, self).get_context_data(**kwargs))
         return context
+
 
 class PlantDeleteView(LoginRequiredMixin, DeleteView):
     login_url = '/login/'
@@ -238,6 +246,7 @@ class PlantDeleteView(LoginRequiredMixin, DeleteView):
         return context
 
 # END BASIC VIEW MOD
+
     
 # PlantPlant
 class PlantPlantView(object):
@@ -245,17 +254,22 @@ class PlantPlantView(object):
     fields = ['kode', 'note', 'active']
     success_url = reverse_lazy('plantplant_list')
 
+
 class PlantPlantList(PlantPlantView, PlantListView):
     pass
+
 
 class PlantPlantCreate(PlantPlantView, PlantCreateView):
     pass
 
+
 class PlantPlantUpdate(PlantPlantView, PlantUpdateView):
     pass
 
+
 class PlantPlantDelete(PlantPlantView, PlantDeleteView):
     pass
+
 
 # PlantOpt
 class PlantOptView(object):
@@ -263,13 +277,17 @@ class PlantOptView(object):
     fields = ['plant_plant', 'usia', 'note', 'active']
     success_url = reverse_lazy('plantopt_list')
 
+
 class PlantOptList(PlantOptView, PlantListView):
     pass
+
 
 class PlantOptCreate(PlantOptView, PlantCreateView):
     pass
 
+
 class PlantOptUpdate(PlantOptView, PlantUpdateView):
+
     def get_context_data(self, **kwargs):
         context = super(PlantOptUpdate, self).get_context_data(**kwargs)
         context['link_list'] = [
@@ -281,8 +299,10 @@ class PlantOptUpdate(PlantOptView, PlantUpdateView):
         self.request.session['parent_id'] = context['object'].id
         return context
 
+
 class PlantOptDelete(PlantOptView, PlantDeleteView):
     pass
+
 
 # PlantOptDetail
 class PlantOptDetailView(object):
@@ -291,23 +311,30 @@ class PlantOptDetailView(object):
     success_url = reverse_lazy('plantoptdetail_list')
     is_child = True
 
+
 class PlantOptDetailList(PlantOptDetailView, PlantListView):
+
     def get_context_data(self, **kwargs):
         context = super(PlantOptDetailList, self).get_context_data(**kwargs)
         context['object_list'] = self.model.objects.filter(plant_opt=self.request.session.get('parent_id'))
         return context
 
+
 class PlantOptDetailCreate(PlantOptDetailView, PlantCreateView):
+
     def get_initial(self):
         context = super(PlantOptDetailCreate, self).get_initial()
         context['plant_opt'] = self.request.session.get('parent_id')
         return context
 
+
 class PlantOptDetailUpdate(PlantOptDetailView, PlantUpdateView):
     pass
 
+
 class PlantOptDetailDelete(PlantOptDetailView, PlantDeleteView):
     pass
+
     
 # PlantSensor
 class PlantSensorView(object):
@@ -315,13 +342,17 @@ class PlantSensorView(object):
     fields = ['kode', 'url', 'active']
     success_url = reverse_lazy('plantsensor_list')
 
+
 class PlantSensorList(PlantSensorView, PlantListView):
     pass
+
 
 class PlantSensorCreate(PlantSensorView, PlantCreateView):
     pass
 
+
 class PlantSensorUpdate(PlantSensorView, PlantUpdateView):
+
     def get_context_data(self, **kwargs):
         context = super(PlantSensorUpdate, self).get_context_data(**kwargs)
         context['link_list'] = [
@@ -337,8 +368,10 @@ class PlantSensorUpdate(PlantSensorView, PlantUpdateView):
         self.request.session['parent_id'] = context['object'].id
         return context
 
+
 class PlantSensorDelete(PlantSensorView, PlantDeleteView):
     pass
+
 
 class PlantSensorDashboard(TemplateView):
     template_name = 'dashboard.html'
@@ -381,6 +414,7 @@ class PlantSensorDashboard(TemplateView):
 
         return context
 
+
 # PlantSensorDetail
 class PlantSensorDetailView(object):
     model = PlantSensorDetail
@@ -388,23 +422,30 @@ class PlantSensorDetailView(object):
     success_url = reverse_lazy('plantsensordetail_list')
     is_child = True
 
+
 class PlantSensorDetailList(PlantSensorDetailView, PlantListView):
+
     def get_context_data(self, **kwargs):
         context = super(PlantSensorDetailList, self).get_context_data(**kwargs)
         context['object_list'] = self.model.objects.filter(plant_sensor=self.request.session.get('parent_id'))
         return context
 
+
 class PlantSensorDetailCreate(PlantSensorDetailView, PlantCreateView):
+
     def get_initial(self):
         context = super(PlantSensorDetailCreate, self).get_initial()
         context['plant_sensor'] = self.request.session.get('parent_id')
         return context
 
+
 class PlantSensorDetailUpdate(PlantSensorDetailView, PlantUpdateView):
     pass
 
+
 class PlantSensorDetailDelete(PlantSensorDetailView, PlantDeleteView):
     pass
+
     
 # PlantControl
 class PlantControlView(object):
@@ -412,13 +453,17 @@ class PlantControlView(object):
     fields = ['kode', 'url', 'active']
     success_url = reverse_lazy('plantcontrol_list')
 
+
 class PlantControlList(PlantControlView, PlantListView):
     pass
+
 
 class PlantControlCreate(PlantControlView, PlantCreateView):
     pass
 
+
 class PlantControlUpdate(PlantControlView, PlantUpdateView):
+
     def get_context_data(self, **kwargs):
         context = super(PlantControlUpdate, self).get_context_data(**kwargs)
         context['link_list'] = [
@@ -434,8 +479,10 @@ class PlantControlUpdate(PlantControlView, PlantUpdateView):
         self.request.session['parent_id'] = context['object'].id
         return context
 
+
 class PlantControlDelete(PlantControlView, PlantDeleteView):
     pass
+
 
 class PlantControlDashboard(TemplateView):
     template_name = 'dashboard.html'
@@ -480,6 +527,7 @@ class PlantControlDashboard(TemplateView):
 
         return context
 
+
 # PlantControlDetail
 class PlantControlDetailView(object):
     model = PlantControlDetail
@@ -487,23 +535,30 @@ class PlantControlDetailView(object):
     success_url = reverse_lazy('plantcontroldetail_list')
     is_child = True
 
+
 class PlantControlDetailList(PlantControlDetailView, PlantListView):
+
     def get_context_data(self, **kwargs):
         context = super(PlantControlDetailList, self).get_context_data(**kwargs)
         context['object_list'] = self.model.objects.filter(plant_control=self.request.session.get('parent_id'))
         return context
 
+
 class PlantControlDetailCreate(PlantControlDetailView, PlantCreateView):
+
     def get_initial(self):
         context = super(PlantControlDetailCreate, self).get_initial()
         context['plant_control'] = self.request.session.get('parent_id')
         return context
 
+
 class PlantControlDetailUpdate(PlantControlDetailView, PlantUpdateView):
     pass
 
+
 class PlantControlDetailDelete(PlantControlDetailView, PlantDeleteView):
     pass
+
     
 # PlantRack
 class PlantRackView(object):
@@ -511,13 +566,17 @@ class PlantRackView(object):
     fields = ['kode', 'plant_control', 'plant_sensor', 'dt', 'p', 'l', 't', 'type', 'active']
     success_url = reverse_lazy('plantrack_list')
 
+
 class PlantRackList(PlantRackView, PlantListView):
     pass
+
 
 class PlantRackCreate(PlantRackView, PlantCreateView):
     pass
 
+
 class PlantRackUpdate(PlantRackView, PlantUpdateView):
+
     def get_context_data(self, **kwargs):
         context = super(PlantRackUpdate, self).get_context_data(**kwargs)
         context['link_list'] = [
@@ -529,8 +588,10 @@ class PlantRackUpdate(PlantRackView, PlantUpdateView):
         self.request.session['parent_id'] = context['object'].id
         return context
 
+
 class PlantRackDelete(PlantRackView, PlantDeleteView):
     pass
+
 
 # PlantRackPoint
 class PlantRackPointView(object):
@@ -539,23 +600,30 @@ class PlantRackPointView(object):
     success_url = reverse_lazy('plantrackpoint_list')
     is_child = True
 
+
 class PlantRackPointList(PlantRackPointView, PlantListView):
+
     def get_context_data(self, **kwargs):
         context = super(PlantRackPointList, self).get_context_data(**kwargs)
         context['object_list'] = self.model.objects.filter(plant_rack=self.request.session.get('parent_id'))
         return context
 
+
 class PlantRackPointCreate(PlantRackPointView, PlantCreateView):
+
     def get_initial(self):
         context = super(PlantRackPointCreate, self).get_initial()
         context['plant_rack'] = self.request.session.get('parent_id')
         return context
 
+
 class PlantRackPointUpdate(PlantRackPointView, PlantUpdateView):
     pass
 
+
 class PlantRackPointDelete(PlantRackPointView, PlantDeleteView):
     pass
+
 
 # PlantSensorLog
 class PlantSensorLogView(object):
@@ -563,13 +631,17 @@ class PlantSensorLogView(object):
     fields = ['dt', 'plant_sensor', 'plant_rack', 'state']
     success_url = reverse_lazy('plantsensorlog_list')
 
+
 class PlantSensorLogList(PlantSensorLogView, PlantListView):
     pass
+
 
 class PlantSensorLogCreate(PlantSensorLogView, PlantCreateView):
     pass
 
+
 class PlantSensorLogUpdate(PlantSensorLogView, PlantUpdateView):
+
     def get_context_data(self, **kwargs):
         context = super(PlantSensorLogUpdate, self).get_context_data(**kwargs)
         context['link_list'] = [
@@ -581,8 +653,10 @@ class PlantSensorLogUpdate(PlantSensorLogView, PlantUpdateView):
         self.request.session['parent_id'] = context['object'].id
         return context
 
+
 class PlantSensorLogDelete(PlantSensorLogView, PlantDeleteView):
     pass
+
 
 # PlantSensorLogDetail
 class PlantSensorLogDetailView(object):
@@ -591,23 +665,30 @@ class PlantSensorLogDetailView(object):
     success_url = reverse_lazy('plantsensorlogdetail_list')
     is_child = True
 
+
 class PlantSensorLogDetailList(PlantSensorLogDetailView, PlantListView):
+
     def get_context_data(self, **kwargs):
         context = super(PlantSensorLogDetailList, self).get_context_data(**kwargs)
         context['object_list'] = self.model.objects.filter(plant_sensor_log=self.request.session.get('parent_id'))
         return context
 
+
 class PlantSensorLogDetailCreate(PlantSensorLogDetailView, PlantCreateView):
+
     def get_initial(self):
         context = super(PlantSensorLogDetailCreate, self).get_initial()
         context['plant_sensor_log'] = self.request.session.get('parent_id')
         return context
 
+
 class PlantSensorLogDetailUpdate(PlantSensorLogDetailView, PlantUpdateView):
     pass
 
+
 class PlantSensorLogDetailDelete(PlantSensorLogDetailView, PlantDeleteView):
     pass
+
     
 # PlantControlLog
 class PlantControlLogView(object):
@@ -615,13 +696,17 @@ class PlantControlLogView(object):
     fields = ['dt', 'plant_control', 'plant_rack', 'state', 'note']
     success_url = reverse_lazy('plantcontrollog_list')
 
+
 class PlantControlLogList(PlantControlLogView, PlantListView):
     pass
+
 
 class PlantControlLogCreate(PlantControlLogView, PlantCreateView):
     pass
 
+
 class PlantControlLogUpdate(PlantControlLogView, PlantUpdateView):
+
     def get_context_data(self, **kwargs):
         context = super(PlantControlLogUpdate, self).get_context_data(**kwargs)
         context['link_list'] = [
@@ -633,8 +718,10 @@ class PlantControlLogUpdate(PlantControlLogView, PlantUpdateView):
         self.request.session['parent_id'] = context['object'].id
         return context
 
+
 class PlantControlLogDelete(PlantControlLogView, PlantDeleteView):
     pass
+
 
 # PlantControlLogDetail
 class PlantControlLogDetailView(object):
@@ -643,23 +730,30 @@ class PlantControlLogDetailView(object):
     success_url = reverse_lazy('plantcontrollogdetail_list')
     is_child = True
 
+
 class PlantControlLogDetailList(PlantControlLogDetailView, PlantListView):
+
     def get_context_data(self, **kwargs):
         context = super(PlantControlLogDetailList, self).get_context_data(**kwargs)
         context['object_list'] = self.model.objects.filter(plant_control_log=self.request.session.get('parent_id'))
         return context
 
+
 class PlantControlLogDetailCreate(PlantControlLogDetailView, PlantCreateView):
+
     def get_initial(self):
         context = super(PlantControlLogDetailCreate, self).get_initial()
         context['plant_control_log'] = self.request.session.get('parent_id')
         return context
 
+
 class PlantControlLogDetailUpdate(PlantControlLogDetailView, PlantUpdateView):
     pass
 
+
 class PlantControlLogDetailDelete(PlantControlLogDetailView, PlantDeleteView):
     pass
+
 
 # PlantEvalGroup
 class PlantEvalGroupView(object):
@@ -667,17 +761,22 @@ class PlantEvalGroupView(object):
     fields = ['kode', 'active']
     success_url = reverse_lazy('plantevalgroup_list')
 
+
 class PlantEvalGroupList(PlantEvalGroupView, PlantListView):
     pass
+
 
 class PlantEvalGroupCreate(PlantEvalGroupView, PlantCreateView):
     pass
 
+
 class PlantEvalGroupUpdate(PlantEvalGroupView, PlantUpdateView):
     pass
 
+
 class PlantEvalGroupDelete(PlantEvalGroupView, PlantDeleteView):
     pass
+
 
 # PlantEvalIf
 class PlantEvalIfView(object):
@@ -685,13 +784,17 @@ class PlantEvalIfView(object):
     fields = ['kode', 'eval_if', 'plant_eval_group', 'prior', 'active']
     success_url = reverse_lazy('plantevalif_list')
 
+
 class PlantEvalIfList(PlantEvalIfView, PlantListView):
     fields = ['kode', 'plant_eval_group', 'prior', 'active']
+
 
 class PlantEvalIfCreate(PlantEvalIfView, PlantCreateView):
     pass
 
+
 class PlantEvalIfUpdate(PlantEvalIfView, PlantUpdateView):
+
     def get_context_data(self, **kwargs):
         context = super(PlantEvalIfUpdate, self).get_context_data(**kwargs)
         context['link_list'] = [
@@ -703,8 +806,10 @@ class PlantEvalIfUpdate(PlantEvalIfView, PlantUpdateView):
         self.request.session['parent_id'] = context['object'].id
         return context
 
+
 class PlantEvalIfDelete(PlantEvalIfView, PlantDeleteView):
     pass
+
 
 # PlantEvalThen
 class PlantEvalThenView(object):
@@ -712,17 +817,22 @@ class PlantEvalThenView(object):
     fields = ['kode', 'eval_then', 'active']
     success_url = reverse_lazy('plantevalthen_list')
 
+
 class PlantEvalThenList(PlantEvalThenView, PlantListView):
     fields = ['kode', 'active']
+
 
 class PlantEvalThenCreate(PlantEvalThenView, PlantCreateView):
     pass
 
+
 class PlantEvalThenUpdate(PlantEvalThenView, PlantUpdateView):
     pass
 
+
 class PlantEvalThenDelete(PlantEvalThenView, PlantDeleteView):
     pass
+
 
 # PlantEval
 class PlantEvalView(object):
@@ -730,6 +840,7 @@ class PlantEvalView(object):
     fields = ['plant_eval_if', 'plant_eval_then', 'active']
     success_url = reverse_lazy('planteval_list')
     is_child = True
+
 
 class PlantEvalList(PlantEvalView, PlantListView):
     fields = ['plant_eval_then', 'active']
@@ -739,17 +850,22 @@ class PlantEvalList(PlantEvalView, PlantListView):
         context['object_list'] = self.model.objects.filter(plant_eval_if=self.request.session.get('parent_id'))
         return context
 
+
 class PlantEvalCreate(PlantEvalView, PlantCreateView):
+
     def get_initial(self):
         context = super(PlantEvalCreate, self).get_initial()
         context['plant_eval_if'] = self.request.session.get('parent_id')
         return context
 
+
 class PlantEvalUpdate(PlantEvalView, PlantUpdateView):
     pass
 
+
 class PlantEvalDelete(PlantEvalView, PlantDeleteView):
     pass
+
 
 # PlantEvalLog
 class PlantEvalLogView(object):
@@ -757,17 +873,22 @@ class PlantEvalLogView(object):
     fields = ['dt', 'plant_eval']
     success_url = reverse_lazy('plantevallog_list')
 
+
 class PlantEvalLogList(PlantEvalLogView, PlantListView):
     pass
+
 
 class PlantEvalLogCreate(PlantEvalLogView, PlantCreateView):
     pass
 
+
 class PlantEvalLogUpdate(PlantEvalLogView, PlantUpdateView):
     pass
 
+
 class PlantEvalLogDelete(PlantEvalLogView, PlantDeleteView):
     pass
+
     
 # PlantAlert
 class PlantAlertView(object):
@@ -775,17 +896,22 @@ class PlantAlertView(object):
     fields = ['dt', 'note', 'url', 'state', 'active']
     success_url = reverse_lazy('plantalert_list')
 
+
 class PlantAlertList(PlantAlertView, PlantListView):
     pass
+
 
 class PlantAlertCreate(PlantAlertView, PlantCreateView):
     pass
 
+
 class PlantAlertUpdate(PlantAlertView, PlantUpdateView):
     pass
 
+
 class PlantAlertDelete(PlantAlertView, PlantDeleteView):
     pass
+
 
 def PlantAlertSimple(request):
     body = ''
@@ -823,11 +949,13 @@ def PlantAlertSimple(request):
     ''' % (reverse_lazy('plantalert_list'))
     return HttpResponse('%s%s' % (body, foot), content_type='text/plain')
 
+
 def PlantAlertCount(request):
     alerts = PlantAlert.objects.filter(active=True).count()
     return HttpResponse('%s' % (alerts), content_type='text/plain')
 
-def PlantAlertDe(request, pk = False):
+
+def PlantAlertDe(request, pk=False):
     if pk:
         alert = PlantAlert.objects.get(pk=pk)
         alert.active = False

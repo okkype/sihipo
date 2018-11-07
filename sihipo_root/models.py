@@ -4,9 +4,14 @@ from __future__ import unicode_literals
 from django.db import models
 from django.utils import timezone
 
+import telegram
+from sihipo.settings import TELEGRAM_TOKEN, TELEGRAM_CHAT_ID
+
 # Create your models here.
 
+
 class FloatRangeField(models.FloatField):
+
     def __init__(self, verbose_name=None, name=None, min_value=None, max_value=None, **kwargs):
         self.min_value, self.max_value = min_value, max_value
         models.FloatField.__init__(self, verbose_name, name, **kwargs)
@@ -15,6 +20,7 @@ class FloatRangeField(models.FloatField):
         defaults = {'min_value': self.min_value, 'max_value':self.max_value}
         defaults.update(kwargs)
         return super(FloatRangeField, self).formfield(**defaults)
+
     
 class PlantBase(models.Model):
     created = models.DateTimeField(default=timezone.now)
@@ -90,6 +96,7 @@ class PlantBase(models.Model):
         ('SIHIPO_S', 'Device Device'),
     )
 
+
 # Create your models here.
 class PlantEvalGroup(PlantBase):
     kode = models.CharField('Kode Group', unique=True, max_length=20)
@@ -99,6 +106,7 @@ class PlantEvalGroup(PlantBase):
     
     class Meta:
         verbose_name = 'Group Logika'
+
     
 class PlantEvalIf(PlantBase):
     kode = models.CharField('Kode Kondisi', unique=True, max_length=20)
@@ -124,6 +132,7 @@ class PlantEvalIf(PlantBase):
         verbose_name = 'Kondisi'
         unique_together = ('plant_eval_group', 'prior')
         ordering = ['plant_eval_group', 'prior']
+
         
 class PlantEvalThen(PlantBase):
     kode = models.CharField('Kode Aksi', unique=True, max_length=20)
@@ -149,6 +158,7 @@ class PlantEvalThen(PlantBase):
         verbose_name = 'Aksi'
         ordering = ['-active', 'kode']
 
+
 class PlantEval(PlantBase):
     plant_eval_if = models.ForeignKey(PlantEvalIf, models.PROTECT, verbose_name='Kondisi', limit_choices_to={'active': True})
     plant_eval_then = models.ForeignKey(PlantEvalThen, models.PROTECT, verbose_name='Aksi', limit_choices_to={'active': True})
@@ -167,6 +177,7 @@ class PlantEval(PlantBase):
         verbose_name = 'Evaluasi Tanaman'
         unique_together = ('plant_eval_if', 'plant_eval_then')
 
+
 class PlantEvalLog(PlantBase):
     dt = models.DateTimeField('Waktu', default=timezone.now, blank=True)
     plant_eval = models.ForeignKey(PlantEval, models.CASCADE, verbose_name='Evaluasi Tanaman', limit_choices_to={'active': True})
@@ -174,6 +185,7 @@ class PlantEvalLog(PlantBase):
     class Meta:
         verbose_name = 'Log Evaluasi Tanaman'
         ordering = ['-dt']
+
 
 class PlantPlant(PlantBase):
     kode = models.CharField('Kode Tanaman', unique=True, max_length=20)
@@ -183,6 +195,7 @@ class PlantPlant(PlantBase):
     
     class Meta:
         verbose_name = 'Tanaman'
+
         
 class PlantOpt(PlantBase):
     plant_plant = models.ForeignKey(PlantPlant, models.PROTECT, verbose_name="Tanaman", limit_choices_to={'active': True})
@@ -194,6 +207,7 @@ class PlantOpt(PlantBase):
     class Meta:
         verbose_name = 'Kondisi Optimal Tanaman'
         unique_together = ('plant_plant', 'usia')
+
         
 class PlantOptDetail(PlantBase):
     plant_opt = models.ForeignKey(PlantOpt, models.PROTECT, verbose_name='Kondisi Optimal Tanaman', limit_choices_to={'active': True})
@@ -207,6 +221,7 @@ class PlantOptDetail(PlantBase):
     class Meta:
         verbose_name = 'Detail Kondisi Optimal Tanaman'
         unique_together = ('plant_opt', 'kode')
+
         
 class PlantDevice(PlantBase):
     kode = models.CharField('Kode Device', max_length=20, unique=True)
@@ -218,6 +233,7 @@ class PlantDevice(PlantBase):
     
     class Meta:
         verbose_name = 'Device Tanaman'
+
     
 class PlantSensor(PlantDevice):    
     # dev_type = models.CharField('Tipe Device', max_length=10, choices=PlantBase.device_type, default='SIHIPO_S')
@@ -231,6 +247,7 @@ class PlantSensor(PlantDevice):
     
     class Meta:
         verbose_name = 'Sensor Tanaman'
+
         
 class PlantSensorDetail(PlantBase):
     plant_sensor = models.ForeignKey(PlantSensor, models.PROTECT, verbose_name='Sensor Tanaman', limit_choices_to={'active': True})
@@ -239,6 +256,7 @@ class PlantSensorDetail(PlantBase):
     class Meta:
         verbose_name = 'Detail Sensor Tanaman'
         unique_together = ('plant_sensor', 'kode')
+
     
 class PlantControl(PlantDevice):    
     # dev_type = models.CharField('Tipe Device', max_length=10, choices=PlantBase.device_type, default='SIHIPO_C')
@@ -252,6 +270,7 @@ class PlantControl(PlantDevice):
     
     class Meta:
         verbose_name = 'Kontrol Tanaman'
+
         
 class PlantControlDetail(PlantBase):
     plant_control = models.ForeignKey(PlantControl, models.PROTECT, verbose_name='Kontrol Tanaman', limit_choices_to={'active': True})
@@ -261,6 +280,7 @@ class PlantControlDetail(PlantBase):
     class Meta:
         verbose_name = 'Detail Control Tanaman'
         unique_together = ('plant_control', 'kode')
+
         
 class PlantRack(PlantBase):
     kode = models.CharField('Kode Rak', max_length=20)
@@ -277,6 +297,7 @@ class PlantRack(PlantBase):
     
     class Meta:
         verbose_name = 'Rak Tanaman'
+
         
 class PlantRackPoint(PlantBase):
     plant_plant = models.ForeignKey(PlantPlant, models.PROTECT, verbose_name='Tanaman', limit_choices_to={'active': True})
@@ -291,6 +312,7 @@ class PlantRackPoint(PlantBase):
     
     class Meta:
         verbose_name = 'Point Tanaman'
+
     
 class PlantControlLog(PlantBase):
     dt = models.DateTimeField('Waktu', default=timezone.now, blank=True)
@@ -304,6 +326,7 @@ class PlantControlLog(PlantBase):
     class Meta:
         verbose_name = 'Log Kontrol Tanaman'
         ordering = ['-dt']
+
         
 class PlantControlLogDetail(PlantBase):
     plant_control_log = models.ForeignKey(PlantControlLog, models.CASCADE, verbose_name='Log Kontrol Tanaman', limit_choices_to={'active': True})
@@ -313,6 +336,7 @@ class PlantControlLogDetail(PlantBase):
     class Meta:
         verbose_name = 'Detail Log Control Tanaman'
         unique_together = ('plant_control_log', 'kode')
+
         
 class PlantSensorLog(PlantBase):
     dt = models.DateTimeField('Waktu', default=timezone.now, blank=True)
@@ -326,6 +350,7 @@ class PlantSensorLog(PlantBase):
     class Meta:
         verbose_name = 'Log Sensor Tanaman'
         ordering = ['-dt']
+
         
 class PlantSensorLogDetail(PlantBase):
     plant_sensor_log = models.ForeignKey(PlantSensorLog, models.CASCADE, verbose_name='Log Sensor Tanaman', limit_choices_to={'active': True})
@@ -335,12 +360,21 @@ class PlantSensorLogDetail(PlantBase):
     class Meta:
         verbose_name = 'Detail Log Sensor Tanaman'
         unique_together = ('plant_sensor_log', 'kode')
+
         
 class PlantAlert(PlantBase):
     dt = models.DateTimeField('Waktu', default=timezone.now, blank=True)
     url = models.CharField('URL Aksi', max_length=255, default='#')
     state = models.CharField('Status', max_length=2, choices=PlantBase.alert_type, null=True, blank=True)
     
+    def save(self, *args, **kwargs):
+        try:
+            bot = telegram.Bot(token=TELEGRAM_TOKEN)
+            bot.send_message(chat_id=TELEGRAM_CHAT_ID, text=self.note)
+        except Exception as e:
+            print(e)
+        super(PlantAlert, self).save(*args, **kwargs)
+
     class Meta:
         verbose_name = 'Berita Tanaman'
         ordering = ['-dt']

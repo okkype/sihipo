@@ -8,6 +8,7 @@ import requests
 import time
 import json
 
+
 class SensorThread(threading.Thread):
     interval = 1
     hours = range(0, 24)
@@ -57,6 +58,7 @@ class SensorThread(threading.Thread):
                 except Exception as e:
                     print(e)
             time.sleep(self.interval)
+
 
 class ControlThread(threading.Thread):
     interval = 1
@@ -138,6 +140,7 @@ class ControlThread(threading.Thread):
                             control.plant_rack = rack
                         control.save()
             time.sleep(self.interval)
+
 
 class EvalThread(threading.Thread):
     interval = 1
