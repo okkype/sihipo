@@ -961,10 +961,3 @@ def PlantAlertDe(request, pk=False):
         alert.active = False
         alert.save()
     return HttpResponse('%s' % (1), content_type='text/plain')
-
-# def PlantDuplicate(request, model=False, pk=False):
-#     if model and pk:
-#         obj = eval('%s.objects.get(pk=%s)' % (model, pk))
-#         obj.pk = None
-#         obj.save()
-#     return redirect(request.META.get('HTTP_REFERER'))

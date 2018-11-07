@@ -7,6 +7,7 @@ import threading
 import requests
 import time
 import json
+from sihipo.settings import TELEGRAM_TOKEN, TELEGRAM_CHAT_ID
 
 
 class SensorThread(threading.Thread):
@@ -180,11 +181,19 @@ class EvalThread(threading.Thread):
                                     PlantEvalLog(plant_eval=e).save()
                             break
             time.sleep(self.interval)
+
             
-#         while not self.stop:
-#             evls = PlantEval.objects.filter(active=True)
-#             for evl in evls:
-#                 if evl.plant_eval_if.execute:
-#                     if evl.plant_eval_then.execute:
-#                         PlantEvalLog(plant_eval=evl).save()
-#             time.sleep(self.interval)
+class TelegramThread(threading.Thread):
+
+    text = ''
+
+    def __init__(self, group=None, target=None, name=None, args=(), kwargs=None, verbose=None, text=''):
+        self.text = text
+        threading.Thread.__init__(self, group=group, target=target, name=name, args=args, kwargs=kwargs, verbose=verbose)
+
+    def run(self):
+        try:
+            bot = telegram.Bot(token=TELEGRAM_TOKEN)
+            bot.send_message(chat_id=TELEGRAM_CHAT_ID, text=self.text)
+        except Exception as e:
+            print(e)

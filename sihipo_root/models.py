@@ -6,6 +6,7 @@ from django.utils import timezone
 
 import telegram
 from sihipo.settings import TELEGRAM_TOKEN, TELEGRAM_CHAT_ID
+from sihipo_root.threads import TelegramThread
 
 # Create your models here.
 
@@ -368,12 +369,9 @@ class PlantAlert(PlantBase):
     state = models.CharField('Status', max_length=2, choices=PlantBase.alert_type, null=True, blank=True)
     
     def save(self, *args, **kwargs):
-        try:
-            bot = telegram.Bot(token=TELEGRAM_TOKEN)
-            bot.send_message(chat_id=TELEGRAM_CHAT_ID, text=self.note)
-        except Exception as e:
-            print(e)
         super(PlantAlert, self).save(*args, **kwargs)
+        telegram_thread = TelegramThread(text=self.note)
+        telegram_thread.run()
 
     class Meta:
         verbose_name = 'Berita Tanaman'
