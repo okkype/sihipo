@@ -246,6 +246,12 @@
 	        $('.data-tables').DataTable({
 	            /* responsive: true */
 	        });
+	        setTimeout(function () {
+	            $('.navbar-toggle').click();
+	            setTimeout(function () {
+                    $('.navbar-toggle').click();
+                }, 350);
+	        },350);
 	        {% block jquery %}{% endblock %}
 	    });
     </script>
