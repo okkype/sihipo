@@ -147,6 +147,7 @@ class PlantEvalThen(PlantBase):
     
     class Meta:
         verbose_name = 'Aksi'
+        ordering = ['-active', 'kode']
 
 class PlantEval(PlantBase):
     plant_eval_if = models.ForeignKey(PlantEvalIf, models.PROTECT, verbose_name='Kondisi', limit_choices_to={'active': True})
