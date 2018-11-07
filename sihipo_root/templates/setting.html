@@ -36,6 +36,17 @@
 			<hr />
 		</form>
 	</div>
+    <div class="col-md-12 col-xs-12">
+        <form role="form" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label class="control-label" for="id_intval_telegram">Telegram Chat ID</label>
+                <input class="form-control" id="id_intval_telegram" name="intval_telegram" type="number" min="0" value="{% if intval_telegram_run %}{{ intval_telegram_run }}{% else %}0{% endif %}" />
+            </div>
+            <input class="btn btn-outline {% if thread_telegram_run %}btn-danger{% else %}btn-success{% endif %}" name="thread_telegram" type="submit" value="{% if thread_telegram_run %}Stop{% else %}Start{% endif %} Telegram Thread" />&nbsp;
+            <hr />
+        </form>
+    </div>
 	<div class="col-md-12 col-xs-12">
 		<label class="control-label" for="ip_list">IP List (/var/lib/misc/dnsmasq.leases)</label>
 		<textarea id="ip_list">{{ ip_list }}</textarea>
