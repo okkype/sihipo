@@ -217,7 +217,7 @@
 	    function notif_count() {
 	    	$.get('{% url 'plantalert_count' %}').done(function (data) {
 	    		$('.badge-notif').html(data);
-	    		setTimeout(notif_count, 5000);
+	    		setTimeout(notif_count, 10000);
 	    	});
 	    }
 	    function notif_go(id, url) {
@@ -245,12 +245,14 @@
 	        $('.data-tables').DataTable({
 	            /* responsive: true */
 	        });
-	        setTimeout(function () {
-	            $('.navbar-toggle').click();
-	            setTimeout(function () {
+	        if (window.innerWidth < 786) {
+                setTimeout(function () {
                     $('.navbar-toggle').click();
-                }, 350);
-	        },350);
+                    setTimeout(function () {
+                        $('.navbar-toggle').click();
+                    }, 350);
+                },350);
+	        }
 	        {% block jquery %}{% endblock %}
 	    });
     </script>
