@@ -13,7 +13,7 @@
 					<th><a href="?sort={{ table_field }}">{{ table_headers|dict_get:table_field }}</a></th>
 					{% endfor %}
 					{% endblock %}
-					<th style="text-align: center; width: 90px;"><a href="{% url name|add:'_create' %}" class="btn btn-outline btn-success btn-xs" style="font-family: courier;">Add</a></th>
+					<th style="text-align: center; width: 90px;"><a href="{% url name|add:'_create' %}" class="btn btn-outline btn-success btn-xs" style="font-family: courier;"><i class="fa fa-plus"></a></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -23,18 +23,19 @@
 						{% for table_field in table_fields %}
 						<td {% if object|dict_get_field_type:table_field in numeric_field %}data-type="numeric"{% endif %}>
 						{% if forloop.first %}
-						<a href="{% url name|add:'_update' object.id %}">
+						<!-- a href="{% url name|add:'_update' object.id %}" -->
 						{% endif %}
 						{{ object|dict_get_display:table_field|default_if_none:'-' }}
 						{% if forloop.first %}
-						</a>
+						<!-- /a -->
 						{% endif %}
 						</td>
 						{% endfor %}
 						{% endblock %}
 						<td style="text-align: center;">
-							<a href="{% url name|add:'_duplicate' object.id %}" class="btn btn-outline btn-info btn-xs" style="font-family: courier;">Dup</a>
-							<a href="{% url name|add:'_delete' object.id %}" class="btn btn-outline btn-danger btn-xs" style="font-family: courier;">Del</a>
+                            <a href="{% url name|add:'_update' object.id %}" class="btn btn-outline btn-info btn-xs" style="font-family: courier;"><i class="fa fa-edit"></i></a>
+							<a href="{% url name|add:'_duplicate' object.id %}" class="btn btn-outline btn-info btn-xs" style="font-family: courier;"><i class="fa fa-copy"></i></a>
+							<a href="{% url name|add:'_delete' object.id %}" class="btn btn-outline btn-danger btn-xs" style="font-family: courier;"><i class="fa {% if object.active %}fa-trash{% else %}fa-close{% endif %}"></i></a>
 						</td>
 					</tr>
 				{% endfor %}
