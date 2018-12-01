@@ -126,7 +126,7 @@ PWA_APP_NAME = 'SIHIPO'
 PWA_APP_DESCRIPTION = "Sistem Informasi Hidroponik"
 PWA_APP_THEME_COLOR = '#0A0302'
 PWA_APP_BACKGROUND_COLOR = '#ffffff'
-PWA_APP_DISPLAY = 'standalone'
+PWA_APP_DISPLAY = 'fullscreen'
 PWA_APP_START_URL = '/'
 PWA_APP_ICONS = [
     {
