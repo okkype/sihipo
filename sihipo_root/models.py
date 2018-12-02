@@ -94,6 +94,12 @@ class PlantBase(models.Model):
         ('SIHIPO_C', 'Device Kontrol'),
         ('SIHIPO_S', 'Device Device'),
     )
+    
+    daylight_type = (
+        (None, 'N/A'),
+        (12, '12/12'),
+        (16, '16/8'),
+    )
 
 
 # Create your models here.

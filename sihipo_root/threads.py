@@ -104,6 +104,7 @@ class ControlThread(threading.Thread):
                         try:
                             res = requests.get(url).text
                         except Exception as e:
+                            print(e)
                             res = e
                         finally:
                             pass
@@ -119,6 +120,7 @@ class ControlThread(threading.Thread):
                         try:
                             res = requests.get(url).text
                         except Exception as e:
+                            print(e)
                             res = e
                         finally:
                             pass
@@ -134,6 +136,7 @@ class ControlThread(threading.Thread):
                         try:
                             res = requests.get(url).text
                         except Exception as e:
+                            print(e)
                             res = e
                         finally:
                             pass

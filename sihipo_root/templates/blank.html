@@ -195,6 +195,7 @@
             </div>
         </div>
     </div>
+    <script src="{% static 'js/pace.min.js' %}" data-pace-options='{ "ajax": false }'></script>
     <script src="{% static 'sb-admin-2/vendor/jquery/jquery.min.js' %}"></script>
     <script src="{% static 'sb-admin-2/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'sb-admin-2/vendor/momentjs/moment.js' %}"></script>
@@ -245,14 +246,14 @@
 	        $('.data-tables').DataTable({
 	            /* responsive: true */
 	        });
-	        if (window.innerWidth < 786) {
+	        /* if (window.innerWidth < 786) {
                 setTimeout(function () {
                     $('.navbar-toggle').click();
                     setTimeout(function () {
                         $('.navbar-toggle').click();
                     }, 350);
                 }, 1);
-	        }
+	        } */
 	        {% block jquery %}{% endblock %}
 	    });
     </script>
