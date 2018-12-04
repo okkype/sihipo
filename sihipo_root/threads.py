@@ -74,6 +74,23 @@ class ControlThread(threading.Thread):
     def __init__(self, group=None, target=None, name='thread_control', args=(), kwargs=None, interval=1):
         self.interval = interval
         threading.Thread.__init__(self, group=group, target=target, name=name, args=args, kwargs=kwargs)
+        
+    def normalize(self, res, control):
+        res_json = json.loads(res)
+        values = res_json.get('value')
+        if values:
+            for i, value in enumerate(values):
+                pins = control.plantcontrollogdetail_set.filter(kode='D%s' % (i))
+                if pins:
+                    for pin in pins:
+                        pin.val = value
+                        pin.save()
+                else:
+                    plant_control_log_detail = PlantControlLogDetail()
+                    plant_control_log_detail.plant_control_log = control
+                    plant_control_log_detail.kode = 'D%s' % (i)
+                    plant_control_log_detail.val = value
+                    plant_control_log_detail.save()
          
     def run(self):
         while True:
@@ -103,6 +120,7 @@ class ControlThread(threading.Thread):
                         res = ''
                         try:
                             res = requests.get(url).text
+                            self.normalize(res, control)
                         except Exception as e:
                             print(e)
                             res = e
@@ -119,6 +137,7 @@ class ControlThread(threading.Thread):
                         res = ''
                         try:
                             res = requests.get(url).text
+                            self.normalize(res, control)
                         except Exception as e:
                             print(e)
                             res = e
@@ -135,6 +154,7 @@ class ControlThread(threading.Thread):
                         res = ''
                         try:
                             res = requests.get(url).text
+                            self.normalize(res, control)
                         except Exception as e:
                             print(e)
                             res = e
