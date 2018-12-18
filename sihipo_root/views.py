@@ -527,7 +527,7 @@ class PlantControlDashboard(TemplateView):
                     days = day_count
                     while days >= 0:
                         last_day = (datetime.datetime.now() - datetime.timedelta(days=days)).strftime('%Y-%m-%d')
-                        val = PlantControlLogDetail.objects.filter(kode=control_detail.kode, plant_control_log__plant_control=self.request.session.get('parent_id'), plant_control_log__dt__range=('%s 00:00:00' % (last_day), '%s 23:59:59' % (last_day))).aggregate(Count('val'))
+                        val = PlantControlLogDetail.objects.filter(val=1, kode=control_detail.kode, plant_control_log__plant_control=self.request.session.get('parent_id'), plant_control_log__dt__range=('%s 00:00:00' % (last_day), '%s 23:59:59' % (last_day))).aggregate(Count('val'))
                         ydata.append(val['val__count'] or 0.0)
                         days -= 1
                     chartdata['y%s' % (chartseq)] = ydata
