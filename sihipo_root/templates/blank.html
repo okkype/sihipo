@@ -173,20 +173,16 @@
                 {% endif %}
                 {% block container %}{% endblock %}
 				{% if is_paginated %}
-					<div class="row">
-						<div class="col-xs-4" style="text-align: left;">
+					<div class="row" style="text-align: center;">
+						<div class="btn-group">
 				            {% if page_obj.has_previous %}
-				                <a class="btn btn-outline btn-primary btn-block" href="?page={{ page_obj.previous_page_number }}">&lt;</a>
+				                <a class="btn btn-outline btn-primary" href="?page={{ page_obj.previous_page_number }}">&lt;</a>
 				            {% endif %}
-				        </div>
-				        <div class="col-xs-4" style="text-align: center;">
-				        	<span class="btn btn-outline btn-info btn-block">
+				        	<a class="btn btn-outline btn-primary" href="javascript:location.href='?page='+(parseInt(prompt('Loncat ke halaman?'))||1)">
 				        		{{ page_obj.number }}/{{ page_obj.paginator.num_pages }}
-				        	</span>
-				        </div>
-				        <div class="col-xs-4" style="text-align: right;">
+				        	</a>
 				            {% if page_obj.has_next %}
-				                <a class="btn btn-outline btn-primary btn-block" href="?page={{ page_obj.next_page_number }}">&gt;</a>
+				                <a class="btn btn-outline btn-primary" href="?page={{ page_obj.next_page_number }}">&gt;</a>
 				            {% endif %}
 				        </div>
 			        </div>

@@ -33,9 +33,11 @@
 						{% endfor %}
 						{% endblock %}
 						<td style="text-align: center;">
-                            <a href="{% url name|add:'_update' object.id %}" class="btn btn-outline btn-info btn-xs" style="font-family: courier;"><i class="fa fa-edit"></i></a>
-							<a href="{% url name|add:'_duplicate' object.id %}" class="btn btn-outline btn-info btn-xs" style="font-family: courier;"><i class="fa fa-copy"></i></a>
-							<a href="{% url name|add:'_delete' object.id %}" class="btn btn-outline btn-danger btn-xs" style="font-family: courier;"><i class="fa {% if object.active %}fa-trash{% else %}fa-close{% endif %}"></i></a>
+						    <div class="btn-group">
+                                <a href="{% url name|add:'_update' object.id %}" class="btn btn-outline btn-info btn-xs" style="font-family: courier;"><i class="fa fa-edit"></i></a>
+    							<a href="{% url name|add:'_duplicate' object.id %}" class="btn btn-outline btn-info btn-xs" style="font-family: courier;"><i class="fa fa-copy"></i></a>
+    							<a href="{% url name|add:'_delete' object.id %}" class="btn btn-outline btn-danger btn-xs" style="font-family: courier;"><i class="fa {% if object.active %}fa-trash{% else %}fa-close{% endif %}"></i></a>
+    						</div>
 						</td>
 					</tr>
 				{% endfor %}
