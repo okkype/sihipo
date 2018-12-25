@@ -1,26 +1,29 @@
-from sihipo_root.models import *
-from sihipo_root.threads import *
-
-from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
+from django.db.models.aggregates import Avg, Count
+from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
+from django.utils.datetime_safe import strftime
 from django.views.generic import TemplateView, ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.db.models import Q
-from django.http.response import HttpResponse, HttpResponseRedirect
-from django.utils.datetime_safe import strftime
-from django.db.models.aggregates import Avg, Count
-from django.contrib.auth.mixins import LoginRequiredMixin
-
-import time, datetime
-import threading
 from sihipo.settings import TELEGRAM_CHAT_ID
-# from datetime import datetime
+from sihipo_root.models import *
+from sihipo_root.threads import *
+import subprocess
+import threading
+import time, datetime
 
 
 # START HOME
 class HomeView(LoginRequiredMixin, TemplateView):
     template_name = 'home.html'
     login_url = '/login/'
+    
+    def get_context_data(self, **kwargs):
+        context = super(HomeView, self).get_context_data(**kwargs)
+        context['git_version'] = subprocess.check_output(['git', 'describe', '--tags']).strip().split('-')[0]
+        return context
     
 # END HOME
 
