@@ -15,9 +15,9 @@ from telegram.ext import CommandHandler, Updater
 
 class SensorThread(threading.Thread):
     interval = 1
-    hours = range(0, 24)
-    minutes = range(0, 60)
-    seconds = range(0, 60)
+#     hours = range(0, 24)
+#     minutes = range(0, 60)
+#     seconds = range(0, 60)
     stop = False
     
     def __init__(self, group=None, target=None, name='thread_sensor', args=(), kwargs=None, interval=1):
@@ -26,13 +26,13 @@ class SensorThread(threading.Thread):
          
     def run(self):
         while True:
-            hour = datetime.now().hour
-            minute = datetime.now().minute
-            second = datetime.now().second
+#             hour = datetime.now().hour
+#             minute = datetime.now().minute
+#             second = datetime.now().second
             if self.stop:
                 break
-            elif (hour in self.hours) and (minute in self.minutes) and (second in self.seconds):
-                try :
+            else:  # elif (hour in self.hours) and (minute in self.minutes) and (second in self.seconds):
+                try:
                     sensors = PlantSensor.objects.filter(active=True)
                     for sensor in sensors:
                         data = json.loads(requests.get(sensor.url).text)
@@ -66,9 +66,9 @@ class SensorThread(threading.Thread):
 
 class ControlThread(threading.Thread):
     interval = 1
-    hours = range(0, 24)
-    minutes = range(0, 60)
-    seconds = range(0, 60)
+#     hours = range(0, 24)
+#     minutes = range(0, 60)
+#     seconds = range(0, 60)
     stop = False
     
     def __init__(self, group=None, target=None, name='thread_control', args=(), kwargs=None, interval=1):
@@ -94,12 +94,12 @@ class ControlThread(threading.Thread):
          
     def run(self):
         while True:
-            hour = datetime.now().hour
-            minute = datetime.now().minute
-            second = datetime.now().second
+#             hour = datetime.now().hour
+#             minute = datetime.now().minute
+#             second = datetime.now().second
             if self.stop:
                 break
-            elif (hour in self.hours) and (minute in self.minutes) and (second in self.seconds):
+            else:  # elif (hour in self.hours) and (minute in self.minutes) and (second in self.seconds):
                 controls_min = PlantControlLog.objects.filter(state__in=['P']).values('plant_control').annotate(Min('dt')).order_by()
                 for control_min in controls_min:
                     control = PlantControlLog.objects.filter(plant_control=control_min['plant_control'], dt=control_min['dt__min']).first()
@@ -171,9 +171,9 @@ class ControlThread(threading.Thread):
 
 class EvalThread(threading.Thread):
     interval = 1
-    hours = range(0, 24)
-    minutes = range(0, 60)
-    seconds = range(0, 60)
+#     hours = range(0, 24)
+#     minutes = range(0, 60)
+#     seconds = range(0, 60)
     stop = False
     
     def __init__(self, group=None, target=None, name='thread_eval', args=(), kwargs=None, interval=1):
@@ -182,12 +182,12 @@ class EvalThread(threading.Thread):
          
     def run(self):
         while True:
-            hour = datetime.now().hour
-            minute = datetime.now().minute
-            second = datetime.now().second
+#             hour = datetime.now().hour
+#             minute = datetime.now().minute
+#             second = datetime.now().second
             if self.stop:
                 break
-            elif (hour in self.hours) and (minute in self.minutes) and (second in self.seconds):
+            else:  # elif (hour in self.hours) and (minute in self.minutes) and (second in self.seconds):
                 eifs = PlantEvalIf.objects.filter(active=True, plant_eval_group__isnull=True)
                 for eif in eifs:
                     if eif.execute:
