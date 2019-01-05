@@ -150,6 +150,10 @@ class SettingView(LoginRequiredMixin, TemplateView):
             tf = TelegramThread()
             tf.chat_id = context['intval_telegram_run']
             tf.start()
+        if self.request.POST.get('command') == 'trash' and self.request.POST.get('model'):
+            eval("%s.objects.all().update(active=False)" % (self.request.POST.get('model')))
+        if self.request.POST.get('command') == 'empty' and self.request.POST.get('model'):
+            eval("%s.objects.filter(active=False).delete()" % (self.request.POST.get('model')))
         try:
             f = open('/var/lib/misc/dnsmasq.leases', 'r')
             context['ip_list'] = f.read()
@@ -197,6 +201,7 @@ class PlantListView(LoginRequiredMixin, ListView):
         if not self.is_child and self.request.session.get('parent_id'):
             del self.request.session['parent_id']
         context['table_fields'] = self.fields
+        context['table_model'] = self.model.__name__
         context['filter'] = self.request.GET.get('filter')
         # context['parent_id'] = self.request.session.get('parent_id')
         if context['filter']:

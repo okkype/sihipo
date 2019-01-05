@@ -13,7 +13,13 @@
 					<th><a href="?sort={{ table_field }}">{{ table_headers|dict_get:table_field }}</a></th>
 					{% endfor %}
 					{% endblock %}
-					<th style="text-align: center; width: 90px;"><a href="{% url name|add:'_create' %}" class="btn btn-outline btn-success btn-xs" style="font-family: courier;"><i class="fa fa-plus"></a></th>
+					<th style="text-align: center; width: 90px;">
+					    <div class="btn-group">
+					       <a href="{% url name|add:'_create' %}" class="btn btn-outline btn-success btn-xs" style="font-family: courier;"><i class="fa fa-plus"></i></a>
+					       <a href="javascript:if(confirm('Apakah Anda Yakin Membuang Semua {{verbose_name}} ke Sampah?')) trash('{{ table_model }}','trash');" class="btn btn-outline btn-danger btn-xs" style="font-family: courier;"><i class="fa fa-trash"></i></a>
+					       <a href="javascript:if(confirm('Apakah Anda Yakin Memhapus Semua {{verbose_name}} dari Sampah?')) trash('{{ table_model }}','empty');" class="btn btn-outline btn-danger btn-xs" style="font-family: courier;"><i class="fa fa-close"></i></a>
+					    </div>
+					</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -48,4 +54,17 @@
 	{% endif %}
 	</div>
 </div>
+{% endblock %}
+{% block javascript %}
+function trash(model, command) {
+    Pace.stop();
+    Pace.bar.render();
+    $.post({% url 'setting' %}, {
+        'csrfmiddlewaretoken':'{{ csrf_token }}',
+        'command':command,
+        'model':model
+    }, function () {
+        location.reload();
+    });
+}
 {% endblock %}
