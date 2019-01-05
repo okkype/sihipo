@@ -3,9 +3,13 @@
 {% block container %}
 <div class="row">
 	<div class="col-lg-12">
-		<form role="form" method="post">
+		<form id="form-delete" role="form" method="post">
 			{% csrf_token %}
-			{% if object.active %}Non aktifkan{% else %}Hapus{% endif %} "{{ object }}" ?<hr />
+			{% if object.active %}
+			<script type="text/javascript">
+			document.getElementById('form-delete').submit();
+			</script>
+			{% else %}Hapus "{{ object }}" ?{% endif %}<hr />
     		<input type="submit" value="Ya" class="btn btn-outline btn-success" />&nbsp;
     		<input type="button" value="Tidak" class="btn btn-outline btn-danger" onclick="history.back()" />
 		</form>

@@ -33,6 +33,9 @@ class PlantBase(models.Model):
     def __init__(self, *args, **kwargs):
         super(PlantBase, self).__init__(*args, **kwargs)
         self.model_name = self._meta.model_name
+        
+    class Meta:
+        ordering = ['-active', ]
     
     sensor_type = (
         (None, 'N/A'),
@@ -136,7 +139,7 @@ class PlantEvalIf(PlantBase):
     class Meta:
         verbose_name = 'Kondisi'
         unique_together = ('plant_eval_group', 'prior')
-        ordering = ['plant_eval_group', 'prior']
+        ordering = ['-active', 'plant_eval_group', 'prior']
 
         
 class PlantEvalThen(PlantBase):
@@ -161,7 +164,7 @@ class PlantEvalThen(PlantBase):
     
     class Meta:
         verbose_name = 'Aksi'
-        ordering = ['-active', 'kode']
+        ordering = ['-active', '-active', 'kode']
 
 
 class PlantEval(PlantBase):
@@ -189,7 +192,7 @@ class PlantEvalLog(PlantBase):
     
     class Meta:
         verbose_name = 'Log Evaluasi Tanaman'
-        ordering = ['-dt']
+        ordering = ['-active', '-dt']
 
 
 class PlantPlant(PlantBase):
@@ -330,7 +333,7 @@ class PlantControlLog(PlantBase):
     
     class Meta:
         verbose_name = 'Log Kontrol Tanaman'
-        ordering = ['-dt']
+        ordering = ['-active', '-dt']
 
         
 class PlantControlLogDetail(PlantBase):
@@ -354,7 +357,7 @@ class PlantSensorLog(PlantBase):
     
     class Meta:
         verbose_name = 'Log Sensor Tanaman'
-        ordering = ['-dt']
+        ordering = ['-active', '-dt']
 
         
 class PlantSensorLogDetail(PlantBase):
@@ -380,4 +383,4 @@ class PlantAlert(PlantBase):
 
     class Meta:
         verbose_name = 'Berita Tanaman'
-        ordering = ['-dt']
+        ordering = ['-active', '-dt']
