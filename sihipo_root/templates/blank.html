@@ -178,7 +178,7 @@
 				            {% if page_obj.has_previous %}
 				                <a class="btn btn-outline btn-primary" href="?page={{ page_obj.previous_page_number }}">&lt;</a>
 				            {% endif %}
-				        	<a class="btn btn-outline btn-primary" href="javascript:location.href='?page='+(parseInt(prompt('Loncat ke halaman?'))||1)">
+				        	<a class="btn btn-outline btn-primary" href="javascript:var jump=parseInt(prompt('Loncat ke halaman?'));location.href='?page='+((jump>{{ page_obj.paginator.num_pages }}?{{ page_obj.paginator.num_pages }}:jump)||1)">
 				        		{{ page_obj.number }}/{{ page_obj.paginator.num_pages }}
 				        	</a>
 				            {% if page_obj.has_next %}
