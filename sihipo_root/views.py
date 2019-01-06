@@ -157,6 +157,43 @@ class SettingView(LoginRequiredMixin, TemplateView):
         try:
             f = open('/var/lib/misc/dnsmasq.leases', 'r')
             context['ip_list'] = f.read()
+            if self.request.POST.get('command') == 'Tambahkan ke Sensor/Kontrol':
+                split_lines = str(self.request.POST.get('ip_list')).split('\n')
+                for split_line in split_lines:
+                    split_spaces = split_line.split(' ')
+                    if len(split_spaces) > 3:
+                        try:
+                            url = 'http://%s' % (split_spaces[2])
+                            res_json = requests.get(url, timeout=5).json()
+                            tipe = res_json.get('type')
+                            kode = split_spaces[3] if (split_spaces[3] not in ['', '*']) else res_json.get('id')
+                            if tipe:
+                                if tipe.upper() == 'SIHIPO_C':
+                                    controls = PlantControl.objects.filter(Q(kode=kode)|Q(url=url))
+                                    if controls:
+                                        for control in controls:
+                                            control.kode = kode
+                                            control.url = url
+                                            control.save()
+                                    else:
+                                        control = PlantControl()
+                                        control.kode = kode
+                                        control.url = url
+                                        control.save()
+                                elif tipe.upper() == 'SIHIPO_S':
+                                    sensors = PlantSensor.objects.filter(Q(kode=kode)|Q(url=url))
+                                    if sensors:
+                                        for sensor in sensors:
+                                            sensor.kode = kode
+                                            sensor.url = url
+                                            sensor.save()
+                                    else:
+                                        sensor = PlantSensor()
+                                        sensor.kode = kode
+                                        sensor.url = url
+                                        sensor.save()
+                        except Exception as e:
+                            print(e)
         except Exception as e:
             context['ip_list'] = '%s' % (e)
         return context

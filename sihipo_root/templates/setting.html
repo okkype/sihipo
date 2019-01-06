@@ -48,13 +48,20 @@
         </form>
     </div>
 	<div class="col-md-12 col-xs-12">
-		<label class="control-label" for="ip_list">IP List (/var/lib/misc/dnsmasq.leases)</label>
-		<textarea id="ip_list">{{ ip_list }}</textarea>
+	    <form role="form" method="post">
+	        {% csrf_token %}
+            <div class="form-group">
+        		<label class="control-label" for="id_ip_list">IP List (/var/lib/misc/dnsmasq.leases)</label>
+        		<textarea name="ip_list" id="id_ip_list">{{ ip_list }}</textarea>
+        	</div>
+            <input class="btn btn-outline btn-success" name="command" type="submit" value="Tambahkan ke Sensor/Kontrol" />&nbsp;
+            <hr />
+        </form>
 	</div>
 </div>
 {% endblock %}
 {% block javascript %}
-	code_edit('ip_list');
+	code_edit('id_ip_list');
 {% endblock %}
 {% block jquery %}
 {% for datetime_field in datetime_fields %}
