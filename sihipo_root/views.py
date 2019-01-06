@@ -200,6 +200,10 @@ class PlantListView(LoginRequiredMixin, ListView):
         context = get_plant_context(self, super(PlantListView, self).get_context_data(**kwargs))
         if not self.is_child and self.request.session.get('parent_id'):
             del self.request.session['parent_id']
+        if self.request.GET.get('filter') or (self.is_child and self.request.session.get('parent_id')):
+            context['table_extra'] = False
+        else:
+            context['table_extra'] = True
         context['table_fields'] = self.fields
         context['table_model'] = self.model.__name__
         context['filter'] = self.request.GET.get('filter')
