@@ -15,9 +15,11 @@
 					{% endblock %}
 					<th style="text-align: center; width: 90px;">
 					    <div class="btn-group">
-					       <a href="{% url name|add:'_create' %}" class="btn btn-outline btn-success btn-xs" style="font-family: courier;"><i class="fa fa-plus"></i></a>
-					       <a href="javascript:if(confirm('Apakah Anda Yakin Membuang Semua {{verbose_name}} ke Sampah?')) trash('{{ table_model }}','trash');" class="btn btn-outline btn-danger btn-xs" style="font-family: courier;"><i class="fa fa-trash"></i></a>
-					       <a href="javascript:if(confirm('Apakah Anda Yakin Memhapus Semua {{verbose_name}} dari Sampah?')) trash('{{ table_model }}','empty');" class="btn btn-outline btn-danger btn-xs" style="font-family: courier;"><i class="fa fa-close"></i></a>
+					        <a href="{% url name|add:'_create' %}" class="btn btn-outline btn-success btn-xs" style="font-family: courier;"><i class="fa fa-plus"></i></a>
+					        {% if table_extra %}
+					            <a href="javascript:if(confirm('Apakah Anda Yakin Membuang Semua {{verbose_name}} ke Sampah?')) trash('{{ table_model }}','trash');" class="btn btn-outline btn-danger btn-xs" style="font-family: courier;"><i class="fa fa-trash"></i></a>
+					            <a href="javascript:if(confirm('Apakah Anda Yakin Memhapus Semua {{verbose_name}} dari Sampah?')) trash('{{ table_model }}','empty');" class="btn btn-outline btn-danger btn-xs" style="font-family: courier;"><i class="fa fa-close"></i></a>
+					        {% endif %}
 					    </div>
 					</th>
 				</tr>
@@ -42,7 +44,7 @@
 						    <div class="btn-group">
                                 <a href="{% url name|add:'_update' object.id %}" class="btn btn-outline btn-info btn-xs" style="font-family: courier;"><i class="fa fa-edit"></i></a>
     							<a href="{% url name|add:'_duplicate' object.id %}" class="btn btn-outline btn-info btn-xs" style="font-family: courier;"><i class="fa fa-copy"></i></a>
-    							<a href="{% url name|add:'_delete' object.id %}" class="btn btn-outline btn-danger btn-xs" style="font-family: courier;"><i class="fa {% if object.active %}fa-trash{% else %}fa-close{% endif %}"></i></a>
+    							<a href="javascript:if(('{{ object.active }}'=='True')||confirm('Apakah Anda Yakin?')) trashone('{% url name|add:'_delete' object.id %}');" class="btn btn-outline btn-danger btn-xs" style="font-family: courier;"><i class="fa {% if object.active %}fa-trash{% else %}fa-close{% endif %}"></i></a>
     						</div>
 						</td>
 					</tr>
@@ -56,6 +58,15 @@
 </div>
 {% endblock %}
 {% block javascript %}
+function trashone(url) {
+    Pace.stop();
+    Pace.bar.render();
+    $.post(url, {
+        'csrfmiddlewaretoken':'{{ csrf_token }}'
+    }, function () {
+        location.reload();
+    });
+}
 function trash(model, command) {
     Pace.stop();
     Pace.bar.render();
