@@ -151,9 +151,15 @@ class SettingView(LoginRequiredMixin, TemplateView):
             tf.chat_id = context['intval_telegram_run']
             tf.start()
         if self.request.POST.get('command') == 'trash' and self.request.POST.get('model'):
-            eval("%s.objects.all().update(active=False)" % (self.request.POST.get('model')))
+            if self.request.POST.get('filter_query'):
+                eval("%s.objects.filter(%s).update(active=False)" % (self.request.POST.get('model'), str(self.request.POST.get('filter_query')).replace('context[&#39;filter&#39;]', "'%s'" % (self.request.POST.get('filter')))))
+            else:
+                eval("%s.objects.all().update(active=False)" % (self.request.POST.get('model')))
         if self.request.POST.get('command') == 'empty' and self.request.POST.get('model'):
-            eval("%s.objects.filter(active=False).delete()" % (self.request.POST.get('model')))
+            if self.request.POST.get('filter_query'):
+                eval("%s.objects.filter(Q(active=False)&(%s)).delete()" % (self.request.POST.get('model'), str(self.request.POST.get('filter_query')).replace('context[&#39;filter&#39;]', "'%s'" % (self.request.POST.get('filter')))))
+            else:
+                eval("%s.objects.filter(active=False).delete()" % (self.request.POST.get('model')))
         try:
             f = open('/var/lib/misc/dnsmasq.leases', 'r')
             context['ip_list'] = f.read()
@@ -169,7 +175,7 @@ class SettingView(LoginRequiredMixin, TemplateView):
                             kode = split_spaces[3] if (split_spaces[3] not in ['', '*']) else res_json.get('id')
                             if tipe:
                                 if tipe.upper() == 'SIHIPO_C':
-                                    controls = PlantControl.objects.filter(Q(kode=kode)|Q(url=url))
+                                    controls = PlantControl.objects.filter(Q(kode=kode) | Q(url=url))
                                     if controls:
                                         for control in controls:
                                             control.kode = kode
@@ -181,7 +187,7 @@ class SettingView(LoginRequiredMixin, TemplateView):
                                         control.url = url
                                         control.save()
                                 elif tipe.upper() == 'SIHIPO_S':
-                                    sensors = PlantSensor.objects.filter(Q(kode=kode)|Q(url=url))
+                                    sensors = PlantSensor.objects.filter(Q(kode=kode) | Q(url=url))
                                     if sensors:
                                         for sensor in sensors:
                                             sensor.kode = kode
@@ -237,13 +243,15 @@ class PlantListView(LoginRequiredMixin, ListView):
         context = get_plant_context(self, super(PlantListView, self).get_context_data(**kwargs))
         if not self.is_child and self.request.session.get('parent_id'):
             del self.request.session['parent_id']
-        if self.request.GET.get('filter') or (self.is_child and self.request.session.get('parent_id')):
+        # if self.request.GET.get('filter') or (self.is_child and self.request.session.get('parent_id')):
+        if self.is_child and self.request.session.get('parent_id'):
             context['table_extra'] = False
         else:
             context['table_extra'] = True
         context['table_fields'] = self.fields
         context['table_model'] = self.model.__name__
         context['filter'] = self.request.GET.get('filter')
+        context['filter_query'] = False
         # context['parent_id'] = self.request.session.get('parent_id')
         if context['filter']:
             self.paginate_by = False
@@ -252,7 +260,8 @@ class PlantListView(LoginRequiredMixin, ListView):
                 if self.model._meta.get_field(table_field).get_internal_type() in context['search_field']:
                     eval_obj.append('Q(%s__icontains=context[\'filter\'])' % (table_field))
             if eval_obj:
-                context['object_list'] = eval('self.model.objects.filter(%s)' % ('|'.join(eval_obj)))
+                context['filter_query'] = '|'.join(eval_obj)
+                context['object_list'] = eval('self.model.objects.filter(%s)' % (context['filter_query']))
         context['table_fields'] = self.fields
         context['table_headers'] = {}
         for table_field in context['table_fields']:

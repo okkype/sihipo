@@ -72,6 +72,8 @@ function trash(model, command) {
     Pace.bar.render();
     $.post({% url 'setting' %}, {
         'csrfmiddlewaretoken':'{{ csrf_token }}',
+        'filter_query':'{{ filter_query }}',
+        'filter':'{{ filter }}',
         'command':command,
         'model':model
     }, function () {
