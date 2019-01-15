@@ -5,7 +5,7 @@
 <div class="row">
 	<div class="col-lg-12">
 	{% if object_list %}
-		<table style="width: 100%; table-layout: fixed; white-space: normal; word-wrap: break-word;" class="table table-striped table-condensed table-hover {% if filter %}data-tables{% endif %}">
+		<table class="table table-striped table-condensed table-hover {% if filter %}data-tables{% endif %}">
 			<thead>
 				<tr>
 					{% block list_header %}
@@ -13,7 +13,7 @@
 					<th><a href="?sort={{ table_field }}">{{ table_headers|dict_get:table_field }}</a></th>
 					{% endfor %}
 					{% endblock %}
-					<th style="text-align: center; width: 90px;">
+					<th>
 					    <div class="btn-group">
 					        <a href="{% url name|add:'_create' %}" class="btn btn-outline btn-success btn-xs" style="font-family: courier;"><i class="fa fa-plus"></i></a>
 					        {% if table_extra %}
@@ -40,7 +40,7 @@
 						</td>
 						{% endfor %}
 						{% endblock %}
-						<td style="text-align: center;">
+						<td>
 						    <div class="btn-group">
                                 <a href="{% url name|add:'_update' object.id %}" class="btn btn-outline btn-info btn-xs" style="font-family: courier;"><i class="fa fa-edit"></i></a>
     							<a href="{% url name|add:'_duplicate' object.id %}" class="btn btn-outline btn-info btn-xs" style="font-family: courier;"><i class="fa fa-copy"></i></a>
