@@ -172,7 +172,7 @@ class SettingView(LoginRequiredMixin, TemplateView):
                             url = 'http://%s' % (split_spaces[2])
                             res_json = requests.get(url, timeout=5).json()
                             tipe = res_json.get('type')
-                            kode = split_spaces[1] if (split_spaces[1] not in ['', '*']) else split_spaces[3] if (split_spaces[3] not in ['', '*']) else res_json.get('id')
+                            kode = str(split_spaces[1]).upper() if (split_spaces[1] not in ['', '*']) else split_spaces[3] if (split_spaces[3] not in ['', '*']) else res_json.get('id')
                             if tipe:
                                 if tipe.upper() == 'SIHIPO_C':
                                     controls = PlantControl.objects.filter(Q(kode=kode) | Q(url=url))
