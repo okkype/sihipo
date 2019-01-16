@@ -20,6 +20,20 @@
 	<link href="{% static 'sb-admin-2/vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" />
 	<link href="{% static 'sb-admin-2/vendor/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css' %}" rel="stylesheet" />
 	<link href="{% static 'codemirror/lib/codemirror.css' %}" rel="stylesheet" />
+    <script src="{% static 'js/pace.min.js' %}" data-pace-options='{ "ajax": false }'></script>
+    <script src="{% static 'sb-admin-2/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'sb-admin-2/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'sb-admin-2/vendor/momentjs/moment.js' %}"></script>
+    <script src="{% static 'sb-admin-2/vendor/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js' %}"></script>
+    <script src="{% static 'sb-admin-2/vendor/metisMenu/metisMenu.min.js' %}"></script>
+    <script src="{% static 'sb-admin-2/vendor/datatables/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'sb-admin-2/vendor/datatables-plugins/dataTables.bootstrap.min.js' %}"></script>
+    <script src="{% static 'sb-admin-2/vendor/datatables-responsive/dataTables.responsive.js' %}"></script>
+    <script src="{% static 'sb-admin-2/dist/js/sb-admin-2.js' %}"></script>
+    <script src="{% static 'codemirror/lib/codemirror.js' %}"></script>
+    <script src="{% static 'codemirror/mode/python/python.js' %}"></script>
+    <script src="{% static 'codemirror/addon/selection/active-line.js' %}"></script>
+    <script src="{% static 'codemirror/addon/edit/matchbrackets.js' %}"></script>
 	{% block html_head %}{% endblock %}
 </head>
 
@@ -191,20 +205,6 @@
             </div>
         </div>
     </div>
-    <script src="{% static 'js/pace.min.js' %}" data-pace-options='{ "ajax": false }'></script>
-    <script src="{% static 'sb-admin-2/vendor/jquery/jquery.min.js' %}"></script>
-    <script src="{% static 'sb-admin-2/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'sb-admin-2/vendor/momentjs/moment.js' %}"></script>
-    <script src="{% static 'sb-admin-2/vendor/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js' %}"></script>
-    <script src="{% static 'sb-admin-2/vendor/metisMenu/metisMenu.min.js' %}"></script>
-    <script src="{% static 'sb-admin-2/vendor/datatables/js/jquery.dataTables.min.js' %}"></script>
-    <script src="{% static 'sb-admin-2/vendor/datatables-plugins/dataTables.bootstrap.min.js' %}"></script>
-    <script src="{% static 'sb-admin-2/vendor/datatables-responsive/dataTables.responsive.js' %}"></script>
-    <script src="{% static 'sb-admin-2/dist/js/sb-admin-2.js' %}"></script>
-    <script src="{% static 'codemirror/lib/codemirror.js' %}"></script>
-	<script src="{% static 'codemirror/mode/python/python.js' %}"></script>
-	<script src="{% static 'codemirror/addon/selection/active-line.js' %}"></script>
-	<script src="{% static 'codemirror/addon/edit/matchbrackets.js' %}"></script>
     <script type="text/javascript">
 	    function simple_notif() {
 	    	$.get('{% url 'plantalert_simple' %}').done(function (data) {
@@ -214,7 +214,7 @@
 	    function notif_count() {
 	    	$.get('{% url 'plantalert_count' %}').done(function (data) {
 	    		$('.badge-notif').html(data);
-	    		setTimeout(notif_count, 10000);
+	    		setTimeout(notif_count, 60000);
 	    	});
 	    }
 	    function notif_go(id, url) {
@@ -242,14 +242,6 @@
 	        $('.data-tables').DataTable({
 	            /* responsive: true */
 	        });
-	        /* if (window.innerWidth < 786) {
-                setTimeout(function () {
-                    $('.navbar-toggle').click();
-                    setTimeout(function () {
-                        $('.navbar-toggle').click();
-                    }, 350);
-                }, 1);
-	        } */
 	        {% block jquery %}{% endblock %}
 	    });
     </script>

@@ -111,13 +111,13 @@ class SettingView(LoginRequiredMixin, TemplateView):
                     t.stop = True
             if t.getName() == 'thread_control':
                 context['thread_control_run'] = True
-                context['intval_control_run'] = t.interval
+                context['intval_control_run'] = 1 # t.interval
                 if str(self.request.POST.get('thread_control')).startswith('Stop'):
                     context['thread_control_run'] = False
                     t.stop = True
             if t.getName() == 'thread_eval':
                 context['thread_eval_run'] = True
-                context['intval_eval_run'] = t.interval
+                context['intval_eval_run'] = 1 # t.interval
                 if str(self.request.POST.get('thread_eval')).startswith('Stop'):
                     context['thread_eval_run'] = False
                     t.stop = True
