@@ -137,12 +137,12 @@ class SettingView(LoginRequiredMixin, TemplateView):
         if str(self.request.POST.get('thread_control')).startswith('Start'):
             context['thread_control_run'] = True
             context['intval_control_run'] = int(self.request.POST.get('intval_control', 1))
-            tf = ControlThread(interval=context['intval_control_run'])
+            tf = ControlThread() # (interval=context['intval_control_run'])
             tf.start()
         if str(self.request.POST.get('thread_eval')).startswith('Start'):
             context['thread_eval_run'] = True
             context['intval_eval_run'] = int(self.request.POST.get('intval_eval', 1))
-            tf = EvalThread(interval=context['intval_eval_run'])
+            tf = EvalThread() # (interval=context['intval_eval_run'])
             tf.start()
         if str(self.request.POST.get('thread_telegram')).startswith('Start'):
             context['thread_telegram_run'] = True
@@ -172,7 +172,7 @@ class SettingView(LoginRequiredMixin, TemplateView):
                             url = 'http://%s' % (split_spaces[2])
                             res_json = requests.get(url, timeout=5).json()
                             tipe = res_json.get('type')
-                            kode = split_spaces[3] if (split_spaces[3] not in ['', '*']) else res_json.get('id')
+                            kode = split_spaces[1] if (split_spaces[1] not in ['', '*']) else split_spaces[3] if (split_spaces[3] not in ['', '*']) else res_json.get('id')
                             if tipe:
                                 if tipe.upper() == 'SIHIPO_C':
                                     controls = PlantControl.objects.filter(Q(kode=kode) | Q(url=url))
