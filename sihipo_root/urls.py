@@ -115,9 +115,9 @@ urlpatterns = [
 #     url(r'^plantduplicate/<str:model>/(?P<pk>\d+)$', views.PlantDuplicate, name='plantduplicate'),
 ]
 
-tf_control = ControlThread(interval=1)
+tf_control = ControlThread()
 tf_control.start()
-tf_eval = EvalThread(interval=1)
+tf_eval = EvalThread()
 tf_eval.start()
 tf_sensor = SensorThread(interval=36000)
 tf_sensor.start()

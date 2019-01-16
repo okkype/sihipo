@@ -18,18 +18,39 @@ body {
 	font-size: 12px !important;
 }
 
-td {
+.table {
+    width: 100%;
+    min-width: 200px;
+    table-layout: fixed;
+    white-space: normal;
+    word-wrap: break-word;
+}
+
+.table th {
+    /* min-width: 60px; */
+}
+
+.table th:last-child {
+    width: 80px;
+    text-align: center;
+}
+
+.table td {
 	text-align: justify;
 	overflow: hidden;
 	white-space: nowrap;
 }
 
-td:hover {
+.table td:hover {
 	overflow: visible;
 	white-space: normal;
 }
 
-td[data-type=numeric] {
+.table td:last-child {
+    text-align: center;
+}
+
+.table td[data-type=numeric] {
 	text-align: right;
 	font-weight: 900;
 }
