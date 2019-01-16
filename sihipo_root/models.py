@@ -73,8 +73,8 @@ class PlantBase(models.Model):
 
     rack_type = (
         (None, 'N/A'),
-        ('NFT', 'Net Film'),
-        ('DFT', 'Deep Flow'),
+        ('NFT', 'NFT'),
+        ('DFT', 'DFT'),
         ('WICK', 'Wick'),
     )
 
