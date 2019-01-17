@@ -151,13 +151,17 @@ class SettingView(LoginRequiredMixin, TemplateView):
             tf.chat_id = context['intval_telegram_run']
             tf.start()
         if self.request.POST.get('command') == 'trash' and self.request.POST.get('model'):
-            if self.request.POST.get('filter_query'):
-                eval("%s.objects.filter(%s).update(active=False)" % (self.request.POST.get('model'), str(self.request.POST.get('filter_query')).replace('context[&#39;filter&#39;]', "'%s'" % (self.request.POST.get('filter')))))
+            filter_str = str(self.request.POST.get('filter')).strip()
+            filter_query = str(self.request.POST.get('filter_query')).strip()
+            if (filter_str != 'None') and (filter_query != 'False'):
+                eval("%s.objects.filter(%s).update(active=False)" % (self.request.POST.get('model'), filter_query.replace('context[&#39;filter&#39;]', "'%s'" % (filter_str))))
             else:
                 eval("%s.objects.all().update(active=False)" % (self.request.POST.get('model')))
         if self.request.POST.get('command') == 'empty' and self.request.POST.get('model'):
-            if self.request.POST.get('filter_query'):
-                eval("%s.objects.filter(Q(active=False)&(%s)).delete()" % (self.request.POST.get('model'), str(self.request.POST.get('filter_query')).replace('context[&#39;filter&#39;]', "'%s'" % (self.request.POST.get('filter')))))
+            filter_str = str(self.request.POST.get('filter')).strip()
+            filter_query = str(self.request.POST.get('filter_query')).strip()
+            if (filter_str != 'None') and (filter_query != 'False'):
+                eval("%s.objects.filter(Q(active=False)&(%s)).delete()" % (self.request.POST.get('model'), filter_query.replace('context[&#39;filter&#39;]', "'%s'" % (filter_str))))
             else:
                 eval("%s.objects.filter(active=False).delete()" % (self.request.POST.get('model')))
         try:
