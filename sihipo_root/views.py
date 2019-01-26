@@ -151,19 +151,21 @@ class SettingView(LoginRequiredMixin, TemplateView):
             tf.chat_id = context['intval_telegram_run']
             tf.start()
         if self.request.POST.get('command') == 'trash' and self.request.POST.get('model'):
-            filter_str = str(self.request.POST.get('filter')).strip()
-            filter_query = str(self.request.POST.get('filter_query')).strip()
-            if (filter_str != 'None') and (filter_query != 'False'):
-                eval("%s.objects.filter(%s).update(active=False)" % (self.request.POST.get('model'), filter_query.replace('context[&#39;filter&#39;]', "'%s'" % (filter_str))))
-            else:
-                eval("%s.objects.all().update(active=False)" % (self.request.POST.get('model')))
+            eval("%s.objects.filter(pk__in=%s, active=True).update(active=False)" % (self.request.POST.get('model'), self.request.POST.get('pks')))
+#             filter_str = str(self.request.POST.get('filter')).strip()
+#             filter_query = str(self.request.POST.get('filter_query')).strip()
+#             if (filter_str != 'None') and (filter_query != 'None'):
+#                 eval("%s.objects.filter(%s).update(active=False)" % (self.request.POST.get('model'), filter_query.replace('context[&#39;filter&#39;]', "'%s'" % (filter_str))))
+#             else:
+#                 eval("%s.objects.all().update(active=False)" % (self.request.POST.get('model')))
         if self.request.POST.get('command') == 'empty' and self.request.POST.get('model'):
-            filter_str = str(self.request.POST.get('filter')).strip()
-            filter_query = str(self.request.POST.get('filter_query')).strip()
-            if (filter_str != 'None') and (filter_query != 'False'):
-                eval("%s.objects.filter(Q(active=False)&(%s)).delete()" % (self.request.POST.get('model'), filter_query.replace('context[&#39;filter&#39;]', "'%s'" % (filter_str))))
-            else:
-                eval("%s.objects.filter(active=False).delete()" % (self.request.POST.get('model')))
+            eval("%s.objects.filter(pk__in=%s, active=False).delete()" % (self.request.POST.get('model'), self.request.POST.get('pks')))
+#             filter_str = str(self.request.POST.get('filter')).strip()
+#             filter_query = str(self.request.POST.get('filter_query')).strip()
+#             if (filter_str != 'None') and (filter_query != 'None'):
+#                 eval("%s.objects.filter(Q(active=False)&(%s)).delete()" % (self.request.POST.get('model'), filter_query.replace('context[&#39;filter&#39;]', "'%s'" % (filter_str))))
+#             else:
+#                 eval("%s.objects.filter(active=False).delete()" % (self.request.POST.get('model')))
         try:
             f = open('/var/lib/misc/dnsmasq.leases', 'r')
             context['ip_list'] = f.read()
@@ -248,14 +250,15 @@ class PlantListView(LoginRequiredMixin, ListView):
         if not self.is_child and self.request.session.get('parent_id'):
             del self.request.session['parent_id']
         # if self.request.GET.get('filter') or (self.is_child and self.request.session.get('parent_id')):
-        if self.is_child and self.request.session.get('parent_id'):
-            context['table_extra'] = False
-        else:
-            context['table_extra'] = True
+        # if self.is_child and self.request.session.get('parent_id'):
+        #     context['table_extra'] = False
+        # else:
+        context['table_extra'] = True
         context['table_fields'] = self.fields
         context['table_model'] = self.model.__name__
         context['filter'] = self.request.GET.get('filter')
-        context['filter_query'] = False
+        context['filter_query'] = None
+        # context['is_child'] = self.is_child
         # context['parent_id'] = self.request.session.get('parent_id')
         if context['filter']:
             self.paginate_by = False
@@ -704,7 +707,7 @@ class PlantRackPointDelete(PlantRackPointView, PlantDeleteView):
 # PlantSensorLog
 class PlantSensorLogView(object):
     model = PlantSensorLog
-    fields = ['dt', 'plant_sensor', 'plant_rack', 'state']
+    fields = ['dt', 'plant_sensor', 'plant_rack', 'state', 'active']
     success_url = reverse_lazy('plantsensorlog_list')
 
 
@@ -737,7 +740,7 @@ class PlantSensorLogDelete(PlantSensorLogView, PlantDeleteView):
 # PlantSensorLogDetail
 class PlantSensorLogDetailView(object):
     model = PlantSensorLogDetail
-    fields = ['plant_sensor_log', 'kode', 'val', 'note']
+    fields = ['plant_sensor_log', 'kode', 'val', 'note', 'active']
     success_url = reverse_lazy('plantsensorlogdetail_list')
     is_child = True
 
@@ -759,7 +762,7 @@ class PlantSensorLogDetailCreate(PlantSensorLogDetailView, PlantCreateView):
 
 
 class PlantSensorLogDetailUpdate(PlantSensorLogDetailView, PlantUpdateView):
-    pass
+    fields = ['kode', 'val', 'note', 'active']
 
 
 class PlantSensorLogDetailDelete(PlantSensorLogDetailView, PlantDeleteView):
@@ -769,7 +772,7 @@ class PlantSensorLogDetailDelete(PlantSensorLogDetailView, PlantDeleteView):
 # PlantControlLog
 class PlantControlLogView(object):
     model = PlantControlLog
-    fields = ['dt', 'plant_control', 'plant_rack', 'state', 'note']
+    fields = ['dt', 'plant_control', 'plant_rack', 'state', 'note', 'active']
     success_url = reverse_lazy('plantcontrollog_list')
 
 
@@ -802,7 +805,7 @@ class PlantControlLogDelete(PlantControlLogView, PlantDeleteView):
 # PlantControlLogDetail
 class PlantControlLogDetailView(object):
     model = PlantControlLogDetail
-    fields = ['plant_control_log', 'kode', 'val']
+    fields = ['plant_control_log', 'kode', 'val', 'active']
     success_url = reverse_lazy('plantcontrollogdetail_list')
     is_child = True
 
@@ -824,7 +827,7 @@ class PlantControlLogDetailCreate(PlantControlLogDetailView, PlantCreateView):
 
 
 class PlantControlLogDetailUpdate(PlantControlLogDetailView, PlantUpdateView):
-    pass
+    fields = ['kode', 'val', 'active']
 
 
 class PlantControlLogDetailDelete(PlantControlLogDetailView, PlantDeleteView):
@@ -946,7 +949,7 @@ class PlantEvalDelete(PlantEvalView, PlantDeleteView):
 # PlantEvalLog
 class PlantEvalLogView(object):
     model = PlantEvalLog
-    fields = ['dt', 'plant_eval']
+    fields = ['dt', 'plant_eval', 'active']
     success_url = reverse_lazy('plantevallog_list')
 
 

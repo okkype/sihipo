@@ -39,14 +39,14 @@ class PlantBase(models.Model):
     
     sensor_type = (
         (None, 'N/A'),
-        ('PH', 'Keasaman'),
-        ('EC', 'Konduktifitas'),
-        ('HT', 'Kelembapan'),
-        ('TW', 'Suhu Air'),
-        ('TA', 'Suhu Udara'),
+        ('PH', 'Keasaman (pH)'),
+        ('EC', 'Konduktifitas (mS/cm)'),
+        ('HT', 'Kelembapan (%)'),
+        ('TW', 'Suhu Air (C)'),
+        ('TA', 'Suhu Udara (C)'),
         ('LW', 'Level Air'),
-        ('BL', 'Level Baterai'),
-        ('PA', 'Usia Tanam'),
+        ('BL', 'Level Baterai (%)'),
+        ('PA', 'Usia Tanam (Hari)'),
     )
     
     control_type = (
