@@ -22,7 +22,10 @@ class HomeView(LoginRequiredMixin, TemplateView):
     
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
-        context['git_version'] = subprocess.check_output(['git', 'describe', '--tags']).strip().split('-')[0]
+        try:
+            context['git_version'] = subprocess.check_output(['git', 'describe', '--tags']).strip().split('-')[0]
+        except:
+            context['git_version'] = ''
         return context
     
 # END HOME

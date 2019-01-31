@@ -55,6 +55,11 @@ body {
 	font-weight: 900;
 }
 
+.table th[data-type=numeric] {
+    text-align: right;
+    font-weight: 900;
+}
+
 textarea, .CodeMirror {
 	font-family: courier, monospace !important;
 	resize: vertical;
