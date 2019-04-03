@@ -1,0 +1,7 @@
+django-bootstrap3>=10.0.1
+django-htmlmin>=0.10.0
+django-nvd3==0.9.7
+django-progressive-web-app>=0.1.1
+Django>=1.11,<2.0
+python-telegram-bot>=11.1
+requests>=2.20.0

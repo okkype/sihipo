@@ -25,6 +25,12 @@
 </div>
 {% endblock %}
 {% block jquery %}
+    $('select').contextmenu(function () {
+        target = '/' + $(this).attr('name').replace(/_/g, '') + '/update/' + $(this).val();
+        $.get(target, function () {
+            location.href = target;
+        });
+    });
 {% for datetime_field in datetime_fields %}
 	$('#id_{{ datetime_field }}').datetimepicker({format:'YYYY-MM-DD HH:mm:ss'});
 {% endfor %}

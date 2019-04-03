@@ -60,6 +60,11 @@ body {
     font-weight: 900;
 }
 
+.dropdown-menu {
+    left: unset !important;
+    right: 0 !important;
+}
+
 textarea, .CodeMirror {
 	font-family: courier, monospace !important;
 	resize: vertical;
