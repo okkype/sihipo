@@ -58,6 +58,13 @@
             <hr />
         </form>
 	</div>
+    <div class="col-md-12 col-xs-12">
+        <form role="form" method="post">
+            {% csrf_token %}
+            <input class="btn btn-outline btn-danger" name="command" type="submit" value="Clear All Log" />&nbsp;
+            <hr />
+        </form>
+    </div>
 </div>
 {% endblock %}
 {% block javascript %}

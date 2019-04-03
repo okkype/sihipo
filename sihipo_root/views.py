@@ -153,6 +153,10 @@ class SettingView(LoginRequiredMixin, TemplateView):
             tf = TelegramThread()
             tf.chat_id = context['intval_telegram_run']
             tf.start()
+        if self.request.POST.get('command') == 'Clear All Log':
+            PlantEvalLog.objects.all().update(active=False)
+            PlantControlLog.objects.all().update(active=False)
+            PlantSensorLog.objects.all().update(active=False)
         if self.request.POST.get('command') == 'trash' and self.request.POST.get('model'):
             eval("%s.objects.filter(pk__in=%s, active=True).update(active=False)" % (self.request.POST.get('model'), self.request.POST.get('pks')))
 #             filter_str = str(self.request.POST.get('filter')).strip()
@@ -162,7 +166,7 @@ class SettingView(LoginRequiredMixin, TemplateView):
 #             else:
 #                 eval("%s.objects.all().update(active=False)" % (self.request.POST.get('model')))
         if self.request.POST.get('command') == 'empty' and self.request.POST.get('model'):
-            eval("%s.objects.filter(pk__in=%s, active=False).delete()" % (self.request.POST.get('model'), self.request.POST.get('pks')))
+            eval("%s.objects.filter(active=False).delete()" % (self.request.POST.get('model'), self.request.POST.get('pks')))
 #             filter_str = str(self.request.POST.get('filter')).strip()
 #             filter_query = str(self.request.POST.get('filter_query')).strip()
 #             if (filter_str != 'None') and (filter_query != 'None'):
