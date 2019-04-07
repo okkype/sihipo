@@ -30,6 +30,7 @@
         $.get(target, function () {
             location.href = target;
         });
+        return false;
     });
 {% for datetime_field in datetime_fields %}
 	$('#id_{{ datetime_field }}').datetimepicker({format:'YYYY-MM-DD HH:mm:ss'});
