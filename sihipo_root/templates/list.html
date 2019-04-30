@@ -26,16 +26,16 @@
 			</thead>
 			<tbody>
 				{% for object in object_list %}
-					<tr>
+					<tr oncontextmenu="location.href='{% url name|add:'_update' object.id %}';return false;">
 						{% block list_body %}
 						{% for table_field in table_fields %}
 						<td {% if object|dict_get_field_type:table_field in numeric_field %}data-type="numeric"{% endif %}>
 						{% if forloop.first %}
-						<!-- a href="{% url name|add:'_update' object.id %}" -->
+						<strong>
 						{% endif %}
 						{{ object|dict_get_display:table_field|default_if_none:'-' }}
 						{% if forloop.first %}
-						<!-- /a -->
+						</strong>
 						{% endif %}
 						</td>
 						{% endfor %}
