@@ -26,9 +26,18 @@
 {% endblock %}
 {% block jquery %}
     $('select').contextmenu(function () {
-        target = '/' + $(this).attr('name').replace(/_/g, '') + '/update/' + $(this).val();
-        $.get(target, function () {
+        var obj = $(this).attr('name')
+        var target = '/' + obj.replace(/_/g, '') + '/update/' + $(this).val();
+        $.get(target, function () {})
+        .done(function () {
             location.href = target;
+        })
+        .fail(function () {
+            target = '/' + obj.replace(/_/g, '') + '/create';
+            $.get(target, function () {})
+            .done(function () {
+                location.href = target;
+            })
         });
         return false;
     });
