@@ -1,4 +1,4 @@
-{% extends 'blank.html' %}
+{% extends pwa_app_single|yesno:'empty.html,blank.html' %}
 {% load static %}
 {% load dict_lib %}
 {% load bootstrap3 %}
@@ -7,6 +7,10 @@
 	<div class="col-lg-12">
 		{% if 'duplicate' in request|dict_class:'path'|cut:'/' %}
 		<form action="{% url name|add:'_create' %}" role="form" method="post">
+        {% elif 'update' in request|dict_class:'path'|cut:'/' %}
+        <form action="{% url name|add:'_update' object.id %}" role="form" method="post">
+        {% elif 'create' in request|dict_class:'path'|cut:'/' %}
+        <form action="{% url name|add:'_create' %}" role="form" method="post">
 		{% else %}
 		<form role="form" method="post">
 		{% endif %}
@@ -30,13 +34,21 @@
         var target = '/' + obj.replace(/_/g, '') + '/update/' + $(this).val();
         $.get(target, function () {})
         .done(function () {
-            location.href = target;
+            {% if pwa_app_single %}
+                location.href = '#target=' + target;
+            {% else %}
+                location.href = target;
+            {% endif %}
         })
         .fail(function () {
             target = '/' + obj.replace(/_/g, '') + '/create';
             $.get(target, function () {})
             .done(function () {
-                location.href = target;
+                {% if pwa_app_single %}
+                    location.href = '#target=' + target;
+                {% else %}
+                    location.href = target;
+                {% endif %}
             })
         });
         return false;

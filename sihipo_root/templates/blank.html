@@ -205,6 +205,7 @@
             </div>
         </div>
     </div>
+    {% if pwa_app_single %}<button class="add-button">Add to home screen</button>{% endif %}
     <script type="text/javascript">
 	    function simple_notif() {
 	    	$.get('{% url 'plantalert_simple' %}').done(function (data) {
@@ -234,14 +235,75 @@
 				matchBrackets: true
 	    	});
 	    }
+	    {% if pwa_app_single %}
+            function pwa_link() {
+                $('a[href^="/"]').each(function(){ 
+                    var oldUrl = $(this).attr("href");
+                    var newUrl = '#target=' + oldUrl;
+                    $(this).attr("href", newUrl);
+                });
+            }
+            function pwa_page() {
+                pwa_link();
+                var pwa_url = $(location).attr("href").split('#');
+                var pwa_var = pwa_url.length > 1 ? pwa_url[1] : '';
+                pwa_var.split('&').forEach(function (item, index) {
+                    if(item.startsWith('target=')) {
+                        var pwa_target = item.replace('target=', '');
+                        $.get(pwa_target, function (data) {
+                            if(data.toLowerCase().includes('<head')) {
+                                location.href = pwa_target;
+                            } else {
+                                $('.container-fluid').html(data);
+                                pwa_link();
+                            }
+                        });
+                    }
+                });
+            }
+            // START : Code to handle install prompt on desktop
+            let deferredPrompt;
+            const addBtn = document.querySelector('.add-button');
+            addBtn.style.display = 'none';
+            
+            window.addEventListener('beforeinstallprompt', (e) => {
+              // Prevent Chrome 67 and earlier from automatically showing the prompt
+              e.preventDefault();
+              // Stash the event so it can be triggered later.
+              deferredPrompt = e;
+              // Update UI to notify the user they can add to home screen
+              addBtn.style.display = 'block';
+            
+              addBtn.addEventListener('click', (e) => {
+                // hide our user interface that shows our A2HS button
+                addBtn.style.display = 'none';
+                // Show the prompt
+                deferredPrompt.prompt();
+                // Wait for the user to respond to the prompt
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                      console.log('User accepted the A2HS prompt');
+                    } else {
+                      console.log('User dismissed the A2HS prompt');
+                    }
+                    deferredPrompt = null;
+                  });
+              });
+            });
+            // END : Code to handle install prompt on desktop
+        {% endif %}
         {% block javascript %}{% endblock %}
 	    $(document).ready(function() {
-	    	notif_count();
+            notif_count();
             $('#page-wrapper').focus();
-	    	$('.dropdown-toggle').click(simple_notif);
-	        $('.data-tables').DataTable({
-	            /* responsive: true */
-	        });
+            $('.dropdown-toggle').click(simple_notif);
+            $('.data-tables').DataTable();
+            {% if pwa_app_single %}
+                pwa_page();
+                // $(window).load(pwa_page());
+                // $(window).hashchange(pwa_page());
+                window.addEventListener("hashchange", pwa_page, false);
+            {% endif %}
 	        {% block jquery %}{% endblock %}
 	    });
     </script>

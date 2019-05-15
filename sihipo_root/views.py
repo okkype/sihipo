@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 from django.utils.datetime_safe import strftime
 from django.views.generic import TemplateView, ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from sihipo.settings import TELEGRAM_CHAT_ID
+from sihipo.settings import TELEGRAM_CHAT_ID, PWA_APP_SINGLE
 from sihipo_root.models import *
 from sihipo_root.threads import *
 import subprocess
@@ -22,6 +22,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
     
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
+        context['pwa_app_single'] = PWA_APP_SINGLE
         try:
             context['git_version'] = subprocess.check_output(['git', 'describe', '--tags']).strip().split('-')[0]
         except:
@@ -39,6 +40,7 @@ class DashboardView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super(DashboardView, self).get_context_data(**kwargs)
         # context['verbose_name'] = 'Dashboard'
+        context['pwa_app_single'] = PWA_APP_SINGLE
         
         day_count = 10
         xdata_line = []
@@ -102,8 +104,9 @@ class SettingView(LoginRequiredMixin, TemplateView):
         return self.get(request, *args, **kwargs)
     
     def get_context_data(self, **kwargs):
-        context = super(SettingView, self).get_context_data()
+        context = super(SettingView, self).get_context_data(**kwargs)
         context['verbose_name'] = 'Setting'
+        context['pwa_app_single'] = PWA_APP_SINGLE
 
         for t in threading.enumerate():
             if t.getName() == 'thread_sensor':
@@ -166,7 +169,7 @@ class SettingView(LoginRequiredMixin, TemplateView):
 #             else:
 #                 eval("%s.objects.all().update(active=False)" % (self.request.POST.get('model')))
         if self.request.POST.get('command') == 'empty' and self.request.POST.get('model'):
-            eval("%s.objects.filter(active=False).delete()" % (self.request.POST.get('model'), self.request.POST.get('pks')))
+            eval("%s.objects.filter(active=False).delete()" % (self.request.POST.get('model')))
 #             filter_str = str(self.request.POST.get('filter')).strip()
 #             filter_query = str(self.request.POST.get('filter_query')).strip()
 #             if (filter_str != 'None') and (filter_query != 'None'):
@@ -228,6 +231,7 @@ def get_plant_context(obj, context):
     context['search_field'] = [u'CharField', u'TextField']
     context['numeric_field'] = [u'IntegerField', u'FloatField']
     context['datetime_fields'] = []
+    context['pwa_app_single'] = PWA_APP_SINGLE
     for field in obj.fields:
         if obj.model._meta.get_field(field).get_internal_type() in [u'DateTimeField']:
             context['datetime_fields'].append(field)
@@ -269,6 +273,7 @@ class PlantListView(LoginRequiredMixin, ListView):
         # context['parent_id'] = self.request.session.get('parent_id')
         if context['filter']:
             self.paginate_by = False
+            context['pwa_app_single'] = False
             eval_obj = []
             for table_field in self.fields:
                 if self.model._meta.get_field(table_field).get_internal_type() in context['search_field']:

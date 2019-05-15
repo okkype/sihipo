@@ -1,0 +1,40 @@
+{% load static %}
+<div class="pwa-container" style="display:none;">
+    {% if verbose_name %}
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="page-header">
+                    <input type="button" value="&lt;" onclick="history.back()" style="border-radius: 50%;font-family: courier;" />&nbsp;
+                    {% block page-header %}{{ verbose_name }}{% endblock %}
+                </h3>
+            </div>
+        </div>
+    {% endif %}
+    {% block container %}{% endblock %}
+    {% if is_paginated %}
+        <div class="row" style="text-align: center;">
+            <div class="btn-group">
+                {% if page_obj.has_previous %}
+                    <a class="btn btn-outline btn-primary" href="{% url name|add:'_list' %}?page={{ page_obj.previous_page_number }}">&lt;</a>
+                {% endif %}
+                <a class="btn btn-outline btn-primary" href="javascript:var jump=parseInt(prompt('Loncat ke halaman?'));location.href='#target={% url name|add:'_list' %}?page='+((jump>{{ page_obj.paginator.num_pages }}?{{ page_obj.paginator.num_pages }}:jump)||1);location.reload();">
+                    {{ page_obj.number }}/{{ page_obj.paginator.num_pages }}
+                </a>
+                {% if page_obj.has_next %}
+                    <a class="btn btn-outline btn-primary" href="#target={% url name|add:'_list' %}?page={{ page_obj.next_page_number }}">&gt;</a>
+                {% endif %}
+            </div>
+        </div>
+        <hr />
+    {% endif %}
+</div>
+<script type="text/javascript">
+    if(document.head.innerHTML == '') {
+        location.href = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port + '/#target=' + window.location.pathname;
+    }
+    {% block javascript %}{% endblock %}
+    $(document).ready(function() {
+        $('.pwa-container').show();
+        {% block jquery %}{% endblock %}
+    });
+</script>
