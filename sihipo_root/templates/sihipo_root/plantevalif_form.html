@@ -1,6 +1,6 @@
 {% extends 'form.html' %}
 {% block javascript %}
 	{% if object %}
-		code_edit('id_eval_if');
+		code_edit('id_eval_if').refresh();
 	{% endif %}
 {% endblock %}

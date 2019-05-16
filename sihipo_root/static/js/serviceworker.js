@@ -5,6 +5,7 @@ self.addEventListener('install', function(event) {
     caches.open(staticCacheName).then(function(cache) {
       return cache.addAll([
         '/',
+        '/login/',
         '/manifest.json',
         '/static/img/hipo-icon.png',
         '/static/img/hipo-icon-2.png',

@@ -1,10 +1,10 @@
-{% extends 'blank.html' %}
+{% extends pwa_app_single|yesno:'empty.html,blank.html' %}
 {% load static %}
 {% load bootstrap3 %}
 {% block container %}
 <div class="row">
 	<div class="col-md-12 col-xs-12">
-		<form role="form" method="post">
+		<form action="{% url 'setting' %}" role="form" method="post">
 			{% csrf_token %}
 			<div class="form-group">
 				<label class="control-label" for="id_intval_sensor">Sensor Interval</label>
@@ -68,7 +68,7 @@
 </div>
 {% endblock %}
 {% block javascript %}
-	code_edit('id_ip_list');
+	code_edit('id_ip_list').refresh();
 {% endblock %}
 {% block jquery %}
 {% for datetime_field in datetime_fields %}
