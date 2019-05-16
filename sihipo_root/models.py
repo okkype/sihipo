@@ -233,7 +233,7 @@ class PlantOptDetail(PlantBase):
         
 class PlantDevice(PlantBase):
     kode = models.CharField('Kode Device', max_length=20, unique=True)
-    url = models.URLField('URL Device', unique=True)
+    url = models.URLField('URL Device')
     tipe = models.CharField('Tipe Device', max_length=10, choices=PlantBase.device_type)
     
     def __str__(self):
@@ -241,6 +241,7 @@ class PlantDevice(PlantBase):
     
     class Meta:
         verbose_name = 'Device Tanaman'
+        unique_together = ('url', 'tipe')
 
     
 class PlantSensor(PlantDevice):    
