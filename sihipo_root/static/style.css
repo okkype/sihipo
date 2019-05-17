@@ -74,6 +74,8 @@ body {
 textarea, .CodeMirror {
 	font-family: courier, monospace !important;
 	resize: vertical;
+	border: 1px dotted black;
+	height: auto;
 }
 
 .pace {

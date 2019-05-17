@@ -31,7 +31,8 @@ self.addEventListener('install', function(event) {
         '/static/codemirror/lib/codemirror.js',
         '/static/codemirror/mode/python/python.js',
         '/static/codemirror/addon/selection/active-line.js',
-        '/static/codemirror/addon/edit/matchbrackets.js'
+        '/static/codemirror/addon/edit/matchbrackets.js',
+        '/static/Panton-Regular.otf'
       ]);
     })
   );

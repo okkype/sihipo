@@ -251,13 +251,19 @@
                 pwa_var.split('&').forEach(function (item, index) {
                     if(item.startsWith('target=')) {
                         var pwa_target = item.replace('target=', '');
+                        Pace.stop();
+                        Pace.bar.render();
                         $.get(pwa_target, function (data) {
                             if(data.toLowerCase().includes('<head')) {
                                 location.href = pwa_target;
                             } else {
                                 $('.container-fluid').html(data);
                                 pwa_link();
+                                Pace.stop();
                             }
+                        }).fail(function () {
+                            alert('Koneksi Terputus!');
+                            Pace.stop();
                         });
                     }
                 });
