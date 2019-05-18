@@ -123,20 +123,21 @@ STATIC_URL = '/static/'
 
 PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'sihipo_root/static/js', 'serviceworker.js')
 PWA_APP_NAME = 'SIHIPO'
+PWA_APP_SHORT_NAME = 'SIHIPO'
 PWA_APP_DESCRIPTION = "Sistem Informasi Hidroponik"
-PWA_APP_THEME_COLOR = '#0A0302'
-PWA_APP_BACKGROUND_COLOR = '#ffffff'
+PWA_APP_THEME_COLOR = 'white'
+PWA_APP_BACKGROUND_COLOR = 'white'
 PWA_APP_DISPLAY = 'fullscreen'
 PWA_APP_START_URL = '/'
 PWA_APP_ICONS = [
     {
+        'src': '/static/img/hipo-icon-3.png',
+        'sizes': '192x192'
+    },
+    {
         'src': '/static/img/hipo-icon-2.png',
         'sizes': '512x512'
     },
-    {
-        'src': '/static/img/hipo-icon-3.png',
-        'sizes': '192x192'
-    }
 ]
 PWA_APP_SINGLE = True
 
