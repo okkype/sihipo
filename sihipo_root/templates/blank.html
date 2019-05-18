@@ -258,8 +258,8 @@
                                 location.href = pwa_target;
                             } else {
                                 $('.container-fluid').html(data);
-                                pwa_link();
                                 Pace.stop();
+                                pwa_link();
                             }
                         }).fail(function () {
                             alert('Koneksi Terputus!');
@@ -307,9 +307,12 @@
             $('.data-tables').DataTable();
             {% if pwa_app_single %}
                 pwa_page();
-                // $(window).load(pwa_page());
-                // $(window).hashchange(pwa_page());
-                window.addEventListener("hashchange", pwa_page, false);
+                window.addEventListener("hashchange", function () {
+                    pwa_page();
+                    if (window.innerWidth < 786) {
+                        $('.navbar-collapse').collapse('hide');
+                    }
+                }, false);
             {% endif %}
 	        {% block jquery %}{% endblock %}
 	    });
