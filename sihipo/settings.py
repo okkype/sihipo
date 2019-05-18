@@ -131,7 +131,11 @@ PWA_APP_START_URL = '/'
 PWA_APP_ICONS = [
     {
         'src': '/static/img/hipo-icon-2.png',
-        'sizes': '160x160'
+        'sizes': '512x512'
+    },
+    {
+        'src': '/static/img/hipo-icon-3.png',
+        'sizes': '192x192'
     }
 ]
 PWA_APP_SINGLE = True

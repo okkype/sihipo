@@ -9,6 +9,7 @@ self.addEventListener('install', function(event) {
         '/manifest.json',
         '/static/img/hipo-icon.png',
         '/static/img/hipo-icon-2.png',
+        '/static/img/hipo-icon-3.png',
         '/static/style.css',
         '/static/sb-admin-2/vendor/bootstrap/css/bootstrap.min.css',
         '/static/sb-admin-2/vendor/metisMenu/metisMenu.min.css',
