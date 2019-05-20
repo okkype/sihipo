@@ -11,7 +11,7 @@ SIHIPO (Sistem Informasi Hidroponik) adalah Sistem Informasi yang menangani temp
 
 1. WEMOS SENSOR (https://github.com/okkype/wemos_sensor.git)
 2. WEMOS RELAY (https://github.com/okkype/wemos_relay.git)
-3. Komputer (Rekomendasi Raspberry Pi 3/Zero)
+3. Komputer (Rekomendasi Raspberry Pi 3/Zero, image bisa diunduh di https://github.com/okkype/sihipo/releases/download/v1.1.0/sihipo_v1.1.0.zip)
 4. Python 2.7+ (https://www.python.org/downloads/)
 5. PIP (https://pip.pypa.io/en/stable/installing/)
 6. Git (https://git-scm.com/downloads)
