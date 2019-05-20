@@ -19,20 +19,27 @@ SIHIPO (Sistem Informasi Hidroponik) adalah Sistem Informasi yang menangani temp
 ## Installasi
 
 1. Clone Repo
+
    `git clone https://github.com/okkype/sihipo.git`
 
 2. Install Requirement
+
    `cd sihipo`
+   
    `pip install -r requirement.txt`
 
 3. Migrate dan Tambah Super User
+
    `python manage.py migrate`
+   
    `python manage.py createsuperuser`
 
 4. Load Fixture
+
    `python manage.py loaddata sihipo_root_data.json`
 
 5. Run
+
    `python manage.py runserver 0.0.0.0:8000`
    
 ## Menggunakan Raspberry Pi Image
