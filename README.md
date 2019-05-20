@@ -19,25 +19,26 @@ SIHIPO (Sistem Informasi Hidroponik) adalah Sistem Informasi yang menangani temp
 ## Installasi
 
 1. Clone Repo
-
    `git clone https://github.com/okkype/sihipo.git`
 
 2. Install Requirement
-
    `cd sihipo`
-
    `pip install -r requirement.txt`
 
 3. Migrate dan Tambah Super User
-
    `python manage.py migrate`
-
    `python manage.py createsuperuser`
 
 4. Load Fixture
-
    `python manage.py loaddata sihipo_root_data.json`
 
 5. Run
-
    `python manage.py runserver 0.0.0.0:8000`
+   
+## Menggunakan Raspberry Pi Image
+
+1. Setelah unduh berkas zip, siapkan MicroSD minimun 2GB, kemudian tulis image menggunakan https://www.balena.io/etcher/ (tidak perlu mengekstrak berkas zip tersebut)
+2. Jalankan MicroSD tersebut pada Raspberry Pi, apabila tidak ada masalah akan muncul SSID Wifi dengan nama `SIHIPO` dan kata sandi `sistemhidroponik`
+3. Masuk jaringan Wifi kemudian masuk ke SSH dengan alamat `local.sihipo.net` nama pengguna `pi` kata sandi `raspberry` kemudian gunakan perintah `sudo raspi-config` , cari opsi `resize partition` untuk memenuhi partisi yang masih kosong
+4. Untuk masuk ke aplikasi SIHIPO, buka peramban web, masukkan alamat https://local.sihipo.net/ , kemudian masuk menggunakan nama pengguna `admin` kata sandi `administrator`
+5. Petunjuk penggunaan bisa dilihat di https://www.youtube.com/watch?v=HpNHy1K7S1w
