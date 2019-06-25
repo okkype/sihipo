@@ -240,8 +240,12 @@
             function pwa_link() {
                 $('a[href^="/"]').each(function(){ 
                     var oldUrl = $(this).attr("href");
-                    var newUrl = '#target=' + oldUrl;
-                    $(this).attr("href", newUrl);
+                    if(oldUrl.startsWith('/#target=')) {
+                        /* RESERVED */
+                    } else {
+                        var newUrl = '/#target=' + oldUrl;
+                        $(this).attr("href", newUrl);
+                    }
                 });
             }
             function pwa_page() {
@@ -251,8 +255,7 @@
                 pwa_var.split('&').forEach(function (item, index) {
                     if(item.startsWith('target=')) {
                         var pwa_target = item.replace('target=', '');
-                        Pace.stop();
-                        Pace.bar.render();
+                        Pace.restart();
                         $.get(pwa_target, function (data) {
                             if(data.toLowerCase().includes('<head')) {
                                 location.href = pwa_target;

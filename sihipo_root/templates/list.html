@@ -63,8 +63,7 @@
 {% endblock %}
 {% block javascript %}
 function trashone(url) {
-    Pace.stop();
-    Pace.bar.render();
+    Pace.restart();
     $.post(url, {
         'csrfmiddlewaretoken':'{{ csrf_token }}'
     }, function () {
@@ -77,8 +76,7 @@ function trashone(url) {
     });
 }
 function trash(model, command) {
-    Pace.stop();
-    Pace.bar.render();
+    Pace.restart();
     $.post({% url 'setting' %}, {
         'csrfmiddlewaretoken':'{{ csrf_token }}',
         'pks':'[{% for object in object_list %}{{ object.id }},{% endfor %}]',
