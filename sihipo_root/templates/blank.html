@@ -256,6 +256,7 @@
                     if(item.startsWith('target=')) {
                         var pwa_target = item.replace('target=', '');
                         Pace.restart();
+                        $('.container-fluid').html('');
                         $.get(pwa_target, function (data) {
                             if(data.toLowerCase().includes('<head')) {
                                 location.href = pwa_target;
