@@ -174,7 +174,7 @@
 
         <!-- Page Content -->
         <div id="page-wrapper">
-            <div class="container-fluid">
+            <div class="container-fluid" style="{% if pwa_app_single %}visibility:hidden;{% endif %}">
             	{% if verbose_name %}
 	                <div class="row">
 	                    <div class="col-lg-12">
@@ -310,6 +310,7 @@
             $('.dropdown-toggle').click(simple_notif);
             $('.data-tables').DataTable();
             {% if pwa_app_single %}
+                $('.container-fluid').css("visibility", "visible");
                 pwa_page();
                 window.addEventListener("hashchange", function () {
                     pwa_page();
