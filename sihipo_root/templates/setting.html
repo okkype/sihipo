@@ -15,7 +15,7 @@
 		</form>
 	</div>
 	<div class="col-md-12 col-xs-12">
-		<form role="form" method="post">
+		<form action="{% url 'setting' %}" role="form" method="post">
 			{% csrf_token %}
 			<div class="form-group">
 				<label class="control-label" for="id_intval_control">Control Interval</label>
@@ -26,7 +26,7 @@
 		</form>
 	</div>
 	<div class="col-md-12 col-xs-12">
-		<form role="form" method="post">
+		<form action="{% url 'setting' %}" role="form" method="post">
 			{% csrf_token %}
 			<div class="form-group">
 				<label class="control-label" for="id_intval_eval">Eval Interval</label>
@@ -37,7 +37,7 @@
 		</form>
 	</div>
     <div class="col-md-12 col-xs-12">
-        <form role="form" method="post">
+        <form action="{% url 'setting' %}" role="form" method="post">
             {% csrf_token %}
             <div class="form-group">
                 <label class="control-label" for="id_intval_telegram">Telegram Chat ID</label>
@@ -48,7 +48,7 @@
         </form>
     </div>
 	<div class="col-md-12 col-xs-12">
-	    <form role="form" method="post">
+	    <form action="{% url 'setting' %}" role="form" method="post">
 	        {% csrf_token %}
             <div class="form-group">
         		<label class="control-label" for="id_ip_list">IP List (/var/lib/misc/dnsmasq.leases)</label>
@@ -59,7 +59,7 @@
         </form>
 	</div>
     <div class="col-md-12 col-xs-12">
-        <form role="form" method="post">
+        <form action="{% url 'setting' %}" role="form" method="post">
             {% csrf_token %}
             <input class="btn btn-outline btn-danger" name="command" type="submit" value="Clear All Log" />&nbsp;
             <hr />
