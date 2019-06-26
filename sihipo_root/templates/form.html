@@ -35,7 +35,7 @@
         $.get(target, function () {})
         .done(function () {
             {% if pwa_app_single %}
-                location.href = '#target=' + target;
+                location.href = '/#' + target;
             {% else %}
                 location.href = target;
             {% endif %}
@@ -45,7 +45,7 @@
             $.get(target, function () {})
             .done(function () {
                 {% if pwa_app_single %}
-                    location.href = '#target=' + target;
+                    location.href = '/#' + target;
                 {% else %}
                     location.href = target;
                 {% endif %}

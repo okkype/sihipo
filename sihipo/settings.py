@@ -30,6 +30,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'sihipo_root',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,7 +40,7 @@ INSTALLED_APPS = [
     'bootstrap3',
     'django_nvd3',
     'pwa',
-    'sihipo_root.apps.SihipoRootConfig',
+#     'sihipo_root.apps.SihipoRootConfig',
 ]
 
 MIDDLEWARE = [
@@ -119,7 +120,10 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
-# STATIC_ROOT = '/home/okky/Dokumen/projek/sihipo/sihipo/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'sihipo/static/')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'sihipo_root/static/'),
+]
 
 PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'sihipo_root/static/js', 'serviceworker.js')
 PWA_APP_NAME = 'SIHIPO'

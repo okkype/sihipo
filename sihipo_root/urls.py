@@ -1,9 +1,6 @@
 from . import views
 from django.conf.urls import url, include
 from django.contrib.auth import views as auth_views
-from sihipo_root.threads import *
-import threading
-
 
 urlpatterns = [
     url(r'^$', views.HomeView.as_view(), name='home'),
@@ -114,28 +111,3 @@ urlpatterns = [
     url(r'^plantalert/de/(?P<pk>\d+)$', views.PlantAlertDe, name='plantalert_de'),
 #     url(r'^plantduplicate/<str:model>/(?P<pk>\d+)$', views.PlantDuplicate, name='plantduplicate'),
 ]
-
-# thread_sensor_run = False
-# thread_control_run = False
-# thread_eval_run = False
-# thread_telegram_run = False
-# 
-# for t in threading.enumerate():
-#     if t.getName() == 'thread_sensor':
-#         thread_sensor_run = True
-#     if t.getName() == 'thread_control':
-#         thread_control_run = True
-#     if t.getName() == 'thread_eval':
-#         thread_eval_run = True
-#     if t.getName() == 'thread_telegram':
-#         thread_telegram_run = True
-# 
-# if not thread_control_run:
-#     tf_control = ControlThread()
-#     tf_control.start()
-# if not thread_eval_run:
-#     tf_eval = EvalThread()
-#     tf_eval.start()
-# if not thread_telegram_run:
-#     tf_sensor = SensorThread(interval=36000)
-#     tf_sensor.start()

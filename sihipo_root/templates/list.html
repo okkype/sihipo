@@ -30,7 +30,7 @@
 			</thead>
 			<tbody>
 				{% for object in object_list %}
-					<tr oncontextmenu="location.href='{{ pwa_app_single|yesno:'#target=,' }}{% url name|add:'_update' object.id %}';return false;">
+					<tr oncontextmenu="location.href='{{ pwa_app_single|yesno:'/#,' }}{% url name|add:'_update' object.id %}';return false;">
 						{% block list_body %}
 						{% for table_field in table_fields %}
 						<td {% if object|dict_get_field_type:table_field in numeric_field %}data-type="numeric"{% endif %}>

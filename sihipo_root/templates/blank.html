@@ -240,10 +240,10 @@
             function pwa_link() {
                 $('a[href^="/"]').each(function(){ 
                     var oldUrl = $(this).attr("href");
-                    if(oldUrl.startsWith('/#target=')) {
+                    if(oldUrl.startsWith('/#')) {
                         /* RESERVED */
                     } else {
-                        var newUrl = '/#target=' + oldUrl;
+                        var newUrl = '/#' + oldUrl;
                         $(this).attr("href", newUrl);
                     }
                 });
@@ -251,10 +251,9 @@
             function pwa_page() {
                 pwa_link();
                 var pwa_url = $(location).attr("href").split('#');
-                var pwa_var = pwa_url.length > 1 ? pwa_url[1] : '';
-                pwa_var.split('&').forEach(function (item, index) {
-                    if(item.startsWith('target=')) {
-                        var pwa_target = item.replace('target=', '');
+                var pwa_var = pwa_url.length > 1 ? pwa_url[1] : false;
+                    if (pwa_var != false) {
+                        var pwa_target = pwa_var;
                         Pace.restart();
                         $('.container-fluid').html('');
                         $.get(pwa_target, function (data) {
@@ -270,7 +269,6 @@
                             Pace.stop();
                         });
                     }
-                });
             }
             // START : Code to handle install prompt on desktop
             let deferredPrompt;
