@@ -92,7 +92,7 @@ textarea, .CodeMirror {
 }
 
 .pace .pace-progress {
-  background: green;
+  background: #32CD32;
   position: fixed;
   z-index: 2000;
   top: 0;

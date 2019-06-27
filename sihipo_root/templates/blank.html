@@ -260,9 +260,15 @@
                             if(data.toLowerCase().includes('<head')) {
                                 location.href = pwa_target;
                             } else {
-                                $('.container-fluid').html(data);
-                                Pace.stop();
-                                pwa_link();
+                                if($('.container-fluid').html(data)) {
+                                    if($('form').attr('action')) {
+                                        /* RESERVED */
+                                    } else {
+                                        $('form').attr('action', pwa_target);
+                                    }
+                                    Pace.stop();
+                                    pwa_link();
+                                }
                             }
                         }).fail(function () {
                             alert('Koneksi Terputus!');

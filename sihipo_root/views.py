@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 from django.utils.datetime_safe import strftime
 from django.views.generic import TemplateView, ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from sihipo.settings import TELEGRAM_CHAT_ID, PWA_APP_SINGLE
+from sihipo.settings import TELEGRAM_CHAT_ID, PWA_APP_SINGLE, BASE_DIR
 from sihipo_root.models import *
 from sihipo_root.threads import *
 import subprocess
@@ -23,9 +23,13 @@ class HomeView(TemplateView):
         context = super(HomeView, self).get_context_data(**kwargs)
         context['pwa_app_single'] = PWA_APP_SINGLE
         try:
-            context['git_version'] = subprocess.check_output(['git', 'describe', '--tags']).strip().split('-')[0]
-        except:
-            context['git_version'] = ''
+            if subprocess.check_output(['/bin/bash -c "cd %s && git fetch --all"' % (BASE_DIR)], shell=True, encoding='utf8'):
+                context['git_version'] = subprocess.check_output([
+                    '/bin/bash -c "cd %s && git describe --tags"' % (BASE_DIR)
+                ], shell=True, encoding='utf8').strip()
+        except Exception as e:
+            self.stdout.write(self.style.ERROR(e))
+            context['git_version'] = False
         return context
     
 # END HOME
