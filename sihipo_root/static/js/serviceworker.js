@@ -10,6 +10,7 @@ self.addEventListener('install', function(event) {
         '/static/img/hipo-icon.png',
         '/static/img/hipo-icon-2.png',
         '/static/img/hipo-icon-3.png',
+        '/static/img/loading_leaf_circle.gif',
         '/static/style.css',
         '/static/sb-admin-2/vendor/bootstrap/css/bootstrap.min.css',
         '/static/sb-admin-2/vendor/metisMenu/metisMenu.min.css',

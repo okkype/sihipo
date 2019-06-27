@@ -243,7 +243,7 @@ class PlantListView(LoginRequiredMixin, ListView):
     is_child = False
     
     def get_paginate_by(self, queryset):
-        if self.request.GET.get('filter') or (self.is_child and self.request.session.get('parent_id')):
+        if self.request.GET.get('filter') or self.is_child:
             return 0
         return ListView.get_paginate_by(self, queryset)
     
@@ -257,8 +257,8 @@ class PlantListView(LoginRequiredMixin, ListView):
         
     def get_context_data(self, **kwargs):
         context = get_plant_context(self, super(PlantListView, self).get_context_data(**kwargs))
-        if not self.is_child and self.request.session.get('parent_id'):
-            del self.request.session['parent_id']
+        # if not self.is_child and self.request.session.get('parent_id'):
+        #     del self.request.session['parent_id']
         # if self.request.GET.get('filter') or (self.is_child and self.request.session.get('parent_id')):
         # if self.is_child and self.request.session.get('parent_id'):
         #     context['table_extra'] = False
@@ -386,7 +386,7 @@ class PlantOptUpdate(PlantOptView, PlantUpdateView):
                 'link':reverse_lazy('plantoptdetail_list')
             }
         ]
-        self.request.session['parent_id'] = context['object'].id
+        self.request.session['plant_opt'] = context['object'].id
         return context
 
 
@@ -406,7 +406,7 @@ class PlantOptDetailList(PlantOptDetailView, PlantListView):
 
     def get_context_data(self, **kwargs):
         context = super(PlantOptDetailList, self).get_context_data(**kwargs)
-        context['object_list'] = self.model.objects.filter(plant_opt=self.request.session.get('parent_id'))
+        context['object_list'] = self.model.objects.filter(plant_opt=self.request.session.get('plant_opt'))
         return context
 
 
@@ -414,7 +414,7 @@ class PlantOptDetailCreate(PlantOptDetailView, PlantCreateView):
 
     def get_initial(self):
         context = super(PlantOptDetailCreate, self).get_initial()
-        context['plant_opt'] = self.request.session.get('parent_id')
+        context['plant_opt'] = self.request.session.get('plant_opt')
         return context
 
 
@@ -455,7 +455,7 @@ class PlantSensorUpdate(PlantSensorView, PlantUpdateView):
                 'link':reverse_lazy('plantsensor_dashboard')
             }
         ]
-        self.request.session['parent_id'] = context['object'].id
+        self.request.session['plant_sensor'] = context['object'].id
         return context
 
 
@@ -490,7 +490,7 @@ class PlantSensorDashboard(TemplateView):
                 days = day_count
                 while days >= 0:
                     last_day = (datetime.datetime.now() - datetime.timedelta(days=days)).strftime('%Y-%m-%d')
-                    val = PlantSensorLogDetail.objects.filter(kode=sensor_type[0], plant_sensor_log__plant_sensor=self.request.session.get('parent_id'), plant_sensor_log__dt__range=('%s 00:00:00' % (last_day), '%s 23:59:59' % (last_day))).aggregate(Avg('val'))
+                    val = PlantSensorLogDetail.objects.filter(kode=sensor_type[0], plant_sensor_log__plant_sensor=self.request.session.get('plant_sensor'), plant_sensor_log__dt__range=('%s 00:00:00' % (last_day), '%s 23:59:59' % (last_day))).aggregate(Avg('val'))
                     ydata.append(val['val__avg'] or 0.0)
                     days -= 1
                 chartdata['y%s' % (chartseq)] = ydata
@@ -517,7 +517,7 @@ class PlantSensorDetailList(PlantSensorDetailView, PlantListView):
 
     def get_context_data(self, **kwargs):
         context = super(PlantSensorDetailList, self).get_context_data(**kwargs)
-        context['object_list'] = self.model.objects.filter(plant_sensor=self.request.session.get('parent_id'))
+        context['object_list'] = self.model.objects.filter(plant_sensor=self.request.session.get('plant_sensor'))
         return context
 
 
@@ -525,7 +525,7 @@ class PlantSensorDetailCreate(PlantSensorDetailView, PlantCreateView):
 
     def get_initial(self):
         context = super(PlantSensorDetailCreate, self).get_initial()
-        context['plant_sensor'] = self.request.session.get('parent_id')
+        context['plant_sensor'] = self.request.session.get('plant_sensor')
         return context
 
 
@@ -566,7 +566,7 @@ class PlantControlUpdate(PlantControlView, PlantUpdateView):
                 'link':reverse_lazy('plantcontrol_dashboard')
             }
         ]
-        self.request.session['parent_id'] = context['object'].id
+        self.request.session['plant_control'] = context['object'].id
         return context
 
 
@@ -595,7 +595,7 @@ class PlantControlDashboard(TemplateView):
         chartseq = 1
         for control_type in PlantBase.control_type:
             if control_type[0] is not None:
-                control_details = PlantControlDetail.objects.filter(val=control_type[0], plant_control=self.request.session.get('parent_id'))
+                control_details = PlantControlDetail.objects.filter(val=control_type[0], plant_control=self.request.session.get('plant_control'))
                 for control_detail in control_details:
                     chartdata['name%s' % (chartseq)] = control_detail.get_val_display()
                     chartdata['extra%s' % (chartseq)] = extra_serie
@@ -603,7 +603,7 @@ class PlantControlDashboard(TemplateView):
                     days = day_count
                     while days >= 0:
                         last_day = (datetime.datetime.now() - datetime.timedelta(days=days)).strftime('%Y-%m-%d')
-                        val = PlantControlLogDetail.objects.filter(val=1, kode=control_detail.kode, plant_control_log__plant_control=self.request.session.get('parent_id'), plant_control_log__dt__range=('%s 00:00:00' % (last_day), '%s 23:59:59' % (last_day))).aggregate(Count('val'))
+                        val = PlantControlLogDetail.objects.filter(val=1, kode=control_detail.kode, plant_control_log__plant_control=self.request.session.get('plant_control'), plant_control_log__dt__range=('%s 00:00:00' % (last_day), '%s 23:59:59' % (last_day))).aggregate(Count('val'))
                         ydata.append(val['val__count'] or 0.0)
                         days -= 1
                     chartdata['y%s' % (chartseq)] = ydata
@@ -630,7 +630,7 @@ class PlantControlDetailList(PlantControlDetailView, PlantListView):
 
     def get_context_data(self, **kwargs):
         context = super(PlantControlDetailList, self).get_context_data(**kwargs)
-        context['object_list'] = self.model.objects.filter(plant_control=self.request.session.get('parent_id'))
+        context['object_list'] = self.model.objects.filter(plant_control=self.request.session.get('plant_control'))
         return context
 
 
@@ -638,7 +638,7 @@ class PlantControlDetailCreate(PlantControlDetailView, PlantCreateView):
 
     def get_initial(self):
         context = super(PlantControlDetailCreate, self).get_initial()
-        context['plant_control'] = self.request.session.get('parent_id')
+        context['plant_control'] = self.request.session.get('plant_control')
         return context
 
 
@@ -675,7 +675,7 @@ class PlantRackUpdate(PlantRackView, PlantUpdateView):
                 'link':reverse_lazy('plantrackpoint_list')
             }
         ]
-        self.request.session['parent_id'] = context['object'].id
+        self.request.session['plant_rack'] = context['object'].id
         return context
 
 
@@ -695,7 +695,7 @@ class PlantRackPointList(PlantRackPointView, PlantListView):
 
     def get_context_data(self, **kwargs):
         context = super(PlantRackPointList, self).get_context_data(**kwargs)
-        context['object_list'] = self.model.objects.filter(plant_rack=self.request.session.get('parent_id'))
+        context['object_list'] = self.model.objects.filter(plant_rack=self.request.session.get('plant_rack'))
         return context
 
 
@@ -703,7 +703,7 @@ class PlantRackPointCreate(PlantRackPointView, PlantCreateView):
 
     def get_initial(self):
         context = super(PlantRackPointCreate, self).get_initial()
-        context['plant_rack'] = self.request.session.get('parent_id')
+        context['plant_rack'] = self.request.session.get('plant_rack')
         return context
 
 
@@ -740,7 +740,7 @@ class PlantSensorLogUpdate(PlantSensorLogView, PlantUpdateView):
                 'link':reverse_lazy('plantsensorlogdetail_list')
             }
         ]
-        self.request.session['parent_id'] = context['object'].id
+        self.request.session['plant_sensor_log'] = context['object'].id
         return context
 
 
@@ -760,7 +760,7 @@ class PlantSensorLogDetailList(PlantSensorLogDetailView, PlantListView):
 
     def get_context_data(self, **kwargs):
         context = super(PlantSensorLogDetailList, self).get_context_data(**kwargs)
-        context['object_list'] = self.model.objects.filter(plant_sensor_log=self.request.session.get('parent_id'))
+        context['object_list'] = self.model.objects.filter(plant_sensor_log=self.request.session.get('plant_sensor_log'))
         return context
 
 
@@ -768,7 +768,7 @@ class PlantSensorLogDetailCreate(PlantSensorLogDetailView, PlantCreateView):
 
     def get_initial(self):
         context = super(PlantSensorLogDetailCreate, self).get_initial()
-        context['plant_sensor_log'] = self.request.session.get('parent_id')
+        context['plant_sensor_log'] = self.request.session.get('plant_sensor_log')
         return context
 
 
@@ -805,7 +805,7 @@ class PlantControlLogUpdate(PlantControlLogView, PlantUpdateView):
                 'link':reverse_lazy('plantcontrollogdetail_list')
             }
         ]
-        self.request.session['parent_id'] = context['object'].id
+        self.request.session['plant_control_log'] = context['object'].id
         return context
 
 
@@ -825,7 +825,7 @@ class PlantControlLogDetailList(PlantControlLogDetailView, PlantListView):
 
     def get_context_data(self, **kwargs):
         context = super(PlantControlLogDetailList, self).get_context_data(**kwargs)
-        context['object_list'] = self.model.objects.filter(plant_control_log=self.request.session.get('parent_id'))
+        context['object_list'] = self.model.objects.filter(plant_control_log=self.request.session.get('plant_control_log'))
         return context
 
 
@@ -833,7 +833,7 @@ class PlantControlLogDetailCreate(PlantControlLogDetailView, PlantCreateView):
 
     def get_initial(self):
         context = super(PlantControlLogDetailCreate, self).get_initial()
-        context['plant_control_log'] = self.request.session.get('parent_id')
+        context['plant_control_log'] = self.request.session.get('plant_control_log')
         return context
 
 
@@ -893,7 +893,7 @@ class PlantEvalIfUpdate(PlantEvalIfView, PlantUpdateView):
                 'link':reverse_lazy('planteval_list')
             }
         ]
-        self.request.session['parent_id'] = context['object'].id
+        self.request.session['plant_eval_if'] = context['object'].id
         return context
 
 
@@ -937,7 +937,7 @@ class PlantEvalList(PlantEvalView, PlantListView):
     
     def get_context_data(self, **kwargs):
         context = super(PlantEvalList, self).get_context_data(**kwargs)
-        context['object_list'] = self.model.objects.filter(plant_eval_if=self.request.session.get('parent_id'))
+        context['object_list'] = self.model.objects.filter(plant_eval_if=self.request.session.get('plant_eval_if'))
         return context
 
 
@@ -945,7 +945,7 @@ class PlantEvalCreate(PlantEvalView, PlantCreateView):
 
     def get_initial(self):
         context = super(PlantEvalCreate, self).get_initial()
-        context['plant_eval_if'] = self.request.session.get('parent_id')
+        context['plant_eval_if'] = self.request.session.get('plant_eval_if')
         return context
 
 

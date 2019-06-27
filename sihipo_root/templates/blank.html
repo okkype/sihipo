@@ -255,7 +255,7 @@
                     if (pwa_var != false) {
                         var pwa_target = pwa_var;
                         Pace.restart();
-                        $('.container-fluid').html('');
+                        $('.container-fluid').html('<div style="display:block;text-align:center;"><img style="width:100%;max-width:400px;" src="{% static 'img/loading_leaf_circle.gif' %}" border="0"/></div>');
                         $.get(pwa_target, function (data) {
                             if(data.toLowerCase().includes('<head')) {
                                 location.href = pwa_target;
@@ -308,7 +308,6 @@
             $('.dropdown-toggle').click(simple_notif);
             $('.data-tables').DataTable();
             {% if pwa_app_single %}
-                $('.container-fluid').css("visibility", "visible");
                 pwa_page();
                 window.addEventListener("hashchange", function () {
                     pwa_page();
@@ -316,6 +315,7 @@
                         $('.navbar-collapse').collapse('hide');
                     }
                 }, false);
+                $('.container-fluid').css("visibility", "visible");
             {% endif %}
 	        {% block jquery %}{% endblock %}
 	    });
