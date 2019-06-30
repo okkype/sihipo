@@ -28,8 +28,8 @@ class HomeView(TemplateView):
                     '/bin/bash -c "cd %s && git describe --tags"' % (BASE_DIR)
                 ], shell=True, encoding='utf8').strip()
         except Exception as e:
-            self.stdout.write(self.style.ERROR(e))
             context['git_version'] = False
+            print(e)
         return context
     
 # END HOME
