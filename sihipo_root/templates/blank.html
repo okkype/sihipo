@@ -252,29 +252,29 @@
                 pwa_link();
                 var pwa_url = $(location).attr("href").split('#');
                 var pwa_var = pwa_url.length > 1 ? pwa_url[1] : false;
-                    if (pwa_var != false) {
-                        var pwa_target = pwa_var;
-                        Pace.restart();
-                        $('.container-fluid').html('<div style="display:block;text-align:center;"><img style="width:100%;max-width:400px;" src="{% static 'img/loading_leaf_circle.gif' %}" border="0"/></div>');
-                        $.get(pwa_target, function (data) {
-                            if(data.toLowerCase().includes('<head')) {
-                                location.href = pwa_target;
-                            } else {
-                                if($('.container-fluid').html(data)) {
-                                    if($('form').attr('action')) {
-                                        /* RESERVED */
-                                    } else {
-                                        $('form').attr('action', pwa_target);
-                                    }
-                                    Pace.stop();
-                                    pwa_link();
+                if (pwa_var != false) {
+                    var pwa_target = pwa_var;
+                    Pace.restart();
+                    $('.container-fluid').html('<div style="display:block;text-align:center;"><img style="width:100%;max-width:400px;" src="{% static 'img/loading_leaf_circle.gif' %}" border="0"/></div>');
+                    $.get(pwa_target, function (data) {
+                        if(data.toLowerCase().includes('<head')) {
+                            location.href = pwa_target;
+                        } else {
+                            if($('.container-fluid').html(data)) {
+                                if($('form').attr('action')) {
+                                    /* RESERVED */
+                                } else {
+                                    $('form').attr('action', pwa_target);
                                 }
+                                Pace.stop();
+                                pwa_link();
                             }
-                        }).fail(function () {
-                            alert('Koneksi Terputus!');
-                            Pace.stop();
-                        });
-                    }
+                        }
+                    }).fail(function () {
+                        alert('Koneksi Terputus!');
+                        Pace.stop();
+                    });
+                }
             }
             // START : Code to handle install prompt on desktop
             let deferredPrompt;

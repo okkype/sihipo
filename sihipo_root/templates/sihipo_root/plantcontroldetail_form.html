@@ -1,1 +1,22 @@
 {% extends 'form.html' %}
+{% load dict_lib %}
+{% block button %}
+{% if 'update' in request|dict_class:'path'|cut:'/' %}
+<a href="javascript:cdstate({{ object.id }}, 0)" class="btn btn-outline btn-default">Close</a>&nbsp;
+<a href="javascript:cdstate({{ object.id }}, 1)" class="btn btn-outline btn-default">Open</a>&nbsp;
+<a href="javascript:cdstate({{ object.id }}, 2)" class="btn btn-outline btn-default">Toggle</a>&nbsp;
+<script language="text/javascript">
+function cdstate(cd, state) {
+    Pace.restart();
+    $.post({% url 'setting' %}, {
+        'csrfmiddlewaretoken':'{{ csrf_token }}',
+        'command':'cdstate',
+        'cd':cd,
+        'state':state
+    }, function () {
+        Pace.stop();
+    });
+}
+</script>
+{% endif %}
+{% endblock %}

@@ -120,13 +120,13 @@ class SettingView(LoginRequiredMixin, TemplateView):
                     t.stop = True
             if t.getName() == 'thread_control':
                 context['thread_control_run'] = True
-                context['intval_control_run'] = 1 # t.interval
+                context['intval_control_run'] = 1  # t.interval
                 if str(self.request.POST.get('thread_control')).startswith('Stop'):
                     context['thread_control_run'] = False
                     t.stop = True
             if t.getName() == 'thread_eval':
                 context['thread_eval_run'] = True
-                context['intval_eval_run'] = 1 # t.interval
+                context['intval_eval_run'] = 1  # t.interval
                 if str(self.request.POST.get('thread_eval')).startswith('Stop'):
                     context['thread_eval_run'] = False
                     t.stop = True
@@ -146,12 +146,12 @@ class SettingView(LoginRequiredMixin, TemplateView):
         if str(self.request.POST.get('thread_control')).startswith('Start'):
             context['thread_control_run'] = True
             context['intval_control_run'] = int(self.request.POST.get('intval_control', 1))
-            tf = ControlThread() # (interval=context['intval_control_run'])
+            tf = ControlThread()  # (interval=context['intval_control_run'])
             tf.start()
         if str(self.request.POST.get('thread_eval')).startswith('Start'):
             context['thread_eval_run'] = True
             context['intval_eval_run'] = int(self.request.POST.get('intval_eval', 1))
-            tf = EvalThread() # (interval=context['intval_eval_run'])
+            tf = EvalThread()  # (interval=context['intval_eval_run'])
             tf.start()
         if str(self.request.POST.get('thread_telegram')).startswith('Start'):
             context['thread_telegram_run'] = True
@@ -165,20 +165,19 @@ class SettingView(LoginRequiredMixin, TemplateView):
             PlantSensorLog.objects.all().update(active=False)
         if self.request.POST.get('command') == 'trash' and self.request.POST.get('model'):
             eval("%s.objects.filter(pk__in=%s, active=True).update(active=False)" % (self.request.POST.get('model'), self.request.POST.get('pks')))
-#             filter_str = str(self.request.POST.get('filter')).strip()
-#             filter_query = str(self.request.POST.get('filter_query')).strip()
-#             if (filter_str != 'None') and (filter_query != 'None'):
-#                 eval("%s.objects.filter(%s).update(active=False)" % (self.request.POST.get('model'), filter_query.replace('context[&#39;filter&#39;]', "'%s'" % (filter_str))))
-#             else:
-#                 eval("%s.objects.all().update(active=False)" % (self.request.POST.get('model')))
         if self.request.POST.get('command') == 'empty' and self.request.POST.get('model'):
             eval("%s.objects.filter(active=False).delete()" % (self.request.POST.get('model')))
-#             filter_str = str(self.request.POST.get('filter')).strip()
-#             filter_query = str(self.request.POST.get('filter_query')).strip()
-#             if (filter_str != 'None') and (filter_query != 'None'):
-#                 eval("%s.objects.filter(Q(active=False)&(%s)).delete()" % (self.request.POST.get('model'), filter_query.replace('context[&#39;filter&#39;]', "'%s'" % (filter_str))))
-#             else:
-#                 eval("%s.objects.filter(active=False).delete()" % (self.request.POST.get('model')))
+        if self.request.POST.get('command') == 'cdstate' and self.request.POST.get('cd') and self.request.POST.get('state'):
+            plant_control_detail = PlantControlDetail.objects.get(pk=int(self.request.POST.get('cd')))
+            plant_control_log = PlantControlLog()
+            plant_control_log.state = "P"
+            plant_control_log.plant_control = plant_control_detail.plant_control
+            plant_control_log.save()
+            plant_control_log_detail = PlantControlLogDetail()
+            plant_control_log_detail.plant_control_log = plant_control_log
+            plant_control_log_detail.kode = plant_control_detail.kode
+            plant_control_log_detail.val = int(self.request.POST.get('state'))
+            plant_control_log_detail.save()
         try:
             f = open('/var/lib/misc/dnsmasq.leases', 'r')
             context['ip_list'] = f.read()
