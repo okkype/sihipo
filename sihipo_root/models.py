@@ -340,7 +340,7 @@ class PlantControlLog(PlantBase):
 class PlantControlLogDetail(PlantBase):
     plant_control_log = models.ForeignKey(PlantControlLog, models.CASCADE, verbose_name='Log Kontrol Tanaman', limit_choices_to={'active': True})
     kode = models.CharField('Kode', max_length=3, choices=PlantBase.control_pin)
-    val = models.IntegerField('Nilai', default=0, choices=((0, 'Normally Close'), (1, 'Normally Open'), (2, 'Toggle')))
+    val = models.IntegerField('Nilai', default=0, choices=((0, 'Normally Open'), (1, 'Normally Close'), (2, 'Toggle')))
     
     class Meta:
         verbose_name = 'Detail Log Control Tanaman'

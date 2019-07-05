@@ -167,17 +167,23 @@ class SettingView(LoginRequiredMixin, TemplateView):
             eval("%s.objects.filter(pk__in=%s, active=True).update(active=False)" % (self.request.POST.get('model'), self.request.POST.get('pks')))
         if self.request.POST.get('command') == 'empty' and self.request.POST.get('model'):
             eval("%s.objects.filter(active=False).delete()" % (self.request.POST.get('model')))
-        if self.request.POST.get('command') == 'cdstate' and self.request.POST.get('cd') and self.request.POST.get('state'):
+        if self.request.POST.get('command') == 'cdstate' and self.request.POST.get('cd'):
+            self.template_name = 'cdstate.html'
             plant_control_detail = PlantControlDetail.objects.get(pk=int(self.request.POST.get('cd')))
-            plant_control_log = PlantControlLog()
-            plant_control_log.state = "P"
-            plant_control_log.plant_control = plant_control_detail.plant_control
-            plant_control_log.save()
-            plant_control_log_detail = PlantControlLogDetail()
-            plant_control_log_detail.plant_control_log = plant_control_log
-            plant_control_log_detail.kode = plant_control_detail.kode
-            plant_control_log_detail.val = int(self.request.POST.get('state'))
-            plant_control_log_detail.save()
+            res_json = requests.get(plant_control_detail.plant_control.url, timeout=5).json()
+            value = res_json.get('value')
+            if value:
+                context['cdstate'] = value[int(plant_control_detail.kode.replace('D', ''))]
+            if self.request.POST.get('state'):
+                plant_control_log = PlantControlLog()
+                plant_control_log.state = "P"
+                plant_control_log.plant_control = plant_control_detail.plant_control
+                plant_control_log.save()
+                plant_control_log_detail = PlantControlLogDetail()
+                plant_control_log_detail.plant_control_log = plant_control_log
+                plant_control_log_detail.kode = plant_control_detail.kode
+                plant_control_log_detail.val = int(self.request.POST.get('state'))
+                plant_control_log_detail.save()
         try:
             f = open('/var/lib/misc/dnsmasq.leases', 'r')
             context['ip_list'] = f.read()
