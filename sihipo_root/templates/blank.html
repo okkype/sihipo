@@ -314,14 +314,26 @@
             $('.dropdown-toggle').click(simple_notif);
             $('.data-tables').DataTable();
             {% if pwa_app_single %}
-                pwa_page();
-                window.addEventListener("hashchange", function () {
+                if (window.addEventListener) {
                     pwa_page();
-                    if (window.innerWidth < 786) {
-                        $('.navbar-collapse').collapse('hide');
-                    }
-                }, false);
-                $('.container-fluid').css("visibility", "visible");
+                    window.addEventListener("hashchange", function () {
+                        pwa_page();
+                        if (window.innerWidth < 786) {
+                            $('.navbar-collapse').collapse('hide');
+                        }
+                    }, false);
+                    $('.container-fluid').css("visibility", "visible");
+                } else {
+                    $.get("{% url 'plantpwasingle' 2 %}", function (data) {
+                        location.reload();
+                    });
+                }
+            {% else %}
+                if (window.addEventListener) {
+                    $.get("{% url 'plantpwasingle' 1 %}", function (data) {
+                        location.reload();
+                    });
+                }
             {% endif %}
 	        {% block jquery %}{% endblock %}
 	    });

@@ -109,5 +109,6 @@ urlpatterns = [
     url(r'^plantalert/count/$', views.PlantAlertCount, name='plantalert_count'),
     url(r'^plantalert/de/$', views.PlantAlertDe, name='plantalert_de'),
     url(r'^plantalert/de/(?P<pk>\d+)$', views.PlantAlertDe, name='plantalert_de'),
+    url(r'^plantpwasingle/(?P<enable>\d+)$', views.PlantPWASingle, name='plantpwasingle'),
 #     url(r'^plantduplicate/<str:model>/(?P<pk>\d+)$', views.PlantDuplicate, name='plantduplicate'),
 ]

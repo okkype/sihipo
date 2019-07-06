@@ -21,7 +21,7 @@ class HomeView(TemplateView):
     
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
-        context['pwa_app_single'] = PWA_APP_SINGLE
+        context['pwa_app_single'] = self.request.session.get('pwa_app_single') and (True if self.request.session.get('pwa_app_single') == 1 else False) or PWA_APP_SINGLE
         try:
             if subprocess.check_output(['/bin/bash -c "cd %s && git fetch --all"' % (BASE_DIR)], shell=True, encoding='utf8'):
                 context['git_version'] = subprocess.check_output([
@@ -43,7 +43,7 @@ class DashboardView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super(DashboardView, self).get_context_data(**kwargs)
         # context['verbose_name'] = 'Dashboard'
-        context['pwa_app_single'] = PWA_APP_SINGLE
+        context['pwa_app_single'] = self.request.session.get('pwa_app_single') and (True if self.request.session.get('pwa_app_single') == 1 else False) or PWA_APP_SINGLE
         
         day_count = 10
         xdata_line = []
@@ -109,7 +109,7 @@ class SettingView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super(SettingView, self).get_context_data(**kwargs)
         context['verbose_name'] = 'Setting'
-        context['pwa_app_single'] = PWA_APP_SINGLE
+        context['pwa_app_single'] = self.request.session.get('pwa_app_single') and (True if self.request.session.get('pwa_app_single') == 1 else False) or PWA_APP_SINGLE
 
         for t in threading.enumerate():
             if t.getName() == 'thread_sensor':
@@ -239,7 +239,7 @@ def get_plant_context(obj, context):
     context['search_field'] = [u'CharField', u'TextField']
     context['numeric_field'] = [u'IntegerField', u'FloatField']
     context['datetime_fields'] = []
-    context['pwa_app_single'] = PWA_APP_SINGLE
+    context['pwa_app_single'] = obj.request.session.get('pwa_app_single') and (True if obj.request.session.get('pwa_app_single') == 1 else False) or PWA_APP_SINGLE
     for field in obj.fields:
         if obj.model._meta.get_field(field).get_internal_type() in [u'DateTimeField']:
             context['datetime_fields'].append(field)
@@ -1060,3 +1060,8 @@ def PlantAlertDe(request, pk=False):
         alert.active = False
         alert.save()
     return HttpResponse('%s' % (1), content_type='text/plain')
+
+
+def PlantPWASingle(request, enable=1):
+    request.session['pwa_app_single'] = enable
+    return HttpResponse('%s' % (enable), content_type='text/plain')
