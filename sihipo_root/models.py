@@ -52,6 +52,7 @@ class PlantBase(models.Model):
     control_type = (
         (None, 'N/A'),
         ('L', 'GROW LAMP'),
+        ('D', 'DAY LAMP'),
         ('S', 'SPRAY'),
         ('W', 'WATER PUMP'),
         ('A', 'AERIAL'),
