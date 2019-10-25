@@ -254,8 +254,12 @@
                 var pwa_var = pwa_url.length > 1 ? pwa_url[1] : false;
                 if (pwa_var != false) {
                     var pwa_target = pwa_var;
+                    var show_load = true;
                     Pace.restart();
-                    $('.container-fluid').html('<div style="display:block;text-align:center;"><img style="width:100%;max-width:400px;" src="{% static 'img/loading_leaf_circle.gif' %}" border="0"/></div>');
+                    if (arguments.length >= 1) {
+                        show_load = arguments[0];
+                    }
+                    if (show_load) $('.container-fluid').html('<div style="display:block;text-align:center;"><img style="width:100%;max-width:400px;" src="{% static 'img/loading_leaf_circle.gif' %}" border="0"/></div>');
                     $.get(pwa_target, function (data) {
                         if(data.toLowerCase().includes('<head')) {
                             location.href = pwa_target;

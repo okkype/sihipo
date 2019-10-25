@@ -5,6 +5,7 @@ from django.db import models
 from django.utils import timezone
 
 import threading
+from sihipo.settings import RELAY_NO, RELAY_NC, RELAY_TOGGLE
 
 # Create your models here.
 
@@ -70,6 +71,12 @@ class PlantBase(models.Model):
         ('D5', 'Digital 5'),
         ('D6', 'Digital 6'),
         ('D7', 'Digital 7'),
+    )
+    
+    relay_mode = (
+        (RELAY_NO, 'Normally Open'),
+        (RELAY_NC, 'Normally Close'),
+        (RELAY_TOGGLE, 'Toggle')
     )
 
     rack_type = (
@@ -152,7 +159,12 @@ class PlantEvalThen(PlantBase):
         __exec__ = True
         try:
             param = {'__exec__':__exec__}
-            exec('from sihipo_root.models import *\r\n%s' % (self.eval_then), param)
+            data = (
+                'from sihipo_root.models import *',
+                'from sihipo.settings import RELAY_NO, RELAY_NC, RELAY_TOGGLE',
+                self.eval_then
+            )
+            exec('\r\n'.join(['%s' for dummy in range(0, len(data))]) % data, param)
             __exec__ = param['__exec__']
         except Exception as e:
             print(e)
@@ -341,7 +353,7 @@ class PlantControlLog(PlantBase):
 class PlantControlLogDetail(PlantBase):
     plant_control_log = models.ForeignKey(PlantControlLog, models.CASCADE, verbose_name='Log Kontrol Tanaman', limit_choices_to={'active': True})
     kode = models.CharField('Kode', max_length=3, choices=PlantBase.control_pin)
-    val = models.IntegerField('Nilai', default=0, choices=((0, 'Normally Open'), (1, 'Normally Close'), (2, 'Toggle')))
+    val = models.IntegerField('Nilai', default=0, choices=PlantBase.relay_mode)
     
     class Meta:
         verbose_name = 'Detail Log Control Tanaman'
