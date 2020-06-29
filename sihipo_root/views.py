@@ -130,13 +130,13 @@ class SettingView(LoginRequiredMixin, TemplateView):
                 if str(self.request.POST.get('thread_eval')).startswith('Stop'):
                     context['thread_eval_run'] = False
                     t.stop = True
-            if t.getName() == 'thread_telegram':
-                context['thread_telegram_run'] = True
-                context['intval_telegram_run'] = t.chat_id
-                if str(self.request.POST.get('thread_telegram')).startswith('Stop'):
-                    context['thread_telegram_run'] = False
-                    context['intval_telegram_run'] = '0'
-                    t.stop = True
+#             if t.getName() == 'thread_telegram':
+#                 context['thread_telegram_run'] = True
+#                 context['intval_telegram_run'] = t.chat_id
+#                 if str(self.request.POST.get('thread_telegram')).startswith('Stop'):
+#                     context['thread_telegram_run'] = False
+#                     context['intval_telegram_run'] = '0'
+#                     t.stop = True
                     
         if str(self.request.POST.get('thread_sensor')).startswith('Start'):
             context['thread_sensor_run'] = True
@@ -153,12 +153,12 @@ class SettingView(LoginRequiredMixin, TemplateView):
             context['intval_eval_run'] = int(self.request.POST.get('intval_eval', 1))
             tf = EvalThread()  # (interval=context['intval_eval_run'])
             tf.start()
-        if str(self.request.POST.get('thread_telegram')).startswith('Start'):
-            context['thread_telegram_run'] = True
-            context['intval_telegram_run'] = int(self.request.POST.get('intval_telegram', TELEGRAM_CHAT_ID)) or TELEGRAM_CHAT_ID
-            tf = TelegramThread()
-            tf.chat_id = context['intval_telegram_run']
-            tf.start()
+#         if str(self.request.POST.get('thread_telegram')).startswith('Start'):
+#             context['thread_telegram_run'] = True
+#             context['intval_telegram_run'] = int(self.request.POST.get('intval_telegram', TELEGRAM_CHAT_ID)) or TELEGRAM_CHAT_ID
+#             tf = TelegramThread()
+#             tf.chat_id = context['intval_telegram_run']
+#             tf.start()
         if self.request.POST.get('command') == 'Clear All Log':
             PlantEvalLog.objects.all().update(active=False)
             PlantControlLog.objects.all().update(active=False)
@@ -1014,6 +1014,7 @@ class PlantAlertDelete(PlantAlertView, PlantDeleteView):
 
 def PlantAlertSimple(request):
     body = ''
+    pwa_app_single = request.session.get('pwa_app_single') and (True if request.session.get('pwa_app_single') == 1 else False) or PWA_APP_SINGLE
     alerts = PlantAlert.objects.filter(active=True)[:10]
     for alert in alerts:
         color = 'black'
@@ -1040,12 +1041,12 @@ def PlantAlertSimple(request):
         ''' % (alert.id, alert.url, color, icon, alert.note, strftime(alert.dt, '%d/%b/%y %H:%M'))
     foot = '''
     <li>
-        <a class="text-center" href="%s">
+        <a class="text-center" href="%s%s">
             <strong>Lihat Semua Berita</strong>
             <i class="fa fa-angle-right"></i>
         </a>
     </li>
-    ''' % (reverse_lazy('plantalert_list'))
+    ''' % ('/#' if pwa_app_single else '', reverse_lazy('plantalert_list'))
     return HttpResponse('%s%s' % (body, foot), content_type='text/plain')
 
 
